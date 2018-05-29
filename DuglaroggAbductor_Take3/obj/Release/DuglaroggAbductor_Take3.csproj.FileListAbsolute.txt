@@ -1,5 +1,0 @@
-C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor_Take3\bin\Release\DuglaroggAbductor.dll
-C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor_Take3\bin\Release\DuglaroggAbductor.pdb
-C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor_Take3\obj\Release\DuglaroggAbductor.dll
-C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor_Take3\obj\Release\DuglaroggAbductor.pdb
-C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor_Take3\obj\Release\DuglaroggAbductor_Take3.csprojResolveAssemblyReference.cache
