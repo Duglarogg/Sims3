@@ -82,7 +82,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="StringTables\" />
-    <Folder Include="XML\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="XML\Aliens.xml" />
+    <Content Include="XML\AliensBuffs.xml" />
+    <Content Include="XML\AliensModule.xml" />
+    <Content Include="XML\AliensTraits.xml" />
+    <Content Include="XML\AliensTuning.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
