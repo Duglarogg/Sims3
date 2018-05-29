@@ -20,6 +20,7 @@ namespace NRaas
         [Tunable, TunableComment("Whether or not to link user-directed actions to Story Progression options")]
         public static bool kStoryProgressionForUserDirected = false;
 
+
         // Alien Settings
         [Tunable, TunableComment("Whether or not aliens gain the Future Sim trait and Advanced Technology skill")]
         public static bool kFutureSim = false;
@@ -32,6 +33,7 @@ namespace NRaas
 
         [Tunable, TunableComment("Min and max Advanced Technology skill levels for aliens")]
         public static int[] kFutureSkill = new int[] { 10, 10 };
+
 
         // Alien Activity Settings
         [Tunable, TunableComment("Range(0 - 23): Earliest hour that alien activity can occur")]
@@ -79,6 +81,7 @@ namespace NRaas
 
         [Tunable, TunableComment("Range(0 - 100): Additional visit chance for space rocks on lot")]
         public static int kSpaceRockBonus = 33;
+
 
         // Alien Pregnancy Settings
 
