@@ -1,0 +1,174 @@
+﻿<KEY>NRaas.Aliens.Root:MenuName</KEY>
+<STR>Aliens</STR>
+
+<KEY>NRaas.Aliens.Debugging:MenuName</KEY>
+<STR>Debugging</STR>
+
+<KEY>NRaas.Aliens.Reset:MenuName</KEY>
+<STR>Total Reset</STR>
+<KEY>NRaas.Aliens.Reset:Prompt</KEY>
+<STR>Reset all settings to their default tuning?</STR>
+<KEY>NRaas.Aliens.Reset:Complete</KEY>
+<STR>Reset completed.</STR>
+
+<KEY>NRaas.Aliens.Version:MenuName</KEY>
+<STR>Version</STR>
+
+<KEY>NRaas.Aliens.Version:Prompt</KEY>
+<STR>Version: {0.Number}</STR>
+
+
+<KEY>NRaas.Aliens.Boolean:True</KEY>
+<STR>True</STR>
+<KEY>NRaas.Aliens.Boolean:False</KEY>
+<STR>False</STR>
+
+
+<KEY>NRaas.Aliens.AlienActivityInteraction:MenuName</KEY>
+<STR>Alien Activity</STR>
+
+<KEY>NRaas.Aliens.BaseActivityChance:MenuName</KEY>
+<STR>Alien Activity Chance</STR>
+<KEY>NRaas.Aliens.BaseActivityChance:Prompt</KEY>
+<STR>Enter the base chance that alien activity occurs at any given hour (Enter 0 to disable all alien activity):</STR>
+
+<KEY>NRaas.Aliens.BaseAbductionChance:MenuName</KEY>
+<STR>Abduction Chance</STR>
+<KEY>NRaas.Aliens.BaseAbductionChance:Prompt</KEY>
+<STR>Enter the base chance that aliens attempt an abduction (Enter 0 to disable abductions):</STR>
+
+<KEY>NRaas.Aliens.BaseVisitChance:MenuName</KEY>
+<STR>Visitation Chance</STR>
+<KEY>NRaas.Aliens.BaseVisitChance:Prompt</KEY>
+<STR>Enter the base chance that aliens visit the activce household (Enter 0 to disable visits to the active household):</STR>
+
+<KEY>NRaas.Aliens.ActivityWindow:MenuName</KEY>
+<STR>Activity Window</STR>
+<KEY>NRaas.Aliens.ActivityWindow:Prompt</KEY>
+<STR>Enter the span of time (in hours) during which aliens are active</STR>
+
+<KEY>NRaas.Aliens.SpaceRockFoundBonus:MenuName</KEY>
+<STR>Space Rock Found Bonus</STR>
+<KEY>NRaas.Aliens.SpaceRockFoundBonus:Prompt</KEY>
+<STR>Enter the additional chance of alien activity for each space rock found:</STR>
+
+<KEY>NRaas.Aliens.MaxSpaceRockFoundBonus:MenuName</KEY>
+<STR>Maximum Space Rock Found Bonus</STR>
+<KEY>NRaas.Aliens.MaxSpaceRockFoundBonus:Prompt</KEY>
+<STR>Enter the maximum additional chance of alien activity that can be gained from finding space rocks:</STR>
+
+<KEY>NRaas.Aliens.EarliestHour:MenuName</KEY>
+<STR>Starting Window</STR>
+<KEY>NRaas.Aliens.EarliestHour:Prompt</KEY>
+<STR>Enter the hour of the day that aliens become active:</STR>
+
+<KEY>NRaas.Aliens.TelescopeBonus:MenuName</KEY>
+<STR>Telescope Use Bonus</STR>
+<KEY>NRaas.Aliens.TelescopeBonus:Prompt</KEY>
+<STR>Enter the additional chance of activity for using a telescope:</STR>
+
+
+<KEY>NRaas.Aliens.AlienPregnancyInteraction:MenuName</KEY>
+<STR>Alien Pregnancy</STR>
+
+<KEY>NRaas.Aliens.AllowTeens:MenuName</KEY>
+<STR>Allow Teens</STR>
+
+<KEY>NRaas.Aliens.BackacheChance:MenuName</KEY>
+<STR>Backache Chance</STR>
+<KEY>NRaas.Aliens.BackacheChance:Prompt</KEY>
+<STR>Enter the chance of a Sim getting the Backache moodlet during an alien pregnancy (Enter 0 to disable backaches):</STR>
+
+<KEY>NRaas.Aliens.ImpregnationChance:MenuName</KEY>
+<STR>Pregnancy Chance</STR>
+<KEY>NRaas.Aliens.ImpregnationChance:Prompt</KEY>
+<STR>Enter the base chance of a Sim becoming pregnant during an abduction (Enter 0 to disable alien pregnancy):</STR>
+
+<KEY>NRaas.Aliens.PregnancyLength:MenuName</KEY>
+<STR>Pregnancy Length</STR>
+<KEY>NRaas.Aliens.PregnancyLength:Prompt</KEY>
+<STR>Enter the duration (in days) of an alien pregnancy (minimum 1):</STR>
+
+<KEY>NRaas.Aliens.UseFertility:MenuName</KEY>
+<STR>Use Fertility</STR>
+
+
+<KEY>NRaas.Aliens.AliensInteraction:MenuName</KEY>
+<STR>Aliens</STR>
+
+<KEY>NRaas.Aliens.FutureSim:MenuName</KEY>
+<STR>Future Sim Aliens</STR>
+
+<KEY>NRaas.Aliens.AdvancedTechMax:MenuName</KEY>
+<STR>Advanced Technology - Max</STR>
+<KEY>NRaas.Aliens.AdvancedTechMax:Prompt</KEY>
+<STR>Enter the highest possible Advanced Technology skill level for NPC aliens (maximum 10):</STR>
+
+<KEY>NRaas.Aliens.AdvancedTechMin:MenuName</KEY>
+<STR>Advanced Technology - Min</STR>
+<KEY>NRaas.Aliens.AdvancedTechMin:Prompt</KEY>
+<STR>Enter the lowest possible Advanced Technology skill level for NPC aliens (minimum 0):</STR>
+
+<KEY>NRaas.Aliens.HandinessMax:MenuName</KEY>
+<STR>Handiness - Max</STR>
+<KEY>NRaas.Aliens.HandinessMax:Prompt</KEY>
+<STR>Enter the highest possible Handiness skill level for NPC aliens (maximum 10):</STR>
+
+<KEY>NRaas.Aliens.HandinessMin:MenuName</KEY>
+<STR>Handiness - Min</STR>
+<KEY>NRaas.Aliens.HandinessMin:Prompt</KEY>
+<STR>Enter the lowest possible Handiness skill level for NPC aliens (minimum 0):</STR>
+
+<KEY>NRaas.Aliens.LogicMax:MenuName</KEY>
+<STR>Logic - Max</STR>
+<KEY>NRaas.Aliens.LogicMax:Prompt</KEY>
+<STR>Enter the highest possible Logic skill level for NPC aliens (maximum 10):</STR>
+
+<KEY>NRaas.Aliens.LogicMin:MenuName</KEY>
+<STR>Logic - Min</STR>
+<KEY>NRaas.Aliens.LogicMin:Prompt</KEY>
+<STR>Enter the lowest possible Logic skill level for NPC aliens (minimum 0):</STR>
+
+
+<KEY>Gameplay/Excel/Buffs/BuffList:NRaasXenogenesis</KEY>
+<STR>Xenogenesis</STR>
+<KEY>Gameplay/Excel/Buffs/BuffList:NRaasXenogenesisDescription</KEY>
+<STR>Looks like you pitched up an extraterrestrial hitch-hiker during that last abduction.</STR>
+
+<KEY>Gameplay/Excel/Buffs/BuffList:NRaasAlienBabyIsComing</KEY>
+<STR>Baby is Coming!</STR>
+<KEY>Gameplay/Excel/Buffs/BuffList:NRaasAlienBabyIsComingDescription</KEY>
+<STR>Your future alien overlord is eager to come out and meet you.  Hail!</STR>
+
+<KEY>Gameplay/Excel/Traits/TraitList:NRaasAlienChild</KEY>
+<STR>Alien Child (Hidden)</STR>
+<KEY>Gameplay/Excel/Traits/TraitList:NRaasAlienChildDescription</KEY>
+<STR>You were the product of an alien pregnancy.</STR>
+
+
+<KEY>NRaas.Aliens.GoToHospitalEx:MenuName</KEY>
+<STR>Go to Hospital</STR>
+
+<KEY>NRaas.Aliens.TakeToHospitalEx:MenuName</KEY>
+<STR>Take to Hospital</STR>
+
+<KEY>NRaas.Aliens.ReactToContractionEx:MenuName</KEY>
+<STR>React to Contraction</STR>
+
+<KEY>NRaas.Aliens.HaveAlienBabyHospital:MenuName</KEY>
+<STR>Have Baby at Hospital</STR>
+
+<KEY>NRaas.Aliens.HaveAlienBabyHome:MenuName</KEY>
+<STR>Have Baby at Home</STR>
+
+<KEY>NRaas.Aliens.AbductSimAEx:MenuName</KEY>
+<STR>Abduct a Sim</STR>
+
+<KEY>NRaas.Aliens.ReturnAlienBabyEx:MenuName</KEY>
+<STR>Return Baby</STR>
+<KEY>NRaas.Aliens.ReturnAlienBabyEx:Dialogue</KEY>
+<STR>Do you wish to return your baby to the alien homeworld? If you do, you will never meet again. Once the baby becomes a toddler, you will be committed to raising him/her.</STR>
+<KEY>NRaas.Aliens.ReturnAlienBabyEx:DialogueAccept</KEY>
+<STR>Return the Baby</STR>
+<KEY>NRaas.Aliens.ReturnAlienBabyEx:DialogueReject</KEY>
+<STR>Keep the Baby</STR>

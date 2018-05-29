@@ -81,9 +81,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="StringTables\" />
+    <Folder Include="AliensSpace\Buffs\" />
+    <Folder Include="AliensSpace\Options\" />
+    <Folder Include="AliensSpace\Proxies\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="StringTables\StringTableEnglish.txt" />
     <Content Include="XML\Aliens.xml" />
     <Content Include="XML\AliensBuffs.xml" />
     <Content Include="XML\AliensModule.xml" />
