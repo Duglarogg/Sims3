@@ -42,6 +42,7 @@
     <Compile Include="AliensSpace\Helpers\AbductionTuningControl.cs" />
     <Compile Include="AliensSpace\Helpers\AlienAbductionSituationEx.cs" />
     <Compile Include="AliensSpace\Helpers\AlienUtilsEx.cs" />
+    <Compile Include="AliensSpace\Interactions\AbductSimAEx.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensTuning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

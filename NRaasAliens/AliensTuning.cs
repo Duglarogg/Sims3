@@ -51,6 +51,9 @@ namespace NRaas
         [Tunable, TunableComment("Range(0 - 100): Base chance of an abduction happening")]
         public static int kBaseAbductionChance = 25;
 
+        [Tunable, TunableComment("Range(0 - 24): Number of hours it takes to complete an abduction")]
+        public static int kAbductionLength = 1;
+
         // BaseVisitationChance = 1 - BaseAbductionChance (Default = 75)
 
         // ActiveAbductionChance /* Base chance that active household is target of abduction */
