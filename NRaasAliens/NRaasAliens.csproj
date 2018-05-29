@@ -40,6 +40,7 @@
     <Compile Include="AliensModule.cs" />
     <Compile Include="AliensSpace\Booters\TraitBooter.cs" />
     <Compile Include="AliensSpace\Helpers\AbductionTuningControl.cs" />
+    <Compile Include="AliensSpace\Helpers\AlienAbductionSituationEx.cs" />
     <Compile Include="AliensSpace\Helpers\AlienUtilsEx.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensTuning.cs" />
