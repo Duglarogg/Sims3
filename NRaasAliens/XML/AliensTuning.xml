@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base>
+  <CurrentTuning>
+    <!-- General Settings -->
+    <kDebugging value="False" />
+      <!-- Whether or not to display debug message and enable debug interactions. -->
+    
+    <kLinkToStoryProgression value="False" />
+      <!-- Whether or not to link alien activity to Story Progression settings. -->
+
+    <kStoryProgressionForUserDirected value="False" />
+      <!-- Whether or not to link user directed actions to Story Progression settings. -->
+
+
+    <!-- Alien Settings -->
+    <kFutureSim value="False" />
+      <!-- Whether or not to add the Future Sim trait and Advanced Technology skill to NPC aliens. -->
+
+    <kLogicSkill value="8,10" />
+      <!-- Min and max levels of the Logic skill that NPC aliens obtain. -->
+
+    <kHandinessSkill value="7,8" />
+      <!-- Min and max levels of the Handiness skill that NPC aliens obtain. -->
+
+    <kFutureSkill value="10,10" />
+      <!-- Min and max levels of the Advanced Technology skill that NPC aliens obtain. -->
+
+
+    <!-- Alien Activity Settings -->
+    <kEarliestHour value="20" />
+      <!-- Range(0 - 23): The hour of the day that aliens become active. -->
+
+    <kActivityWindow value="8" />
+      <!-- Range(0 - 24): Number of hours during which aliens are active. -->
+
+    <kActivityCooldown value="4" />
+      <!-- Range(0 - 24): Number of hours that must pass between alien activities. -->
+
+    <kBaseActivityChance value="10" />
+      <!-- Range(0 - 100): The base chance that alien activity occurs. -->
+
+    <kBaseAbductionChance value="25" />
+      <!-- Range(0 - 100): The base chance that an abduction occurs. -->
+
+    <kBaseVisitChance value="25" />
+      <!-- Range(0 - 100): The base chance that aliens will visit the active household. -->
+    
+    <kAbductionLength value="1" />
+      <!-- Range(1 - 4): The number of hours it takes to complete an abduction. -->
+
+    <kHighLTRThreshold value="60" />
+      <!-- Range(0 - 100): Min LTR needed to get the high LTR bonus. -->
+
+    <kSpaceRockThreshold value="5" />
+      <!-- Range(0 - ?????): Min space rocks on lot needed to get the space rocks on lot bonus. -->
+
+    <kTelescopeBonus value="25" />
+      <!-- Additional activity chance granted for using a telescope. -->
+
+    <kSpaceRockFoundBonus value="5" />
+      <!-- Additional activity chance granted for finding a space rock. -->
+
+    <kMaxSpaceRockBonus value="25" />
+      <!-- Max additional activity chance granted for finding space rocks. -->
+
+    <kHighLTRBonus value="25" />
+      <!-- Additional visit chance granted for having a high LTR with an alien. -->
+
+    <kOffspringBonus value="25" />
+      <!-- Additional visit chance granted for being an alien child. -->
+
+    <kSpaceRockBonus value="25" />
+      <!-- Additional visit chance granted for having enough space rocks on lot. -->
+    
+  </CurrentTuning>
+</base>
