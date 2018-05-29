@@ -259,3 +259,10 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+*.ide-wal
+*.lock
+*.ide
+*.ide-shm
+*.ide-wal
+.vs/Sims3/v15/Server/sqlite3/db.lock
+.vs/Sims3/v15/Server/sqlite3/storage.ide
