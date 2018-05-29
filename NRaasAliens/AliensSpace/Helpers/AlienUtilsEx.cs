@@ -22,6 +22,23 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+/* <NOTES>
+ *  static AlienUtilsEx()
+ *      Setting valid ages for NPC alien generation could be done through tuning files instead
+ *      
+ *  CanASimBeAbucted(...)
+ *      Currently not referenced by anything; candidate for culling.
+ *      
+ *  MakeAlien(...)
+ *      May make this method private, as it should not be called outside AlienRefreshCallback and MakeAlienBaby methods
+ *  
+ *  MakeAlienBaby(...)
+ *      Need to add the custom "Alien Child" hidden trait to alien babies.
+ *      
+ *  ResetAlienActivityAlarm()
+ *      May need to uncomment a for-loop that clears outs the sAlienActivityAlarm array before creating new alarms
+ */
+
 namespace NRaas.AliensSpace.Helpers
 {
     public abstract class AlienUtilsEx : Common.IWorldLoadFinished, Common.IWorldQuit
@@ -230,6 +247,7 @@ namespace NRaas.AliensSpace.Helpers
             }
         }
 
+        /*
         private static bool CanASimBeAbducted(Household household)
         {
             if (AlienUtils.sAlienAbductionHelper == null)
@@ -239,12 +257,13 @@ namespace NRaas.AliensSpace.Helpers
 
             foreach (Sim current in household.mMembers.SimList)
             {
-                if (current.SimDescription.TeenOrAbove && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
+                if (current.SimDescription.TeenOrAbove && current.LotCurrent != null && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
                     num++;
             }
 
             return num > 0;
         }
+        */
 
         public static bool CheckAlarm(AlarmHandle handle, AlarmTimerCallback callback)
         {
@@ -334,7 +353,7 @@ namespace NRaas.AliensSpace.Helpers
 
             foreach (Sim current in household.mMembers.SimList)
             {
-                if (current.SimDescription.TeenOrAbove && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
+                if (current.SimDescription.TeenOrAbove && current.LotCurrent != null && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
                     list.Add(current);
             }
 
@@ -400,6 +419,7 @@ namespace NRaas.AliensSpace.Helpers
             return result;
         }
 
+        // <NOTE> May make this method private </NOTE>
         public static SimDescription MakeAlien(CASAgeGenderFlags age, CASAgeGenderFlags gender, WorldName homeworld, float alienDNAPercentage, bool assignRandomTraits)
         {
             ResourceKey skinTone = RandomUtil.GetRandomObjectFromList(AlienSkinTones);
@@ -770,6 +790,7 @@ namespace NRaas.AliensSpace.Helpers
             for (int i = 0; i < 24; i++)
             {
                 AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[i]);
+                sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
             }            
         }
 
@@ -789,6 +810,14 @@ namespace NRaas.AliensSpace.Helpers
 
             for (int hour = 0; hour < 24; hour++)
             {
+                /*  Uncomment this block if there are issues with the alarms
+                if (sAlienActivityAlarm[hour] != AlarmHandle.kInvalidHandle)
+                {
+                    AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[hour]);
+                    sAlienActivityAlarm[hour] = AlarmHandle.kInvalidHandle;
+                }
+                */
+
                 sAlienActivityAlarm[hour] = AlarmManager.Global.AddAlarmDay((float)hour, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
                     "Alien Activity Hourly Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
             }
