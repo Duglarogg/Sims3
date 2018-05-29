@@ -1,0 +1,5 @@
+C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor\obj\Release\NRaasAbductor.csprojResolveAssemblyReference.cache
+C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor\bin\Release\NRaasAbductor.dll
+C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor\bin\Release\NRaasAbductor.pdb
+C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor\obj\Release\NRaasAbductor.dll
+C:\Users\Duglarogg\Desktop\Mods & Modding\Sims 3 Modding\My Mods\Sims3\DuglaroggAbductor\obj\Release\NRaasAbductor.pdb

@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<base>
+  <CurrentTuning>
+    <kDebugging value="True" />
+    <!-- Whether to enable debugging interactions, etc. -->
+
+    <kLinkToStoryProgression value="False" />
+    <!-- Whether to link to NRaasStoryProgression. -->
+
+    <kStoryProgressionForUserDirected value="False" />
+    <!-- Whether to test user-directed actions against NRaasStoryProgression. -->
+
+    <kBaseActivityChance value="20" />
+    <!-- Range: 0 - 100. Base chance there is alien activity on any given day. -->
+
+    <kBaseAbductionChance value="25" />
+    <!-- Range: 0 - 100. Base chance that alien activity is an abduction. -->
+
+    <kBaseVisitChance value="50" />
+    <!-- Range: 0 - 100. Base chance that alien activity is a visit. -->
+
+    <kActiveAbductionChance value="50" />
+    <!-- Range: 0 - 100. Base chance that the active household is target of an abduction. -->
+
+    <kActiveVisitChance value="20" />
+    <!-- Range: 0 - 100. Base chance that the active household is target of a visit. -->
+
+    <kHourToStartActivity value ="22" />
+    <!-- Range: 0 - 23. Earliest hour of the day that alien activity can begin.-->
+
+    <kHoursOfActivity value="6" />
+    <!-- Range: 0 - 24. Span of time (in hours) during which alien activity can occur. -->
+
+    <kSpaceRockFoundBonus value="10" />
+    <!-- Range: 0 - 100. Bonus chance of alien activity for finding a space rock. -->
+
+    <kMaxSpaceRockFoundBonus value="50" />
+    <!-- Range: 0 - 100. Max bonus chance of alien activity for finding space rocks. -->
+
+    <kTelescopeUsedBonus value="25" />
+    <!-- Range: 0 - 100. Bonus chance of alien activity for using a telescope. -->
+
+    <kAdvancedTechnologySkill value="7, 10" />
+    <!-- Range: 0 - 10. Range of Advanced Tech skill levels for NPC aliens. -->
+
+    <kHandinessSkill value="5, 7" />
+    <!-- Range: 0 - 10. Range of Handiness skill levels for NPC aliens. -->
+
+    <kLogicSkill value ="7, 10" />
+    <!-- Range: 0 - 10. Range of Logic skill levels for NPC aliens. -->
+
+    <kFutureSim value="True" />
+    <!-- Whether to apply the Future Sim trait to aliens. -->
+
+    <kAllowTeens value="True" />
+    <!-- Whether teens can be impregnated during abductions. -->
+
+    <kImpregnationChance value="33" />
+    <!-- Range: 0 - 100. Base chance a Sim will be impregnated during an abduction. -->
+
+    <kHoursOfPregnancy value="76" />
+    <!-- Hour of alien pregnancy that the baby is born. -->
+    <!-- (kPregnancyLength * 24) + kLaborLength -->
+
+    <kHoursToShowPregnantMorph value="60" />
+    <!-- Hours it takes a Sim to go from not showing to fully pregnant. -->
+    <!-- (5/6) * (kPregnancyLength * 24) -->
+
+    <kHourToStartLabor value="72" />
+    <!-- Hour of alien pregnancy to start contractions. -->
+    <!-- (kPregnancyLength * 24) -->
+
+    <kHourToStartPregnantWalk value="32" />
+    <!-- Hour of alien pregnancy a Sim starts using the pregnant walk. -->
+    <!-- (4/9) * (kPregnancyLength * 24) -->
+
+    <kPregnancyLength value="3" />
+    <!-- Duration (in days) of an alien pregnancy, from when buff is applied to when labor begins. -->
+
+    <kLaborLength value="4" />
+    <!-- Duration (in hours) of labor for an alien pregnancy. -->
+
+    <kUseFertility value="false" />
+    <!-- Whether to use fertility buffs and traits when determing if a Sim is impregnated during an abduction. -->
+  </CurrentTuning>
+</base>
