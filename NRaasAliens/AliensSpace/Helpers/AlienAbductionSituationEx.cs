@@ -1,4 +1,5 @@
 ﻿using NRaas.AliensSpace.Helpers;
+using NRaas.AliensSpace.Interactions;
 using Sims3.Gameplay.Actors;
 using Sims3.Gameplay.ActorSystems;
 using Sims3.Gameplay.Autonomy;

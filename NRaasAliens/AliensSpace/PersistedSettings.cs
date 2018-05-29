@@ -27,6 +27,7 @@ namespace NRaas.AliensSpace
 
         public int mBaseActivityChance = AliensTuning.kBaseActivityChance;
         public int mBaseAbductionChance = AliensTuning.kBaseAbductionChance;
+        public int mAbductionLength = AliensTuning.kAbductionLength;
         public int mBaseVisitChance = AliensTuning.kBaseVisitChance;
         public int mHighLTRThreshold = AliensTuning.kHightLTRThreshold;
         public int mSpaceRockThreshold = AliensTuning.kSpaceRockThreshold;
