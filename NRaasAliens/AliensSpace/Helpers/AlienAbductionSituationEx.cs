@@ -13,13 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-/* <NOTES>
- * 
- *  AbductSimEx.Init
- *      Need to create AbductSimAEx interaction as a forced situation interaction and assign the Abductee to it as SimToAbduct, once
- *      AbductSimAEx has been implemented.
- */
-
 namespace NRaas.AliensSpace.Helpers
 {
     public class AlienAbductionSituationEx : RootSituation
@@ -44,7 +37,9 @@ namespace NRaas.AliensSpace.Helpers
                     return;
                 }
 
-                // <NOTE> create AbductSimAEX interaction here and assign the abductee to the interaction
+                AbductSimAEx abductSim = ForceSituationSpecificInteraction(ufo, parent.Alien, AbductSimAEx.Singleton, null, new Callback(OnCompletion),
+                    new Callback(OnFailure), new InteractionPriority(InteractionPriorityLevel.CriticalNPCBehavior)) as AbductSimAEx;
+                abductSim.SimToAbduct = parent.Abductee;
             }
 
             public void OnCompletion(Sim actor, float x)
