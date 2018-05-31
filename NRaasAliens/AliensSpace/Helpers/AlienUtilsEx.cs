@@ -363,6 +363,22 @@ namespace NRaas.AliensSpace.Helpers
                 return list;
         }
 
+        public static List<Sim> GetValidAbductees(Lot lot)
+        {
+            List<Sim> list = new List<Sim>();
+
+            foreach (Sim current in lot.GetSims())
+            {
+                if (current.SimDescription.TeenOrAbove && current.LotCurrent != null && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
+                    list.Add(current);
+            }
+
+            if (list.Count == 0)
+                return null;
+            else
+                return list;
+        }
+
         public static List<SimDescription> GetValidAliens()
         {
             List<SimDescription> list = new List<SimDescription>();

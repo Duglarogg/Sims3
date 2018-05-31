@@ -46,6 +46,7 @@
     <Compile Include="AliensSpace\Helpers\BuffsAndTraits.cs" />
     <Compile Include="AliensSpace\Helpers\CommonPregnancy.cs" />
     <Compile Include="AliensSpace\Interactions\AbductSimAEx.cs" />
+    <Compile Include="AliensSpace\Interactions\DebugTriggerAbduction.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
     <Compile Include="AliensTuning.cs" />
