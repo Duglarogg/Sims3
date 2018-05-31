@@ -16,7 +16,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Interactions
 {
-    public class DebugTriggerAbduction : ImmediateInteraction<Sim, Lot>
+    public class DebugTriggerAbduction : ImmediateInteraction<Sim, Lot>, Common.IAddInteraction
     {
         public static readonly InteractionDefinition Singleton = new Definition();
 
@@ -60,6 +60,11 @@ namespace NRaas.AliensSpace.Interactions
             }
         }
 
+        public void AddInteraction(Common.InteractionInjectorList interactions)
+        {
+            interactions.Add<Lot>(Singleton);
+        }
+
         public override bool Run()
         {
             if (Target == null)
@@ -81,5 +86,6 @@ namespace NRaas.AliensSpace.Interactions
 
             return true;
         }
+
     }
 }
