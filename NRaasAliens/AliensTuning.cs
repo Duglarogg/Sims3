@@ -51,18 +51,14 @@ namespace NRaas
         [Tunable, TunableComment("Range(0 - 100): Base chance of an abduction happening")]
         public static int kBaseAbductionChance = 25;
 
+        [Tunable, TunableComment("Range(0 - 100): Base chance of aliens visiting the active household")]
+        public static int kBaseVisitChance = 25;
+
         [Tunable, TunableComment("Range(0 - 24): Number of hours it takes to complete an abduction")]
         public static int kAbductionLength = 1;
 
-        // BaseVisitationChance = 1 - BaseAbductionChance (Default = 75)
-
-        // ActiveAbductionChance /* Base chance that active household is target of abduction */
-
         [Tunable, TunableComment("Range(0 - 100): Minimum LTR needed to earn the high LTR bonus")]
         public static int kHightLTRThreshold = 60;
-
-        [Tunable, TunableComment("Range(0 - 100): Base chance of aliens visiting the active household")]
-        public static int kBaseVisitChance = 25;
 
         [Tunable, TunableComment("Range(0 - 100): Min number of space rocks on lot to get additional visit bonus")]
         public static int kSpaceRockThreshold = 5;
@@ -87,6 +83,27 @@ namespace NRaas
 
 
         // Alien Pregnancy Settings
+        [Tunable, TunableComment("Range(0 - 100): Base chance of abductee being impregnated during an abduction.")]
+        public static int kPregnancyChance = 33;
+
+        [Tunable, TunableComment("Whether or not teenagers can be impregnated during abductions.")]
+        public static bool kAllowTeens = false;
+
+        [Tunable, TunableComment("Whether or not additional fertility factors are used in alien pregnancies.")]
+        public static bool kUseFertility = false;
+
+        [Tunable, TunableComment("Duration (in days) of an alien pregnancy.")]
+        public static int kPregnancyLength = 3;
+
+        [Tunable, TunableComment("Duration (in hours) of labor for an alien pregnancy.")]
+        public static int kLaborLength = 4;
+
+        [Tunable, TunableComment("Chance for a Sim to get a backache during an alien pregnancy.")]
+        public static int kBackacheChance = 25;
+
+        [Tunable, TunableComment("Number of puddles to spawn when labor begins.")]
+        public static int kNumPuddles = 2;
+
 
     }
 }
