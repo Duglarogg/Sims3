@@ -18,7 +18,7 @@ namespace NRaas.AliensSpace.Interactions
 {
     public class DebugTriggerAbduction : ImmediateInteraction<Sim, Lot>
     {
-        public static readonly InteractionDefinition Singleton;
+        public static readonly InteractionDefinition Singleton = new Definition();
 
         [DoesntRequireTuning]
         public class Definition : ImmediateInteractionDefinition<Sim, Lot, DebugTriggerAbduction>
