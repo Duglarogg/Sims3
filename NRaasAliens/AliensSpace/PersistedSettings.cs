@@ -1,4 +1,5 @@
-﻿using Sims3.SimIFace;
+﻿using NRaas.AliensSpace.Buffs;
+using Sims3.SimIFace;
 using Sims3.SimIFace.CAS;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,27 @@ namespace NRaas.AliensSpace
         public int mSpaceRockBonus = AliensTuning.kSpaceRockBonus;
 
         // Alien Pregnancy Settings
+        public int mPregnancyChance = AliensTuning.kPregnancyChance;
+        public bool mAllowTeens = AliensTuning.kAllowTeens;
+        public bool mUseFertility = AliensTuning.kUseFertility;
+        public int mPregnancyLength = AliensTuning.kPregnancyLength;
+        public int mLaborLength = AliensTuning.kLaborLength;
+        public int mPregnancyShow = 10; // Hours
+        public int mBackacheChance = AliensTuning.kBackacheChance;
+        public int mNumPuddles = AliensTuning.kNumPuddles;
 
+        // Derived Pregnancy Settings
+        public int mPregnancyDuration;  // In Hours
+        public int mPregnancyMorph;     // In Hours
+        public int mStartWalk;          // In Hours
+        public int mStartLabor;         // In Hours
+        public int mForeignShowTNS;     // In Hours
+        public int mForeignLeaves;      // In Hours
+
+        public PersistedSettings()
+        {
+            UpdatePregnancyTuning();
+        }
 
         public bool Debugging
         {
@@ -63,6 +84,18 @@ namespace NRaas.AliensSpace
                     return false;
 
             return true;
+        }
+
+        public void UpdatePregnancyTuning()
+        {
+            int pregnancyLength = mPregnancyLength * 24;
+
+            mStartLabor = mPregnancyShow + pregnancyLength;                                     // Default: 82 hours
+            mPregnancyDuration = mPregnancyShow + pregnancyLength + mLaborLength;               // Default: 86 hours
+            mForeignShowTNS = mPregnancyShow + (int)Math.Round((1f / 6f) * pregnancyLength);    // Default: 22 hours
+            mForeignLeaves = mPregnancyShow + (int)Math.Round((1f / 4f) * pregnancyLength);     // Default: 28 hours
+            mStartWalk = mPregnancyShow + (int)Math.Round((4f / 9f) * pregnancyLength);         // Default: 42 hours
+            mPregnancyMorph = (int)Math.Round((5f / 6f) * pregnancyLength);                     // Default: 60 hours
         }
     }
 }

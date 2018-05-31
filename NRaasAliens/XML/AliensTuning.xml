@@ -72,5 +72,28 @@
     <kSpaceRockBonus value="25" />
       <!-- Additional visit chance granted for having enough space rocks on lot. -->
     
+    
+    <!-- Alien Pregnancy Settings -->
+    <kPregnancyChance value="33" />
+      <!-- Base chance of an abductee being impregnated during an abduction. -->
+
+    <kAllowTeens value="False" />
+      <!-- Whether or not teenagers can be impregnated during an abduction. -->
+
+    <kUseFertility value="False" />
+      <!-- Whether or not additional fertility factors are used for alien pregnancies. -->
+
+    <kPregnancyLength value="3" />
+      <!-- Duration (in days) of an alien pregnancy. -->
+
+    <kLaborLength value="4" />
+      <!-- Duration (in hours) of labor for an alien pregnancy. -->
+
+    <kBackachChance value="25" />
+      <!-- Chance for a Sim to get a backache during an alien pregnancy. -->
+
+    <kNumPuddles value ="2" />
+      <!-- Number of puddles to generate when labor begins. -->    
+
   </CurrentTuning>
 </base>

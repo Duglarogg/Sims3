@@ -39,11 +39,16 @@
     <Compile Include="Aliens.cs" />
     <Compile Include="AliensModule.cs" />
     <Compile Include="AliensSpace\Booters\TraitBooter.cs" />
+    <Compile Include="AliensSpace\Buffs\BuffAbductedEx.cs" />
+    <Compile Include="AliensSpace\Buffs\BuffXenogenesis.cs" />
     <Compile Include="AliensSpace\Helpers\AbductionTuningControl.cs" />
     <Compile Include="AliensSpace\Helpers\AlienAbductionSituationEx.cs" />
     <Compile Include="AliensSpace\Helpers\AlienUtilsEx.cs" />
+    <Compile Include="AliensSpace\Helpers\BuffsAndTraits.cs" />
+    <Compile Include="AliensSpace\Helpers\CommonPregnancy.cs" />
     <Compile Include="AliensSpace\Interactions\AbductSimAEx.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
+    <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
     <Compile Include="AliensTuning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VersionStamp.cs" />
@@ -81,9 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AliensSpace\Buffs\" />
     <Folder Include="AliensSpace\Options\" />
-    <Folder Include="AliensSpace\Proxies\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="StringTables\StringTableEnglish.txt" />
