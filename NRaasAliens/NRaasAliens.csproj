@@ -53,6 +53,7 @@
     <Compile Include="AliensSpace\Interactions\ReactToContractionEx.cs" />
     <Compile Include="AliensSpace\Interactions\ReturnAlienBabyEx.cs" />
     <Compile Include="AliensSpace\Interactions\ShowAlienPregnancy.cs" />
+    <Compile Include="AliensSpace\Interactions\TakeToHospitalEx.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
     <Compile Include="AliensTuning.cs" />
