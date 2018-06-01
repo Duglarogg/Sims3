@@ -21,19 +21,22 @@ namespace NRaas.AliensSpace
         public Pair<int, int> mLogicSkill = new Pair<int, int>(AliensTuning.kLogicSkill[0], AliensTuning.kLogicSkill[1]);
         public Pair<int, int> mHandinessSkill = new Pair<int, int>(AliensTuning.kHandinessSkill[0], AliensTuning.kHandinessSkill[1]);
         public Pair<int, int> mFutureSkill = new Pair<int, int>(AliensTuning.kFutureSkill[0], AliensTuning.kFutureSkill[1]);
+        // Science skill min/max
+        // Occults yes/no
+        // Allowed occults
+        // Max number of occults
 
         // Alien Activity Settings
         public int mEarliestHour = AliensTuning.kEarliestHour;
         public int mActivityWindow = AliensTuning.kActivityWindow;
         public int mActivityCooldown = AliensTuning.kActivityCooldown;
-
         public int mBaseActivityChance = AliensTuning.kBaseActivityChance;
         public int mBaseAbductionChance = AliensTuning.kBaseAbductionChance;
         public int mAbductionLength = AliensTuning.kAbductionLength;
         public int mBaseVisitChance = AliensTuning.kBaseVisitChance;
+
         public int mHighLTRThreshold = AliensTuning.kHightLTRThreshold;
         public int mSpaceRockThreshold = AliensTuning.kSpaceRockThreshold;
-
         public int mTelescopeBonus = AliensTuning.kTelescopeBonus;
         public int mSpaceRockFoundBonus = AliensTuning.kSpaceRockFoundBonus;
         public int mMaxSpaceRockBonus = AliensTuning.kMaxSpaceRockBonus;
