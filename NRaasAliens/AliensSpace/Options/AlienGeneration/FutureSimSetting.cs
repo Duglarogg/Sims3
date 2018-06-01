@@ -1,5 +1,6 @@
 ﻿using NRaas.CommonSpace.Options;
 using Sims3.Gameplay.Abstracts;
+using Sims3.Gameplay.Interfaces;
 using Sims3.SimIFace;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration
 {
-    public class FutureSimSetting : BooleanSettingOption<GameObject>, IAliensOption
+    public class FutureSimSetting : BooleanSettingOption<GameObject>, IAliensOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
     {
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {

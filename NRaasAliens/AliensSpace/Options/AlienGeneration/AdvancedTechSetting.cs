@@ -1,13 +1,15 @@
 ﻿using NRaas.CommonSpace.Options;
 using Sims3.Gameplay.Abstracts;
+using Sims3.Gameplay.Interfaces;
 using Sims3.Gameplay.Utilities;
+using Sims3.SimIFace;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration
 {
-    public class AdvancedTechSetting : IntegerRangeSettingOption<GameObject>, IAliensOption
+    public class AdvancedTechSetting : IntegerRangeSettingOption<GameObject>, IAliensOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 
@@ -19,7 +21,7 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
 
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {
-            return Aliens.Settings.mFutureSim;
+            return GameUtils.IsInstalled(ProductVersion.EP11) && Aliens.Settings.mFutureSim;
         }
 
         public override string GetTitlePrefix()

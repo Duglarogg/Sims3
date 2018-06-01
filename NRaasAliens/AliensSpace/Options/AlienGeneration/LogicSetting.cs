@@ -1,5 +1,6 @@
 ﻿using NRaas.CommonSpace.Options;
 using Sims3.Gameplay.Abstracts;
+using Sims3.Gameplay.Interfaces;
 using Sims3.Gameplay.Utilities;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration
 {
-    public class LogicSetting : IntegerRangeSettingOption<GameObject>, IAliensOption
+    public class LogicSetting : IntegerRangeSettingOption<GameObject>, IAliensOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 
