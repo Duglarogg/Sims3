@@ -26,6 +26,7 @@ namespace NRaas
         public static bool kFutureSim = false;
 
         [Tunable, TunableComment("Min and max Logic skill levels for aliens")]
+        public static 
         public static int[] kLogicSkill = new int[] { 8, 10 };
 
         [Tunable, TunableComment("Min and max Handiness skill levels for aliens")]

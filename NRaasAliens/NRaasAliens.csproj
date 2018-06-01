@@ -54,6 +54,13 @@
     <Compile Include="AliensSpace\Interactions\ReturnAlienBabyEx.cs" />
     <Compile Include="AliensSpace\Interactions\ShowAlienPregnancy.cs" />
     <Compile Include="AliensSpace\Interactions\TakeToHospitalEx.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\FutureSimSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\IAliensOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\ListingOption.cs" />
+    <Compile Include="AliensSpace\Options\DebuggingSetting.cs" />
+    <Compile Include="AliensSpace\Options\IOptionItem.cs" />
+    <Compile Include="AliensSpace\Options\OptionItem.cs" />
+    <Compile Include="AliensSpace\Options\OptionList.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
     <Compile Include="AliensTuning.cs" />
@@ -93,7 +100,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AliensSpace\Options\" />
+    <Folder Include="AliensSpace\Options\AlienActivity\" />
+    <Folder Include="AliensSpace\Options\AlienPregnancy\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="StringTables\StringTableEnglish.txt" />
