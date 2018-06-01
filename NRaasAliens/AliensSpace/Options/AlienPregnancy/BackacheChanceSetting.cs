@@ -5,26 +5,26 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
+namespace NRaas.AliensSpace.Options.AlienPregnancy
 {
-    public class SpaceRockFoundBonusSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class BackacheChanceSetting : IntegerSettingOption<GameObject>, IAlienPregnancyOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 
         protected override int Value
         {
-            get => Aliens.Settings.mSpaceRockFoundBonus;
-            set => Aliens.Settings.mSpaceRockFoundBonus = Validate(value);
+            get => Aliens.Settings.mBackacheChance;
+            set => Aliens.Settings.mBackacheChance = Validate(value);
         }
 
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {
-            return Aliens.Settings.mBaseAbductionChance > 0 || Aliens.Settings.mBaseVisitChance > 0;
+            return Aliens.Settings.mPregnancyChance > 0;
         }
 
         public override string GetTitlePrefix()
         {
-            return "SpaceRockFoundBonus";
+            return "BackacheChance";
         }
 
         protected override int Validate(int value)

@@ -5,26 +5,21 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
+namespace NRaas.AliensSpace.Options.AlienPregnancy
 {
-    public class OffspringBonusSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class PregnancyChanceSetting : IntegerSettingOption<GameObject>, IAlienPregnancyOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 
         protected override int Value
         {
-            get => Aliens.Settings.mOffspringBonus;
-            set => Aliens.Settings.mOffspringBonus = Validate(value);
-        }
-
-        protected override bool Allow(GameHitParameters<GameObject> parameters)
-        {
-            return Aliens.Settings.mBaseVisitChance > 0;
+            get => Aliens.Settings.mPregnancyChance;
+            set => Aliens.Settings.mPregnancyChance = Validate(value);
         }
 
         public override string GetTitlePrefix()
         {
-            return "OffspringBonus";
+            return "PregnancyChance";
         }
 
         protected override int Validate(int value)

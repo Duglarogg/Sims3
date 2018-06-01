@@ -35,6 +35,7 @@ namespace NRaas.AliensSpace
         public int mAbductionLength = AliensTuning.kAbductionLength;
         public int mBaseVisitChance = AliensTuning.kBaseVisitChance;
 
+        // Alien Activity Bonus Settings
         public int mHighLTRThreshold = AliensTuning.kHightLTRThreshold;
         public int mSpaceRockThreshold = AliensTuning.kSpaceRockThreshold;
         public int mTelescopeBonus = AliensTuning.kTelescopeBonus;
@@ -53,6 +54,10 @@ namespace NRaas.AliensSpace
         public int mPregnancyShow = 10; // Hours
         public int mBackacheChance = AliensTuning.kBackacheChance;
         public int mNumPuddles = AliensTuning.kNumPuddles;
+        // Occult babies yes/no
+        // Only occults shared between abductee and alien yes/no
+        // Allowed Occults e
+        // Number of occults #
 
         // Derived Pregnancy Settings
         public int mPregnancyDuration;  // In Hours
