@@ -54,9 +54,31 @@
     <Compile Include="AliensSpace\Interactions\ReturnAlienBabyEx.cs" />
     <Compile Include="AliensSpace\Interactions\ShowAlienPregnancy.cs" />
     <Compile Include="AliensSpace\Interactions\TakeToHospitalEx.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AbductionDurationSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\ActivityCooldownSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\ActivityWindowSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\HighLTRBonusSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\HighLTRThresholdSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\IAlienActivityBonusesOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\ListingOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\MaxSpaceRockBonusSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\OffspringBonusSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\SpaceRockBonusSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\SpaceRockFoundBonusSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\SpaceRockThresholdSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\AlienActivityBonuses\TelescopeBonusSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\BaseAbductionChanceSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\BaseActivityChanceSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\BaseVisitChanceSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\EarliestHourSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\IAlienActivityOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienActivity\ListingOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AdvancedTechSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\FutureSimSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\HandinessSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\IAliensOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\ListingOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\LogicSetting.cs" />
     <Compile Include="AliensSpace\Options\DebuggingSetting.cs" />
     <Compile Include="AliensSpace\Options\IOptionItem.cs" />
     <Compile Include="AliensSpace\Options\OptionItem.cs" />
@@ -100,7 +122,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="AliensSpace\Options\AlienActivity\" />
     <Folder Include="AliensSpace\Options\AlienPregnancy\" />
   </ItemGroup>
   <ItemGroup>
