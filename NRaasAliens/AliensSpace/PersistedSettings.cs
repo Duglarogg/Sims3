@@ -1,4 +1,5 @@
 ﻿using NRaas.AliensSpace.Buffs;
+using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.SimIFace.CAS;
 using System;
@@ -17,22 +18,26 @@ namespace NRaas.AliensSpace
 
         // Alien Settings
         public bool mFutureSim = AliensTuning.kFutureSim;
-        public int[] mLogicSkill = AliensTuning.kLogicSkill;
-        public int[] mHandinessSkill = AliensTuning.kHandinessSkill;
-        public int[] mFutureSkill = AliensTuning.kFutureSkill;
+        public Pair<int, int> mLogicSkill = new Pair<int, int>(AliensTuning.kLogicSkill[0], AliensTuning.kLogicSkill[1]);
+        public Pair<int, int> mHandinessSkill = new Pair<int, int>(AliensTuning.kHandinessSkill[0], AliensTuning.kHandinessSkill[1]);
+        public Pair<int, int> mFutureSkill = new Pair<int, int>(AliensTuning.kFutureSkill[0], AliensTuning.kFutureSkill[1]);
+        // Science skill min/max
+        // Occults yes/no
+        // Allowed occults
+        // Max number of occults
 
         // Alien Activity Settings
         public int mEarliestHour = AliensTuning.kEarliestHour;
         public int mActivityWindow = AliensTuning.kActivityWindow;
         public int mActivityCooldown = AliensTuning.kActivityCooldown;
-
         public int mBaseActivityChance = AliensTuning.kBaseActivityChance;
         public int mBaseAbductionChance = AliensTuning.kBaseAbductionChance;
         public int mAbductionLength = AliensTuning.kAbductionLength;
         public int mBaseVisitChance = AliensTuning.kBaseVisitChance;
+
+        // Alien Activity Bonus Settings
         public int mHighLTRThreshold = AliensTuning.kHightLTRThreshold;
         public int mSpaceRockThreshold = AliensTuning.kSpaceRockThreshold;
-
         public int mTelescopeBonus = AliensTuning.kTelescopeBonus;
         public int mSpaceRockFoundBonus = AliensTuning.kSpaceRockFoundBonus;
         public int mMaxSpaceRockBonus = AliensTuning.kMaxSpaceRockBonus;
@@ -49,6 +54,10 @@ namespace NRaas.AliensSpace
         public int mPregnancyShow = 10; // Hours
         public int mBackacheChance = AliensTuning.kBackacheChance;
         public int mNumPuddles = AliensTuning.kNumPuddles;
+        // Occult babies yes/no
+        // Only occults shared between abductee and alien yes/no
+        // Allowed Occults e
+        // Number of occults #
 
         // Derived Pregnancy Settings
         public int mPregnancyDuration;  // In Hours
