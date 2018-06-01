@@ -49,6 +49,10 @@
     <Compile Include="AliensSpace\Interactions\DebugTriggerAbduction.cs" />
     <Compile Include="AliensSpace\Interactions\HaveAlienBabyHome.cs" />
     <Compile Include="AliensSpace\Interactions\HaveAlienBabyHomeInternal.cs" />
+    <Compile Include="AliensSpace\Interactions\HaveAlienBabyHospital.cs" />
+    <Compile Include="AliensSpace\Interactions\ReactToContractionEx.cs" />
+    <Compile Include="AliensSpace\Interactions\ReturnAlienBabyEx.cs" />
+    <Compile Include="AliensSpace\Interactions\ShowAlienPregnancy.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
     <Compile Include="AliensTuning.cs" />
