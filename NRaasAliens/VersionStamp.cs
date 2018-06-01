@@ -7,16 +7,10 @@ using System.Text;
 
 namespace NRaas
 {
-    public class AliensPopupTuning
-    {
-        [Tunable, TunableComment("Whether to use a popup menu approach when displaying the interactions")]
-        public static bool kPopupMenuStyle = false;
-    }
-
     class VersionStamp : Common.ProtoVersionStamp, Common.IPreLoad
     {
         public static readonly string sNameSpace = "NRaas.Aliens";
-        public static readonly int sVersion = 1;
+        public static readonly int sVersion = 5;
 
         public class Version : ProtoVersion<GameObject>
         { }

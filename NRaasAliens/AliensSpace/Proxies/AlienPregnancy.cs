@@ -516,7 +516,7 @@ namespace NRaas.AliensSpace.Proxies
 
             foreach (InteractionInstance current in mMom.InteractionQueue.InteractionList)
             {
-                HaveBabyHospitalEx haveBabyHospital = current as HaveBabyHospitalEx;
+                HaveAlienBabyHospital haveBabyHospital = current as HaveAlienBabyHospital;
 
                 if (haveBabyHospital != null)
                 {
@@ -548,12 +548,12 @@ namespace NRaas.AliensSpace.Proxies
 
                 if (rabbitHole != null)
                 {
-                    instance = HaveBabyHospitalEx.Singleton.CreateInstance(rabbitHole, mMom, 
+                    instance = HaveAlienBabyHospital.Singleton.CreateInstance(rabbitHole, mMom, 
                         new InteractionPriority(InteractionPriorityLevel.Pregnancy), false, false);
-                    (instance as HaveBabyHospitalEx).BabyShouldBeBorn = true;
+                    (instance as HaveAlienBabyHospital).BabyShouldBeBorn = true;
                 }
                 else
-                    instance = HaveBabyHomeEx.Singleton.CreateInstance(mMom.LotHome, mMom, 
+                    instance = HaveAlienBabyHome.Singleton.CreateInstance(mMom.LotHome, mMom, 
                         new InteractionPriority(InteractionPriorityLevel.Pregnancy), false, false);
 
                 mMom.InteractionQueue.Add(instance);

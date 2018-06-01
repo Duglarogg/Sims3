@@ -9,7 +9,7 @@ namespace NRaas.AliensSpace.Booters
     public class TraitBooter : BooterHelper.ListingBooter
     {
         public TraitBooter()
-            : this(VersionStamp.sNamespace + ".Traits", testDirect: true)
+            : this(VersionStamp.sNameSpace + ".Traits", testDirect: true)
         { }
 
         public TraitBooter(string reference, bool testDirect)

@@ -217,12 +217,12 @@ namespace NRaas.AliensSpace.Helpers
                 element = description.SkillManager.AddElement(SkillNames.Logic);
 
                 if (element != null)
-                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLogicSkill[0], Aliens.Settings.mLogicSkill[1]));
+                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLogicSkill.First, Aliens.Settings.mLogicSkill.Second));
 
                 element = description.SkillManager.AddElement(SkillNames.Handiness);
 
                 if (element != null)
-                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mHandinessSkill[0], Aliens.Settings.mHandinessSkill[1]));
+                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mHandinessSkill.First, Aliens.Settings.mHandinessSkill.Second));
 
                 if (age == CASAgeGenderFlags.Teen)
                 {
@@ -239,31 +239,13 @@ namespace NRaas.AliensSpace.Helpers
                     element = description.SkillManager.AddElement(SkillNames.Future);
 
                     if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFutureSkill[0], Aliens.Settings.mFutureSkill[0]));
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFutureSkill.First, Aliens.Settings.mFutureSkill.Second));
                 }
 
                 Household.AlienHousehold.AddSilent(description);
                 description.OnHouseholdChanged(Household.AlienHousehold, false);
             }
         }
-
-        /*
-        private static bool CanASimBeAbducted(Household household)
-        {
-            if (AlienUtils.sAlienAbductionHelper == null)
-                return false;
-
-            int num = 0;
-
-            foreach (Sim current in household.mMembers.SimList)
-            {
-                if (current.SimDescription.TeenOrAbove && current.LotCurrent != null && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
-                    num++;
-            }
-
-            return num > 0;
-        }
-        */
 
         public static bool CheckAlarm(AlarmHandle handle, AlarmTimerCallback callback)
         {

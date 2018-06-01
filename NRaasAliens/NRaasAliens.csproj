@@ -35,9 +35,32 @@
     <LangVersion>default</LangVersion>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <LangVersion>default</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>CODE_ANALYSIS;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <LangVersion>default</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Aliens.cs" />
     <Compile Include="AliensModule.cs" />
+    <Compile Include="AliensPopupTuning.cs" />
     <Compile Include="AliensSpace\Booters\TraitBooter.cs" />
     <Compile Include="AliensSpace\Buffs\BuffAbductedEx.cs" />
     <Compile Include="AliensSpace\Helpers\AbductionTuningControl.cs" />
@@ -79,6 +102,15 @@
     <Compile Include="AliensSpace\Options\AlienGeneration\IAliensOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\ListingOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\LogicSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowTeensSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\BackacheChanceSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\IAlienPregnancyOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\LaborLengthSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\ListingOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\PregnancyChanceSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\PregnancyLengthSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\PuddlesSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\UseFertilitySetting.cs" />
     <Compile Include="AliensSpace\Options\DebuggingSetting.cs" />
     <Compile Include="AliensSpace\Options\IOptionItem.cs" />
     <Compile Include="AliensSpace\Options\OptionItem.cs" />
@@ -121,9 +153,7 @@
       <HintPath>..\Common References\UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AliensSpace\Options\AlienPregnancy\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="StringTables\StringTableEnglish.txt" />
     <Content Include="XML\Aliens.xml" />
