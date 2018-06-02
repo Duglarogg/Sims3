@@ -16,7 +16,7 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
 
         public override string GetTitlePrefix()
         {
-            return "AliensInteraction";
+            return "AlienGeneration";
         }
 
         public override ITitlePrefixOption ParentListingOption => null;

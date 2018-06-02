@@ -18,7 +18,7 @@ namespace NRaas.AliensSpace.Options.AlienPregnancy
 
         public override string GetTitlePrefix()
         {
-            return "AlienPregnancyInteraction";
+            return "AlienPregnancy";
         }
     }
 }

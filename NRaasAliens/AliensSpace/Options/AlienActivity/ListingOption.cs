@@ -13,7 +13,7 @@ namespace NRaas.AliensSpace.Options.AlienActivity
 
         public override string GetTitlePrefix()
         {
-            return "AlienActivityInteraction";
+            return "AlienActivity";
         }
     }
 }

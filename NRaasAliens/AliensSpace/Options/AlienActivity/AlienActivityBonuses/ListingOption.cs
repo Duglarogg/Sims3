@@ -18,7 +18,7 @@ namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 
         public override string GetTitlePrefix()
         {
-            return "AlienActivityBonusesInteraction";
+            return "AlienActivityBonuses";
         }
     }
 }

@@ -24,51 +24,90 @@
 <STR>False</STR>
 
 
-<KEY>NRaas.Aliens.AlienActivityInteraction:MenuName</KEY>
+<KEY>NRaas.Aliens.AlienActivity:MenuName</KEY>
 <STR>Alien Activity</STR>
 
 <KEY>NRaas.Aliens.BaseActivityChance:MenuName</KEY>
-<STR>Alien Activity Chance</STR>
+<STR>Base Activity Chance</STR>
 <KEY>NRaas.Aliens.BaseActivityChance:Prompt</KEY>
-<STR>Enter the base chance that alien activity occurs at any given hour (Enter 0 to disable all alien activity):</STR>
+<STR>Enter the base chance [0 - 100] that alien activity occurs on any given hour when aliens are active (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.BaseAbductionChance:MenuName</KEY>
-<STR>Abduction Chance</STR>
+<STR>Base Abduction Chance</STR>
 <KEY>NRaas.Aliens.BaseAbductionChance:Prompt</KEY>
-<STR>Enter the base chance that aliens attempt an abduction (Enter 0 to disable abductions):</STR>
+<STR>Enter the base chance [0 - 100] that aliens attempt an abduction (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.BaseVisitChance:MenuName</KEY>
-<STR>Visitation Chance</STR>
+<STR>Base Visitation Chance</STR>
 <KEY>NRaas.Aliens.BaseVisitChance:Prompt</KEY>
-<STR>Enter the base chance that aliens visit the activce household (Enter 0 to disable visits to the active household):</STR>
+<STR>Enter the base chance [0 - 100] that aliens visit the activce household (enter 0 to disable):</STR>
+
+<KEY>NRaas.Aliens.EarliestHour:MenuName</KEY>
+<STR>Starting Time</STR>
+<KEY>NRaas.Aliens.EarliestHour:Prompt</KEY>
+<STR>Enter the hour of the day [0 - 23] that aliens become active:</STR>
 
 <KEY>NRaas.Aliens.ActivityWindow:MenuName</KEY>
 <STR>Activity Window</STR>
 <KEY>NRaas.Aliens.ActivityWindow:Prompt</KEY>
-<STR>Enter the span of time (in hours) during which aliens are active</STR>
+<STR>Enter the number of hours [1 - 24] during which aliens are active (enter 24 for always active):</STR>
+
+<KEY>NRaas.Aliens.ActivityCooldown:MenuName</KEY>
+<STR>Cooldown</STR>
+<KEY>NRaas.Aliens.ActivityCooldown:Prompt</KEY>
+<STR>Enter the minimum number of hours [0 - 24] that must pass between alien activities:</STR>
+
+<KEY>NRaas.Aliens.AbductionDuration:MenuName</KEY>
+<STR>Abduction Duration</STR>
+<KEY>NRaas.Aliens.AbductionDuration:Prompt</KEY>
+<STR>Enter the duration (in mintues) [1 - 120] of an alien abduction:</STR>
+
+
+<KEY>NRaas.Aliens.AlienActivityBonuses:MenuName</KEY>
+<STR>Bonuses</STR>
+
+<KEY>NRaas.Aliens.HighLTRBonus:MenuName</KEY>
+<STR>High LTR Bonus</STR>
+<KEY>NRaas.Aliens.HighLTRBonus:Prompt</KEY>
+<STR>Enter the additional chance [0 - 100] of an alien visit for having a high LTR with an alien:</STR>
+
+<KEY>NRaas.Aliens.HighLTRThreshold:MenuName</KEY>
+<STR>High LTR Threshold</STR>
+<KEY>NRaas.Aliens.HighLTRThreshold:Prompt</KEY>
+<STR>Enter the minimum LTR [0 - 100] needed to earn the high LTR bonus:</STR>
+
+<KEY>NRaas.Aliens.MaxSpaceRockBonus:MenuName</KEY>
+<STR>Maximum Space Rock Found Bonus</STR>
+<KEY>NRaas.Aliens.MaxSpaceRockBonus:Prompt</KEY>
+<STR>Enter the maximum additional chance [0 - 100] of activity for finding space rocks:</STR>
+
+<KEY>NRaas.Aliens.OffspringBonus:MenuName</KEY>
+<STR>Offspring Bonus</STR>
+<KEY>NRaas.Aliens.OffspringBonus:Prompt</KEY>
+<STR>Enter the additional chance [0 - 100] of a visitation for being an alien's offspring:</STR>
+
+<KEY>NRaas.Aliens.SpaceRockBonus:MenuName</KEY>
+<STR>Space Rocks on Lot Bonus</STR>
+<KEY>NRaas.Aliens.SpaceRockBonus:Prompt</KEY>
+<STR>Enter the additional chance [0 - 100] of a visitation for having space rocks on your lot:</STR>
 
 <KEY>NRaas.Aliens.SpaceRockFoundBonus:MenuName</KEY>
-<STR>Space Rock Found Bonus</STR>
+<STR>Space Rocks Found Bonus</STR>
 <KEY>NRaas.Aliens.SpaceRockFoundBonus:Prompt</KEY>
-<STR>Enter the additional chance of alien activity for each space rock found:</STR>
+<STR>Enter the additional chance [0 - 100] of activity for each space rock found:</STR>
 
-<KEY>NRaas.Aliens.MaxSpaceRockFoundBonus:MenuName</KEY>
-<STR>Maximum Space Rock Found Bonus</STR>
-<KEY>NRaas.Aliens.MaxSpaceRockFoundBonus:Prompt</KEY>
-<STR>Enter the maximum additional chance of alien activity that can be gained from finding space rocks:</STR>
-
-<KEY>NRaas.Aliens.EarliestHour:MenuName</KEY>
-<STR>Starting Window</STR>
-<KEY>NRaas.Aliens.EarliestHour:Prompt</KEY>
-<STR>Enter the hour of the day that aliens become active:</STR>
+<KEY>NRaas.Aliens.SpaceRockThreshold:MenuName</KEY>
+<STR>Space Rocks on Lot Threshold</STR>
+<KEY>NRaas.Aliens.SpaceRockThreshold:Prompt</KEY>
+<STR>Enter the minimum number of space rocks needed to earn the space rocks on lot bonus:</STR>
 
 <KEY>NRaas.Aliens.TelescopeBonus:MenuName</KEY>
 <STR>Telescope Use Bonus</STR>
 <KEY>NRaas.Aliens.TelescopeBonus:Prompt</KEY>
-<STR>Enter the additional chance of activity for using a telescope:</STR>
+<STR>Enter the additional chance [0 - 100] of activity for using a telescope:</STR>
 
 
-<KEY>NRaas.Aliens.AlienPregnancyInteraction:MenuName</KEY>
+<KEY>NRaas.Aliens.AlienPregnancy:MenuName</KEY>
 <STR>Alien Pregnancy</STR>
 
 <KEY>NRaas.Aliens.AllowTeens:MenuName</KEY>
@@ -77,57 +116,52 @@
 <KEY>NRaas.Aliens.BackacheChance:MenuName</KEY>
 <STR>Backache Chance</STR>
 <KEY>NRaas.Aliens.BackacheChance:Prompt</KEY>
-<STR>Enter the chance of a Sim getting the Backache moodlet during an alien pregnancy (Enter 0 to disable backaches):</STR>
+<STR>Enter the chance [0 - 100] of a Sim getting a backache during an alien pregnancy (enter 0 to disable):</STR>
 
-<KEY>NRaas.Aliens.ImpregnationChance:MenuName</KEY>
+<KEY>NRaas.Aliens.LaborLength:MenuName</KEY>
+<STR>Labor Length</STR>
+<KEY>NRaas.Aliens.LaborLength:Promp</KEY>
+<STR>Enter the duration (in hours) of the labor phase for alien pregnancies:</STR>
+
+<KEY>NRaas.Aliens.PregnancyChance:MenuName</KEY>
 <STR>Pregnancy Chance</STR>
-<KEY>NRaas.Aliens.ImpregnationChance:Prompt</KEY>
-<STR>Enter the base chance of a Sim becoming pregnant during an abduction (Enter 0 to disable alien pregnancy):</STR>
+<KEY>NRaas.Aliens.PregnancyChance:Prompt</KEY>
+<STR>Enter the base chance [0 -100] of a Sim being impregnated during an abduction (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.PregnancyLength:MenuName</KEY>
 <STR>Pregnancy Length</STR>
 <KEY>NRaas.Aliens.PregnancyLength:Prompt</KEY>
 <STR>Enter the duration (in days) of an alien pregnancy (minimum 1):</STR>
 
+<KEY>NRaas.Aliens.Puddles:MenuName</KEY>
+<STR>Puddles</STR>
+<KEY>NRaas.Aliens.Puddles:Prompt</KEY>
+<STR>Enter the number of puddles to spawn at the start of the labor phase for alien pregnancies:</STR>
+
 <KEY>NRaas.Aliens.UseFertility:MenuName</KEY>
 <STR>Use Fertility</STR>
 
 
-<KEY>NRaas.Aliens.AliensInteraction:MenuName</KEY>
+<KEY>NRaas.Aliens.AlienGeneration:MenuName</KEY>
 <STR>Aliens</STR>
 
+<KEY>NRaas.Aliens.AdvancedTech:MenuName</KEY>
+<STR>Advanced Technology Skill</STR>
+<KEY>NRaas.Aliens.AdvancedTech:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Advanced Technology skill levels for NPC aliens:</STR>
+
 <KEY>NRaas.Aliens.FutureSim:MenuName</KEY>
-<STR>Future Sim Aliens</STR>
+<STR>Apply Future Sim</STR>
 
-<KEY>NRaas.Aliens.AdvancedTechMax:MenuName</KEY>
-<STR>Advanced Technology - Max</STR>
-<KEY>NRaas.Aliens.AdvancedTechMax:Prompt</KEY>
-<STR>Enter the highest possible Advanced Technology skill level for NPC aliens (maximum 10):</STR>
+<KEY>NRaas.Aliens.Handiness:MenuName</KEY>
+<STR>Handiness Skill</STR>
+<KEY>NRaas.Aliens.Handiness:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Handiness skill levels for NPC aliens:</STR>
 
-<KEY>NRaas.Aliens.AdvancedTechMin:MenuName</KEY>
-<STR>Advanced Technology - Min</STR>
-<KEY>NRaas.Aliens.AdvancedTechMin:Prompt</KEY>
-<STR>Enter the lowest possible Advanced Technology skill level for NPC aliens (minimum 0):</STR>
-
-<KEY>NRaas.Aliens.HandinessMax:MenuName</KEY>
-<STR>Handiness - Max</STR>
-<KEY>NRaas.Aliens.HandinessMax:Prompt</KEY>
-<STR>Enter the highest possible Handiness skill level for NPC aliens (maximum 10):</STR>
-
-<KEY>NRaas.Aliens.HandinessMin:MenuName</KEY>
-<STR>Handiness - Min</STR>
-<KEY>NRaas.Aliens.HandinessMin:Prompt</KEY>
-<STR>Enter the lowest possible Handiness skill level for NPC aliens (minimum 0):</STR>
-
-<KEY>NRaas.Aliens.LogicMax:MenuName</KEY>
-<STR>Logic - Max</STR>
-<KEY>NRaas.Aliens.LogicMax:Prompt</KEY>
-<STR>Enter the highest possible Logic skill level for NPC aliens (maximum 10):</STR>
-
-<KEY>NRaas.Aliens.LogicMin:MenuName</KEY>
-<STR>Logic - Min</STR>
-<KEY>NRaas.Aliens.LogicMin:Prompt</KEY>
-<STR>Enter the lowest possible Logic skill level for NPC aliens (minimum 0):</STR>
+<KEY>NRaas.Aliens.Logic:MenuName</KEY>
+<STR>Logic Skill</STR>
+<KEY>NRaas.Aliens.Logic:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Logic skill levels for NPC aliens:</STR>
 
 
 <KEY>Gameplay/Excel/Buffs/BuffList:NRaasXenogenesis</KEY>

@@ -33,8 +33,13 @@ namespace NRaas.AliensSpace.Options.AlienPregnancy
 
         protected override int Validate(int value)
         {
+            int max = (int)Math.Round((1f / 9f) * Aliens.Settings.mPregnancyLength * 24f);
+
             if (value < 1)
                 return 1;
+
+            if (value > max)
+                return max;
 
             return value;
         }
