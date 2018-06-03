@@ -31,10 +31,7 @@ using System.Text;
  *      
  *  MakeAlien(...)
  *      May make this method private, as it should not be called outside AlienRefreshCallback and MakeAlienBaby methods
- *  
- *  MakeAlienBaby(...)
- *      Need to add the custom "Alien Child" hidden trait to alien babies.
- *      
+ *
  *  ResetAlienActivityAlarm()
  *      May need to uncomment a for-loop that clears outs the sAlienActivityAlarm array before creating new alarms
  */
@@ -240,6 +237,14 @@ namespace NRaas.AliensSpace.Helpers
 
                     if (element != null)
                         element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFutureSkill.First, Aliens.Settings.mFutureSkill.Second));
+                }
+
+                if (Aliens.Settings.mAlienScience)
+                {
+                    element = description.SkillManager.AddElement(SkillNames.Science);
+
+                    if (element != null)
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mScienceSkill.First, Aliens.Settings.mScienceSkill.Second));
                 }
 
                 Household.AlienHousehold.AddSilent(description);
@@ -757,7 +762,7 @@ namespace NRaas.AliensSpace.Helpers
 
                 baby.LastName = alien.LastName;
                 Genetics.AssignTraits(baby, alien, abductee, interactive, averageMood, pregoRandom);
-                // <NOTE> Add Alien Child hidden trait here! </NOTE>
+                baby.TraitManager.AddHiddenElement(BuffsAndTraits.sAlienChild);
 
                 if (Aliens.Settings.mFutureSim)
                     baby.TraitManager.AddHiddenElement(TraitNames.FutureSim);
@@ -808,7 +813,7 @@ namespace NRaas.AliensSpace.Helpers
 
             for (int hour = 0; hour < 24; hour++)
             {
-                /*  Uncomment this block if there are issues with the alarms
+                /*  <NOTE> Uncomment this block if there are issues with the alarms
                 if (sAlienActivityAlarm[hour] != AlarmHandle.kInvalidHandle)
                 {
                     AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[hour]);

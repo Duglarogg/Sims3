@@ -37,7 +37,24 @@ namespace NRaas.AliensSpace.Proxies
 
         public AlienPregnancy(Sim abductee, SimDescription alien)
         {
+            mMom = abductee;
+            mDad = alien != null ? alien.CreatedSim : null;
+            mMomDeathType = mMom.SimDescription.DeathStyle;
+            mMomWasGhostFromPotion = mMom.BuffManager.HasElement(BuffNames.TheUndead);
+            mMomOccultType = mMom.OccultManager.CurrentOccultTypes;
 
+            if (alien != null)
+            {
+                DadDescriptionId = alien.SimDescriptionId;
+                mDadDeathType = alien.DeathStyle;
+                mDadWasGhostFromPotion = mDad != null && mDad.BuffManager.HasElement(BuffNames.TheUndead);
+                mDadOccultType = alien.OccultManager.CurrentOccultTypes;
+            }
+
+            mChanceOfRandomOccultMutation = kBaseChanceOfBabyHavingRandomOccultMutation;
+            mHourOfPregnancy = 0;
+            mRandomGenSeed = RandomUtil.GetInt(2147483647);
+            Initialize();
         }
 
         public AlienPregnancy(Pregnancy src)
@@ -737,9 +754,7 @@ namespace NRaas.AliensSpace.Proxies
 
         public static bool ShouldImpregnate(Sim abductee, SimDescription alien)
         {
-            GreyedOutTooltipCallback callback = null;
-
-            if (!CommonPregnancy.CanGetPregnant(abductee, true, ref callback, out string reason))
+            if (!CommonPregnancy.CanGetPregnant(abductee, true, out string reason))
             {
                 Common.DebugNotify("Alien Pregnancy: Auto Fail - " + reason);
                 return false;

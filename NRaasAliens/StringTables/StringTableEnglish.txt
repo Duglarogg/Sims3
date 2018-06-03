@@ -163,6 +163,14 @@
 <KEY>NRaas.Aliens.Logic:Prompt</KEY>
 <STR>Enter the minimum and maximum possible Logic skill levels for NPC aliens:</STR>
 
+<KEY>NRaas.Aliens.AlienScience:MenuName</KEY>
+<STR>Scientific Aliens</STR>
+
+<KEY>NRaas.Aliens.Science:MenuName</KEY>
+<STR>Science Skill</STR>
+<KEY>NRaas.Aliens.Science:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Science skill levels for NPC aliens:</STR>
+
 
 <KEY>Gameplay/Excel/Buffs/BuffList:NRaasXenogenesis</KEY>
 <STR>Xenogenesis</STR>

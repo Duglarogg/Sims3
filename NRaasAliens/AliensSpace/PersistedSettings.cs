@@ -2,6 +2,7 @@
 using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.SimIFace.CAS;
+using Sims3.UI.Hud;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,10 +22,12 @@ namespace NRaas.AliensSpace
         public Pair<int, int> mLogicSkill = new Pair<int, int>(AliensTuning.kLogicSkill[0], AliensTuning.kLogicSkill[1]);
         public Pair<int, int> mHandinessSkill = new Pair<int, int>(AliensTuning.kHandinessSkill[0], AliensTuning.kHandinessSkill[1]);
         public Pair<int, int> mFutureSkill = new Pair<int, int>(AliensTuning.kFutureSkill[0], AliensTuning.kFutureSkill[1]);
-        // Science skill min/max
-        // Occults yes/no
-        // Allowed occults
-        // Max number of occults
+        public bool mAlienScience = AliensTuning.kAlienScience;
+        public Pair<int, int> mScienceSkill = new Pair<int, int>(AliensTuning.kScienceSkill[0], AliensTuning.kScienceSkill[1]);
+
+        public bool mAllowOccultAliens = AliensTuning.kAllowOccultAliens;
+        public int mMaxAlienOccults = AliensTuning.kMaxAlienOccults;
+        public List<OccultTypes> mAllowedAlienOccults = AliensTuning.kAllowedAlienOccults;
 
         // Alien Activity Settings
         public int mEarliestHour = AliensTuning.kEarliestHour;

@@ -2,6 +2,7 @@
 using Sims3.Gameplay.Services;
 using Sims3.Gameplay.Socializing;
 using Sims3.SimIFace;
+using Sims3.UI.Hud;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,6 +35,31 @@ namespace NRaas
         [Tunable, TunableComment("Min and max Advanced Technology skill levels for aliens")]
         public static int[] kFutureSkill = new int[] { 10, 10 };
 
+        [Tunable, TunableComment("Whether or NPC aliens get the Science skill")]
+        public static bool kAlienScience = false;
+
+        [Tunable, TunableComment("Min and max Science skill levels for aliesn")]
+        public static int[] kScienceSkill = new int[] { 7, 8 };
+
+        [Tunable, TunableComment("Whether or not NPC aliens can have an occult life state.")]
+        public static bool kAllowOccultAliens = false;
+
+        [Tunable, TunableComment("Maximum possible number of occult life states an NPC alien can have.")]
+        public static int kMaxAlienOccults = 1;
+
+        [Tunable, TunableComment("Which occult life states that NPC aliens can have.")]
+        public static List<OccultTypes> kAllowedAlienOccults = new List<OccultTypes>()
+            {
+                OccultTypes.Fairy,
+                OccultTypes.Genie,
+                OccultTypes.Ghost,
+                OccultTypes.ImaginaryFriend,
+                OccultTypes.Mermaid,
+                OccultTypes.PlantSim,
+                OccultTypes.Vampire,
+                OccultTypes.Werewolf,
+                OccultTypes.Witch
+            };
 
         // Alien Activity Settings
         [Tunable, TunableComment("Range(0 - 23): Earliest hour that alien activity can occur")]
