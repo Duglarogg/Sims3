@@ -20,10 +20,7 @@ namespace NRaas.AliensSpace.Buffs
     {
         private const ulong kGuid = 0xCFDEF00B5671CB3F;
 
-        public static ulong GUID
-        {
-            get { return kGuid; }
-        }
+        public static ulong GUID => kGuid;
 
         public class BuffInstanceAbductedEx : BuffInstance
         {
@@ -39,11 +36,7 @@ namespace NRaas.AliensSpace.Buffs
 
             public override BuffInstance Clone()
             {
-                BuffInstanceAbductedEx bi = new BuffInstanceAbductedEx(mBuff, mBuffGuid, mEffectValue, mTimeoutCount);
-                bi.Abductee = Abductee;
-                bi.Alien = Alien;
-
-                return bi;
+                return new BuffInstanceAbductedEx(mBuff, mBuffGuid, mEffectValue, mTimeoutCount);
             }
         }
 
