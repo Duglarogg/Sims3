@@ -20,7 +20,7 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
 
         public override string GetTitlePrefix()
         {
-            return "HandinessSetting";
+            return "Handiness";
         }
 
         protected override Pair<int, int> Validate(int value1, int value2)

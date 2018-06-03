@@ -26,7 +26,7 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
 
         public override string GetTitlePrefix()
         {
-            return "AdvancedTechSetting";
+            return "AdvancedTech";
         }
 
         protected override Pair<int, int> Validate(int value1, int value2)

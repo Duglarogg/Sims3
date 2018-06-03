@@ -9,7 +9,7 @@ namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 {
     public class HighLTRBonusSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
     {
-        public override ITitlePrefixOption ParentListingOption => throw new NotImplementedException();
+        public override ITitlePrefixOption ParentListingOption => new ListingOption();
 
         protected override int Value
         {

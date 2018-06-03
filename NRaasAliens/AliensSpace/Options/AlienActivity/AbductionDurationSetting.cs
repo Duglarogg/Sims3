@@ -32,7 +32,8 @@ namespace NRaas.AliensSpace.Options.AlienActivity
             if (value < 1)
                 return 1;
 
-            // Determine maximum value for abduction duration (in minutes)
+            if (value > 120)
+                return 120;
 
             return value;
         }
