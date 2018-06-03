@@ -32,6 +32,11 @@ namespace NRaas.AliensSpace.Helpers
             }
         }
 
+        protected virtual void Dispose(bool dispose)
+        {
+            ResetTuning(mTuning, mDisallowAutonomous, mDisallowUserDirected);
+        }
+
         public void Dispose()
         {
             ResetTuning(mTuning, mDisallowAutonomous, mDisallowUserDirected);
