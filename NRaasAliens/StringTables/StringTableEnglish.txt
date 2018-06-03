@@ -171,6 +171,14 @@
 <KEY>NRaas.Aliens.Science:Prompt</KEY>
 <STR>Enter the minimum and maximum possible Science skill levels for NPC aliens:</STR>
 
+<KEY>NRaas.Aliens.AllowOccultAliens:MenuName</KEY>
+<STR>Occult Aliens</STR>
+
+<KEY>NRaas.Aliens.MaxAlienOccults:MenuName</KEY>
+<STR>Maximum Alien Occults</STR>
+<KEY>NRaas.Aliens.MaxAlienOccults:Prompt</KEY>
+<STR>Enter the maximum possible number of occult life states (minimum 1) that an NPC alien can have:</STR>
+
 
 <KEY>Gameplay/Excel/Buffs/BuffList:NRaasXenogenesis</KEY>
 <STR>Xenogenesis</STR>
