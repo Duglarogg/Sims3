@@ -24,9 +24,9 @@ namespace NRaas.AliensSpace
         public Pair<int, int> mFutureSkill = new Pair<int, int>(AliensTuning.kFutureSkill[0], AliensTuning.kFutureSkill[1]);
         public bool mAlienScience = AliensTuning.kAlienScience;
         public Pair<int, int> mScienceSkill = new Pair<int, int>(AliensTuning.kScienceSkill[0], AliensTuning.kScienceSkill[1]);
-
         public bool mAllowOccultAliens = AliensTuning.kAllowOccultAliens;
         public int mMaxAlienOccults = AliensTuning.kMaxAlienOccults;
+
         public List<OccultTypes> mAllowedAlienOccults = AliensTuning.kAllowedAlienOccults;
 
         // Alien Activity Settings
@@ -57,10 +57,10 @@ namespace NRaas.AliensSpace
         public int mPregnancyShow = 10; // Hours
         public int mBackacheChance = AliensTuning.kBackacheChance;
         public int mNumPuddles = AliensTuning.kNumPuddles;
-        // Occult babies yes/no
+        public bool mAllowOccultBabies = AliensTuning.kAllowOccultBabies;
+        public int mMaxBabyOccults = AliensTuning.kMaxBabyOccults;
+        public List<OccultTypes> mAllowedBabyOccults = AliensTuning.kAllowedBabyOccults;
         // Only occults shared between abductee and alien yes/no
-        // Allowed Occults e
-        // Number of occults #
 
         // Derived Pregnancy Settings
         public int mPregnancyDuration;  // In Hours

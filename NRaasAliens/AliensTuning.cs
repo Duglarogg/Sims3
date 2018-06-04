@@ -1,4 +1,5 @@
-﻿using Sims3.Gameplay.Roles;
+﻿using NRaas.CommonSpace.Helpers;
+using Sims3.Gameplay.Roles;
 using Sims3.Gameplay.Services;
 using Sims3.Gameplay.Socializing;
 using Sims3.SimIFace;
@@ -48,18 +49,14 @@ namespace NRaas
         public static int kMaxAlienOccults = 1;
 
         [Tunable, TunableComment("Which occult life states that NPC aliens can have.")]
-        public static List<OccultTypes> kAllowedAlienOccults = new List<OccultTypes>()
+        public static List<OccultTypes> kAllowedAlienOccults = OccultTypeHelper.CreateListOfMissingOccults(new List<OccultTypes>
             {
-                OccultTypes.Fairy,
-                OccultTypes.Genie,
+                OccultTypes.Frankenstein,
                 OccultTypes.Ghost,
-                OccultTypes.ImaginaryFriend,
-                OccultTypes.Mermaid,
-                OccultTypes.PlantSim,
-                OccultTypes.Vampire,
-                OccultTypes.Werewolf,
-                OccultTypes.Witch
-            };
+                OccultTypes.Mummy,
+                OccultTypes.Robot,
+                OccultTypes.Unicorn
+            }, true);
 
         // Alien Activity Settings
         [Tunable, TunableComment("Range(0 - 23): Earliest hour that alien activity can occur")]
@@ -130,6 +127,21 @@ namespace NRaas
         [Tunable, TunableComment("Number of puddles to spawn when labor begins.")]
         public static int kNumPuddles = 2;
 
+        [Tunable, TunableComment("Whether or not alien babies can inherit occults")]
+        public static bool kAllowOccultBabies = false;
 
+        [Tunable, TunableComment("Max number of occult life states an alien baby can inherit")]
+        public static int kMaxBabyOccults = 1;
+
+        [Tunable, TunableComment("Which occult life states can be inherited by alien babies")]
+        public static List<OccultTypes> kAllowedBabyOccults = new List<OccultTypes>(
+            OccultTypeHelper.CreateListOfMissingOccults( new List<OccultTypes>()
+                {
+                    OccultTypes.Frankenstein,
+                    OccultTypes.Ghost,
+                    OccultTypes.Mummy,
+                    OccultTypes.Robot,
+                    OccultTypes.Unicorn
+                }, true));
     }
 }
