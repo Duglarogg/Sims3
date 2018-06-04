@@ -115,6 +115,7 @@
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedOccults\AllowFairySetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedOccults\IAllowedAlienBabyOccultsOption.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedOccults\ListingOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowOccultBabiesSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowTeensSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\BackacheChanceSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\IAlienPregnancyOption.cs" />

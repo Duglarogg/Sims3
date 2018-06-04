@@ -18,7 +18,7 @@ namespace NRaas.AliensSpace.Options.AlienGeneration.AllowedOccults
 
         public override string GetTitlePrefix()
         {
-            return "AllowedAlienOccults";
+            return "AllowedOccults";
         }
     }
 }

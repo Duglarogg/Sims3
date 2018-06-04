@@ -13,7 +13,6 @@
 
 <KEY>NRaas.Aliens.Version:MenuName</KEY>
 <STR>Version</STR>
-
 <KEY>NRaas.Aliens.Version:Prompt</KEY>
 <STR>Version: {0.Number}</STR>
 

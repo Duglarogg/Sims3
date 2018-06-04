@@ -797,9 +797,7 @@ namespace NRaas.AliensSpace.Proxies
             }
             else
             {
-                GreyedOutTooltipCallback callback = null;
-
-                if (!CommonPregnancy.CanGetPregnant(abductee, true, ref callback, out string reason))
+                if (!CommonPregnancy.CanGetPregnant(abductee, true, out string reason))
                 {
                     Common.DebugNotify("Alien Pregnancy: Auto Fail - " + reason);
                     return false;
