@@ -25,8 +25,10 @@ namespace NRaas.AliensSpace.Helpers
         static Common.MethodStore sStoryProgressionAllowImpregnation = new Common.MethodStore("NRaasStoryProgression", "NRaas.StoryProgression",
             "AllowImpregnation", new Type[] { typeof(SimDescription), typeof(bool) });
 
+        /*
         static Common.MethodStore sWoohooerAllowPlantSimPregnancy = new Common.MethodStore("NRaasWoohooer", "NRaas.Woohooer", "AllowPlantSimPregnancy",
             new Type[] { });
+            */
 
         public delegate float GetChanceOfSuccess(Sim a, SimDescription b);
         public static GetChanceOfSuccess sGetChanceOfSuccess = OnGetChanceOfSuccess;
@@ -34,10 +36,7 @@ namespace NRaas.AliensSpace.Helpers
 
         public static bool AllowPlantSimPregnancy()
         {
-            if (sWoohooerAllowPlantSimPregnancy.Valid)
-                return sWoohooerAllowPlantSimPregnancy.Invoke<bool>(new Type[] { });
-            else
-                return true;
+            return true;
         }
 
         public static bool CanGetPregnant(Sim sim, bool isAutonomous, out string reason)

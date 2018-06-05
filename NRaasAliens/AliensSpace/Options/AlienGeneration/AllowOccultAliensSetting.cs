@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration
 {
-    public class AllowOccultAliensSetting : BooleanSettingOption<GameObject>, IAliensOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class AllowOccultAliensSetting : BooleanSettingOption<GameObject>, IAliensOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 

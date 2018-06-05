@@ -7,7 +7,6 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienPregnancy
 {
-    public interface IAlienPregnancyOption : IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
-    {
-    }
+    public interface IAlienPregnancyOption : IOptionItem
+    { }
 }

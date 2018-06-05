@@ -75,10 +75,12 @@ namespace NRaas.AliensSpace.Helpers
                 CASAgeGenderFlags.Elder
             };
 
+            /*
             for (int i = 0; i < 24; i++)
             {
                 sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
             }
+            */
         }
 
         public static void AlienActivityCallback()
@@ -811,19 +813,22 @@ namespace NRaas.AliensSpace.Helpers
                 AlienUtils.sAlienVisitationAlarm = AlarmHandle.kInvalidHandle;
             }
 
+            sAlienActivityAlarm = null;
+
+            /*
             for (int hour = 0; hour < 24; hour++)
             {
-                /*  <NOTE> Uncomment this block if there are issues with the alarms
+                //  <NOTE> Uncomment this block if there are issues with the alarms
                 if (sAlienActivityAlarm[hour] != AlarmHandle.kInvalidHandle)
                 {
                     AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[hour]);
                     sAlienActivityAlarm[hour] = AlarmHandle.kInvalidHandle;
                 }
-                */
 
                 sAlienActivityAlarm[hour] = AlarmManager.Global.AddAlarmDay((float)hour, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
                     "Alien Activity Hourly Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
             }
+        */
         }
 
         private void ResetAlienRefreshAlarm()

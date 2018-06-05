@@ -7,7 +7,6 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 {
-    public interface IAlienActivityBonusesOption : IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
-    {
-    }
+    public interface IAlienActivityBonusesOption : IOptionItem
+    { }
 }

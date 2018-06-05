@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 {
-    public class HighLTRThresholdSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class HighLTRThresholdSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 

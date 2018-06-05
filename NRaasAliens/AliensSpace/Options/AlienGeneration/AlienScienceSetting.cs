@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration
 {
-    public class AlienScienceSetting : BooleanSettingOption<GameObject>, IAliensOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class AlienScienceSetting : BooleanSettingOption<GameObject>, IAliensOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 

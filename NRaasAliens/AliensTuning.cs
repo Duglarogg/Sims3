@@ -48,15 +48,18 @@ namespace NRaas
         [Tunable, TunableComment("Maximum possible number of occult life states an NPC alien can have.")]
         public static int kMaxAlienOccults = 1;
 
-        public static List<OccultTypes> kAllowedAlienOccults = OccultTypeHelper.CreateListOfMissingOccults(new List<OccultTypes>
+        public static List<OccultTypes> kAllowedAlienOccults = new List<OccultTypes>()
             {
-                OccultTypes.Frankenstein,
-                OccultTypes.Ghost,
-                OccultTypes.Mummy,
-                OccultTypes.Robot,
-                OccultTypes.Unicorn
-            }, true);
-
+                OccultTypes.Fairy,
+                OccultTypes.Genie,
+                OccultTypes.ImaginaryFriend,
+                OccultTypes.Mermaid,
+                OccultTypes.PlantSim,
+                OccultTypes.Vampire,
+                OccultTypes.Werewolf,
+                OccultTypes.Witch
+            };
+            
         // Alien Activity Settings
         [Tunable, TunableComment("Range(0 - 23): Earliest hour that alien activity can occur")]
         public static int kEarliestHour = 20;
@@ -132,14 +135,17 @@ namespace NRaas
         [Tunable, TunableComment("Max number of occult life states an alien baby can inherit")]
         public static int kMaxBabyOccults = 1;
 
-        public static List<OccultTypes> kAllowedBabyOccults = new List<OccultTypes>(
-            OccultTypeHelper.CreateListOfMissingOccults( new List<OccultTypes>()
-                {
-                    OccultTypes.Frankenstein,
-                    OccultTypes.Ghost,
-                    OccultTypes.Mummy,
-                    OccultTypes.Robot,
-                    OccultTypes.Unicorn
-                }, true));
+        public static List<OccultTypes> kAllowedBabyOccults = new List<OccultTypes>()
+            {
+                OccultTypes.Fairy,
+                OccultTypes.Genie,
+                OccultTypes.Ghost,
+                OccultTypes.ImaginaryFriend,
+                OccultTypes.Mermaid,
+                OccultTypes.PlantSim,
+                OccultTypes.Vampire,
+                OccultTypes.Werewolf,
+                OccultTypes.Witch
+            };
     }
 }

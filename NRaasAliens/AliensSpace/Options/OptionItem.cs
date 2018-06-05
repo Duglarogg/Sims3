@@ -7,6 +7,6 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options
 {
-    public abstract class OptionItem : OperationSettingOption<GameObject>, ICommonOptionItem
+    public abstract class OptionItem : OperationSettingOption<GameObject>
     { }
 }

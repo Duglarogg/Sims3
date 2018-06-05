@@ -9,7 +9,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration
 {
-    public class ScienceSetting : IntegerRangeSettingOption<GameObject>, IAliensOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class ScienceSetting : IntegerRangeSettingOption<GameObject>, IAliensOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 

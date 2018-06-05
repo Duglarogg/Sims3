@@ -26,7 +26,7 @@ namespace NRaas.AbductorSpace.Booters
     public class TraitBooter : BooterHelper.ListingBooter
     {
         public TraitBooter()
-            : this(VersionStamp.sNameSpace + ".Traits", testDirect: true)
+            : this(VersionStamp.sNameSpace + ".Traits", true)
         { }
 
         public TraitBooter(string reference, bool testDirect)
