@@ -52,7 +52,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <LangVersion>default</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -141,7 +141,6 @@
   <ItemGroup>
     <Reference Include="mscorlib">
       <HintPath>..\Common References\mscorlib.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="NRaas">
       <HintPath>..\Common References\NRaas.dll</HintPath>

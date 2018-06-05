@@ -28,7 +28,7 @@ namespace NRaas
     public class Aliens : Common, Common.IWorldLoadFinished
     {
         [Tunable, TunableComment("Scripting Mod Instantiator")]
-        protected static bool kInstantiator = false;
+        protected static bool kInstantiator = true;
 
         [PersistableStatic]
         protected static PersistedSettings sSettings = null;
