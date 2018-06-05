@@ -8,7 +8,7 @@ namespace NRaas
 {
     class VersionStamp : Common.ProtoVersionStamp, Common.IPreLoad
     {
-        public static readonly string sNameSpace = "NRaas.Aliens";
+        public static readonly string sNamespace = "NRaas.Aliens";
         public static readonly int sVersion = 6;
 
         public class Version : ProtoVersion<GameObject>

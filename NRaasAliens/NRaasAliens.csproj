@@ -58,10 +58,219 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Booters\BooterHelper.cs">
+      <Link>CommonSpace\Booters\BooterHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Booters\BooterLogger.cs">
+      <Link>CommonSpace\Booters\BooterLogger.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Booters\BuffBooter.cs">
+      <Link>CommonSpace\Booters\BuffBooter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Booters\TraitBooter.cs">
+      <Link>CommonSpace\Booters\TraitBooter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Common.cs">
+      <Link>CommonSpace\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Converters\ListToString.cs">
+      <Link>CommonSpace\Converters\ListToString.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Converters\StringToList.cs">
+      <Link>CommonSpace\Converters\StringToList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Converters\StringToMultiList.cs">
+      <Link>CommonSpace\Converters\StringToMultiList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Converters\StringToSpeciesList.cs">
+      <Link>CommonSpace\Converters\StringToSpeciesList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Converters\StringToStringList.cs">
+      <Link>CommonSpace\Converters\StringToStringList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Dialogs\ObjectPickerDialogEx.cs">
+      <Link>CommonSpace\Dialogs\ObjectPickerDialogEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\BaseWorldRevision.cs">
+      <Link>CommonSpace\Helpers\BaseWorldRevision.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\CASParts.cs">
+      <Link>CommonSpace\Helpers\CASParts.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Corrections.cs">
+      <Link>CommonSpace\Helpers\Corrections.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Instantiation.cs">
+      <Link>CommonSpace\Helpers\Instantiation.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Inventories.cs">
+      <Link>CommonSpace\Helpers\Inventories.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\OccultFairyEx.cs">
+      <Link>CommonSpace\Helpers\OccultFairyEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\OccultGenieEx.cs">
+      <Link>CommonSpace\Helpers\OccultGenieEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\OccultPlantSimEx.cs">
+      <Link>CommonSpace\Helpers\OccultPlantSimEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\OccultTypeHelper.cs">
+      <Link>CommonSpace\Helpers\OccultTypeHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\OccultUnicornEx.cs">
+      <Link>CommonSpace\Helpers\OccultUnicornEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Persistence.cs">
+      <Link>CommonSpace\Helpers\Persistence.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\SimEx.cs">
+      <Link>CommonSpace\Helpers\SimEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\SimListing.cs">
+      <Link>CommonSpace\Helpers\SimListing.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\SimRoutingComponentEx.cs">
+      <Link>CommonSpace\Helpers\SimRoutingComponentEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\SimTypes.cs">
+      <Link>CommonSpace\Helpers\SimTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\StoryProgressionServiceEx.cs">
+      <Link>CommonSpace\Helpers\StoryProgressionServiceEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Tunings.cs">
+      <Link>CommonSpace\Helpers\Tunings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Urnstones.cs">
+      <Link>CommonSpace\Helpers\Urnstones.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Interactions\BaseInteraction.cs">
+      <Link>CommonSpace\Interactions\BaseInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Interactions\CommonInteraction.cs">
+      <Link>CommonSpace\Interactions\CommonInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Interactions\ListedInteraction.cs">
+      <Link>CommonSpace\Interactions\ListedInteraction.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Interactions\RouteToObject.cs">
+      <Link>CommonSpace\Interactions\RouteToObject.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\AgeSettingOption.cs">
+      <Link>CommonSpace\Options\AgeSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\BooleanSettingOption.cs">
+      <Link>CommonSpace\Options\BooleanSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\CommonOptionItem.cs">
+      <Link>CommonSpace\Options\CommonOptionItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\CommonOptionList.cs">
+      <Link>CommonSpace\Options\CommonOptionList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\EnumSettingOption.cs">
+      <Link>CommonSpace\Options\EnumSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\FloatRangeSettingOption.cs">
+      <Link>CommonSpace\Options\FloatRangeSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\FloatSettingOption.cs">
+      <Link>CommonSpace\Options\FloatSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\GenericSettingOption.cs">
+      <Link>CommonSpace\Options\GenericSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\IntegerRangeSettingOption.cs">
+      <Link>CommonSpace\Options\IntegerRangeSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\IntegerSettingOption.cs">
+      <Link>CommonSpace\Options\IntegerSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\InteractionDefinitionOption.cs">
+      <Link>CommonSpace\Options\InteractionDefinitionOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\InteractionDefinitionOptionList.cs">
+      <Link>CommonSpace\Options\InteractionDefinitionOptionList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\InteractionOptionItem.cs">
+      <Link>CommonSpace\Options\InteractionOptionItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\InteractionOptionList.cs">
+      <Link>CommonSpace\Options\InteractionOptionList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\ListedSettingOption.cs">
+      <Link>CommonSpace\Options\ListedSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\OperationSettingNestledOption.cs">
+      <Link>CommonSpace\Options\OperationSettingNestledOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\OperationSettingOption.cs">
+      <Link>CommonSpace\Options\OperationSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\PopupOptionList.cs">
+      <Link>CommonSpace\Options\PopupOptionList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\ProtoReapply.cs">
+      <Link>CommonSpace\Options\ProtoReapply.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\ProtoResetSettings.cs">
+      <Link>CommonSpace\Options\ProtoResetSettings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\ProtoVersion.cs">
+      <Link>CommonSpace\Options\ProtoVersion.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\RangeSettingOption.cs">
+      <Link>CommonSpace\Options\RangeSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\StringSettingOption.cs">
+      <Link>CommonSpace\Options\StringSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Options\ValueSettingOption.cs">
+      <Link>CommonSpace\Options\ValueSettingOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\ScoringMethods\DualSimListedScoringMethod.cs">
+      <Link>CommonSpace\ScoringMethods\DualSimListedScoringMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\ScoringMethods\GenericSimListedScoringMethod.cs">
+      <Link>CommonSpace\ScoringMethods\GenericSimListedScoringMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\ScoringMethods\ListedScoringMethod.cs">
+      <Link>CommonSpace\ScoringMethods\ListedScoringMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\ScoringMethods\ScoringList.cs">
+      <Link>CommonSpace\ScoringMethods\ScoringList.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\ScoringMethods\ScoringLookup.cs">
+      <Link>CommonSpace\ScoringMethods\ScoringLookup.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\ScoringMethods\SimListedScoringMethod.cs">
+      <Link>CommonSpace\ScoringMethods\SimListedScoringMethod.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Scoring\CombinedScoring.cs">
+      <Link>CommonSpace\Scoring\CombinedScoring.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Scoring\Scoring.cs">
+      <Link>CommonSpace\Scoring\Scoring.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Selection\CommonSelection.cs">
+      <Link>CommonSpace\Selection\CommonSelection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Selection\ProtoSelection.cs">
+      <Link>CommonSpace\Selection\ProtoSelection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Selection\ProtoSimSelection.cs">
+      <Link>CommonSpace\Selection\ProtoSimSelection.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\SpeedTrap.cs">
+      <Link>CommonSpace\SpeedTrap.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Stores\SafeStore.cs">
+      <Link>CommonSpace\Stores\SafeStore.cs</Link>
+    </Compile>
     <Compile Include="Aliens.cs" />
     <Compile Include="AliensModule.cs" />
     <Compile Include="AliensPopupTuning.cs" />
-    <Compile Include="AliensSpace\Booters\TraitBooter.cs" />
     <Compile Include="AliensSpace\Buffs\BuffAbductedEx.cs" />
     <Compile Include="AliensSpace\Helpers\AbductionTuningControl.cs" />
     <Compile Include="AliensSpace\Helpers\AlienAbductionSituationEx.cs" />
@@ -124,41 +333,10 @@
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
     <Compile Include="AliensTuning.cs" />
+    <Compile Include="CommonSpace\Stores\OpportunityStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VersionStamp.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib">
-      <HintPath>..\Common References\mscorlib.dll</HintPath>
-    </Reference>
-    <Reference Include="NRaas">
-      <HintPath>..\Common References\NRaas.dll</HintPath>
-    </Reference>
-    <Reference Include="ScriptCore">
-      <HintPath>..\Common References\ScriptCore.dll</HintPath>
-    </Reference>
-    <Reference Include="SimIFace">
-      <HintPath>..\Common References\SimIFace.dll</HintPath>
-    </Reference>
-    <Reference Include="Sims3GameplayObjects">
-      <HintPath>..\Common References\Sims3GameplayObjects.dll</HintPath>
-    </Reference>
-    <Reference Include="Sims3GameplaySystems">
-      <HintPath>..\Common References\Sims3GameplaySystems.dll</HintPath>
-    </Reference>
-    <Reference Include="Sims3Metadata">
-      <HintPath>..\Common References\Sims3Metadata.dll</HintPath>
-    </Reference>
-    <Reference Include="Sims3StoreObjects">
-      <HintPath>..\Common References\Sims3StoreObjects.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UI">
-      <HintPath>..\Common References\UI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="StringTables\StringTableEnglish.txt" />
     <Content Include="XML\Aliens.xml" />
@@ -166,6 +344,38 @@
     <Content Include="XML\AliensModule.xml" />
     <Content Include="XML\AliensTraits.xml" />
     <Content Include="XML\AliensTuning.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="0x03D6C8D903CE868C_Sims3GameplaySystems">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0x03D6C8D903CE868C_Sims3GameplaySystems.dll</HintPath>
+    </Reference>
+    <Reference Include="0x0CAE1C361E05B2B3_Sims3StoreObjects">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0x0CAE1C361E05B2B3_Sims3StoreObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="0x28EE9D383A73463E_mscorlib">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0x28EE9D383A73463E_mscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="0x342EE04373CF1E1C_System">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0x342EE04373CF1E1C_System.dll</HintPath>
+    </Reference>
+    <Reference Include="0x600F9EA1DDC99FB1_Sims3MetaData">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0x600F9EA1DDC99FB1_Sims3MetaData.dll</HintPath>
+    </Reference>
+    <Reference Include="0x6AC101133051BEF1_System.Xml">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0x6AC101133051BEF1_System.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="0x78CF6CF5304D0C4F_ScriptCore">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0x78CF6CF5304D0C4F_ScriptCore.dll</HintPath>
+    </Reference>
+    <Reference Include="0xB9C90FDC6793BC0A_Sims3GameplayObjects">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0xB9C90FDC6793BC0A_Sims3GameplayObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="0xC356DF69B70ADD42_SimIFace">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0xC356DF69B70ADD42_SimIFace.dll</HintPath>
+    </Reference>
+    <Reference Include="0xF7C3ADE896D4E765_UI">
+      <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0xF7C3ADE896D4E765_UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

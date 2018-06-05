@@ -1,6 +1,7 @@
 ﻿using NRaas.CommonSpace.Options;
 using Sims3.Gameplay.Abstracts;
 using Sims3.Gameplay.Interfaces;
+using Sims3.SimIFace;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,18 @@ namespace NRaas.AliensSpace.Options.AlienActivity
             get => Aliens.Settings.mActivityWindow;
             set => Aliens.Settings.mActivityWindow = Validate(value);
         }
+
+        public string Name => throw new NotImplementedException();
+
+        public ThumbnailKey Thumbnail => throw new NotImplementedException();
+
+        public bool UsingCount => throw new NotImplementedException();
+
+        public int Count { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public string DisplayKey => throw new NotImplementedException();
+
+        public int ValueWidth => throw new NotImplementedException();
 
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {
@@ -36,6 +49,21 @@ namespace NRaas.AliensSpace.Options.AlienActivity
                 return 24;
 
             return value;
+        }
+
+        public bool Test(GameHitParameters<GameObject> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OptionResult Perform(GameHitParameters<GameObject> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICommonOptionItem Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

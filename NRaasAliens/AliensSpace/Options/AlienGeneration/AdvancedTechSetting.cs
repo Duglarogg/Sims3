@@ -19,6 +19,20 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
             set => Aliens.Settings.mFutureSkill = Validate(value.First, value.Second);
         }
 
+        public string Name => throw new NotImplementedException();
+
+        public ThumbnailKey Thumbnail => throw new NotImplementedException();
+
+        public string DisplayValue => throw new NotImplementedException();
+
+        public bool UsingCount => throw new NotImplementedException();
+
+        public int Count { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public string DisplayKey => throw new NotImplementedException();
+
+        public int ValueWidth => throw new NotImplementedException();
+
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {
             return GameUtils.IsInstalled(ProductVersion.EP11) && Aliens.Settings.mFutureSim;
@@ -40,6 +54,21 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
                 result.Second = 10;
 
             return result;
+        }
+
+        public bool Test(GameHitParameters<GameObject> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OptionResult Perform(GameHitParameters<GameObject> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICommonOptionItem Clone()
+        {
+            throw new NotImplementedException();
         }
     }
 }

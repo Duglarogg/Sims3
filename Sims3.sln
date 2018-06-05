@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuglaroggAbductor_Take3", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRaasAliens", "NRaasAliens\NRaasAliens.csproj", "{B887FBA7-9D3E-41E3-940B-F6E5E04CC0F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NRaasAliens_Take7", "NRaasAliens_Take7\NRaasAliens_Take7.csproj", "{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,14 +43,6 @@ Global
 		{B887FBA7-9D3E-41E3-940B-F6E5E04CC0F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B887FBA7-9D3E-41E3-940B-F6E5E04CC0F9}.Release|x86.ActiveCfg = Release|x86
 		{B887FBA7-9D3E-41E3-940B-F6E5E04CC0F9}.Release|x86.Build.0 = Release|x86
-		{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}.Debug|x86.Build.0 = Debug|Any CPU
-		{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}.Release|x86.ActiveCfg = Release|Any CPU
-		{D2DDD63A-625C-4B6F-AF6A-F2B82DC1EEDA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

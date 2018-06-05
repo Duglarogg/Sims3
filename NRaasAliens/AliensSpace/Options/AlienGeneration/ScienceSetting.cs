@@ -41,5 +41,20 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
 
             return result;
         }
+
+        public bool Test(GameHitParameters<GameObject> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public OptionResult Perform(GameHitParameters<GameObject> parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICommonOptionItem Clone()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
