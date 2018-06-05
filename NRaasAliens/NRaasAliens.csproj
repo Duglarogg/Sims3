@@ -73,6 +73,7 @@
     <Compile Include="AliensSpace\Interactions\HaveAlienBabyHome.cs" />
     <Compile Include="AliensSpace\Interactions\HaveAlienBabyHomeInternal.cs" />
     <Compile Include="AliensSpace\Interactions\HaveAlienBabyHospital.cs" />
+    <Compile Include="AliensSpace\Interactions\PrimaryInteraction.cs" />
     <Compile Include="AliensSpace\Interactions\ReactToContractionEx.cs" />
     <Compile Include="AliensSpace\Interactions\ReturnAlienBabyEx.cs" />
     <Compile Include="AliensSpace\Interactions\ShowAlienPregnancy.cs" />
