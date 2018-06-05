@@ -15,8 +15,8 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
 
         protected override Pair<int, int> Value
         {
-            get => Aliens.Settings.mScienceSkill;
-            set => Aliens.Settings.mScienceSkill = Validate(value.First, value.Second);
+            get => new Pair<int,int>(Aliens.Settings.mScienceSkill[0], Aliens.Settings.mScienceSkill[1]);
+            set => Validate(value.First, value.Second);
         }
 
         protected override bool Allow(GameHitParameters<GameObject> parameters)
@@ -39,22 +39,10 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
             if (result.Second > 10)
                 result.Second = 10;
 
+            Aliens.Settings.mScienceSkill[0] = result.First;
+            Aliens.Settings.mScienceSkill[1] = result.Second;
+
             return result;
-        }
-
-        public bool Test(GameHitParameters<GameObject> parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public OptionResult Perform(GameHitParameters<GameObject> parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICommonOptionItem Clone()
-        {
-            throw new NotImplementedException();
         }
     }
 }

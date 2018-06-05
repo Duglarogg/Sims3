@@ -86,7 +86,7 @@
     <kPregnancyLength value="3" />
       <!-- Duration (in days) of an alien pregnancy. -->
 
-    <kLaborLength value="4" />
+    <kLaborLength value="8" />
       <!-- Duration (in hours) of labor for an alien pregnancy. -->
 
     <kBackachChance value="25" />

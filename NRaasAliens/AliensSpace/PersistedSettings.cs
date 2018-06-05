@@ -1,4 +1,4 @@
-﻿using NRaas.AliensSpace.Buffs;
+﻿using NRaas.CommonSpace.Helpers;
 using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
 using Sims3.SimIFace.CAS;
@@ -19,15 +19,21 @@ namespace NRaas.AliensSpace
 
         // Alien Settings
         public bool mFutureSim = AliensTuning.kFutureSim;
-        public Pair<int, int> mLogicSkill = new Pair<int, int>(AliensTuning.kLogicSkill[0], AliensTuning.kLogicSkill[1]);
-        public Pair<int, int> mHandinessSkill = new Pair<int, int>(AliensTuning.kHandinessSkill[0], AliensTuning.kHandinessSkill[1]);
-        public Pair<int, int> mFutureSkill = new Pair<int, int>(AliensTuning.kFutureSkill[0], AliensTuning.kFutureSkill[1]);
+        public int[] mLogicSkill = AliensTuning.kLogicSkill;
+        public int[] mHandinessSkill = AliensTuning.kHandinessSkill;
+        public int[] mFutureSkill = AliensTuning.kFutureSkill;
+        public int[] mScienceSkill = AliensTuning.kScienceSkill;
         public bool mAlienScience = AliensTuning.kAlienScience;
-        public Pair<int, int> mScienceSkill = new Pair<int, int>(AliensTuning.kScienceSkill[0], AliensTuning.kScienceSkill[1]);
         public bool mAllowOccultAliens = AliensTuning.kAllowOccultAliens;
         public int mMaxAlienOccults = AliensTuning.kMaxAlienOccults;
-
-        public List<OccultTypes> mAllowedAlienOccults = AliensTuning.kAllowedAlienOccults;
+        public List<OccultTypes> mValidAlienOccults = OccultTypeHelper.CreateListOfMissingOccults(
+            new List<OccultTypes>()
+            {
+                OccultTypes.Frankenstein,
+                OccultTypes.Mummy,
+                OccultTypes.Robot,
+                OccultTypes.Unicorn
+            }, true);
 
         // Alien Activity Settings
         public int mEarliestHour = AliensTuning.kEarliestHour;
@@ -54,21 +60,28 @@ namespace NRaas.AliensSpace
         public bool mUseFertility = AliensTuning.kUseFertility;
         public int mPregnancyLength = AliensTuning.kPregnancyLength;
         public int mLaborLength = AliensTuning.kLaborLength;
-        public int mPregnancyShow = 10; // Hours
         public int mBackacheChance = AliensTuning.kBackacheChance;
         public int mNumPuddles = AliensTuning.kNumPuddles;
         public bool mAllowOccultBabies = AliensTuning.kAllowOccultBabies;
         public int mMaxBabyOccults = AliensTuning.kMaxBabyOccults;
-        public List<OccultTypes> mAllowedBabyOccults = AliensTuning.kAllowedBabyOccults;
         // Only occults shared between abductee and alien yes/no
+        public List<OccultTypes> mValidBabyOccults = OccultTypeHelper.CreateListOfMissingOccults(
+            new List<OccultTypes>()
+            {
+                OccultTypes.Frankenstein,
+                OccultTypes.Mummy,
+                OccultTypes.Robot,
+                OccultTypes.Unicorn
+            }, true);
 
-        // Derived Pregnancy Settings
-        public int mPregnancyDuration;  // In Hours
-        public int mPregnancyMorph;     // In Hours
-        public int mStartWalk;          // In Hours
-        public int mStartLabor;         // In Hours
-        public int mForeignShowTNS;     // In Hours
-        public int mForeignLeaves;      // In Hours
+        // Derived Pregnancy Settings (in hours)
+        public int mPregnancyShow = 10;
+        public int mStartLabor = 82;
+        public int mPregnancyDuration = 90;
+        public int mPregnancyMorph = 60;
+        public int mStartWalk = 42;
+        public int mForeignShowTNS = 22;
+        public int mForeignLeaves = 28;
 
         public PersistedSettings()
         {
@@ -77,13 +90,8 @@ namespace NRaas.AliensSpace
 
         public bool Debugging
         {
-            get { return mDebugging; }
-
-            set
-            {
-                mDebugging = value;
-                Common.kDebugging = value;
-            }
+            get => mDebugging;
+            set => Common.kDebugging = mDebugging = value;
         }
 
         public bool LinkToStoryProgression(bool autonomous)

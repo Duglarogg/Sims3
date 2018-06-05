@@ -18,18 +18,6 @@ namespace NRaas.AliensSpace.Options.AlienActivity
             set => Aliens.Settings.mAbductionLength = Validate(value);
         }
 
-        public string Name => throw new NotImplementedException();
-
-        public ThumbnailKey Thumbnail => throw new NotImplementedException();
-
-        public bool UsingCount => throw new NotImplementedException();
-
-        public int Count { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public string DisplayKey => throw new NotImplementedException();
-
-        public int ValueWidth => throw new NotImplementedException();
-
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {
             return Aliens.Settings.mBaseActivityChance > 0 && Aliens.Settings.mBaseAbductionChance > 0;
@@ -49,21 +37,6 @@ namespace NRaas.AliensSpace.Options.AlienActivity
                 return 120;
 
             return value;
-        }
-
-        public bool Test(GameHitParameters<GameObject> parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public OptionResult Perform(GameHitParameters<GameObject> parameters)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ICommonOptionItem Clone()
-        {
-            throw new NotImplementedException();
         }
     }
 }

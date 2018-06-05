@@ -216,12 +216,12 @@ namespace NRaas.AliensSpace.Helpers
                 element = description.SkillManager.AddElement(SkillNames.Logic);
 
                 if (element != null)
-                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLogicSkill.First, Aliens.Settings.mLogicSkill.Second));
+                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLogicSkill[0], Aliens.Settings.mLogicSkill[1]));
 
                 element = description.SkillManager.AddElement(SkillNames.Handiness);
 
                 if (element != null)
-                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mHandinessSkill.First, Aliens.Settings.mHandinessSkill.Second));
+                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mHandinessSkill[0], Aliens.Settings.mHandinessSkill[1]));
 
                 if (age == CASAgeGenderFlags.Teen)
                 {
@@ -238,7 +238,7 @@ namespace NRaas.AliensSpace.Helpers
                     element = description.SkillManager.AddElement(SkillNames.Future);
 
                     if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFutureSkill.First, Aliens.Settings.mFutureSkill.Second));
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFutureSkill[0], Aliens.Settings.mFutureSkill[1]));
                 }
 
                 if (Aliens.Settings.mAlienScience)
@@ -246,7 +246,7 @@ namespace NRaas.AliensSpace.Helpers
                     element = description.SkillManager.AddElement(SkillNames.Science);
 
                     if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mScienceSkill.First, Aliens.Settings.mScienceSkill.Second));
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mScienceSkill[0], Aliens.Settings.mScienceSkill[1]));
                 }
 
                 Household.AlienHousehold.AddSilent(description);

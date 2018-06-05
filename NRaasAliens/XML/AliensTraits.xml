@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<traits>
+<Traits>
   <TraitList>
     <Name></Name>
     <Description></Description>
@@ -57,4 +57,4 @@
     <Description>NRaasAlienChildDescription</Description>
     <Hex>NRaasAlienChild=63C2B89420FEAA2B</Hex>
   </TraitList>
-</traits>
+</Traits>

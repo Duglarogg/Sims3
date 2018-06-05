@@ -40,7 +40,7 @@ namespace NRaas
         public static bool kAlienScience = false;
 
         [Tunable, TunableComment("Min and max Science skill levels for aliesn")]
-        public static int[] kScienceSkill = new int[] { 7, 8 };
+        public static int[] kScienceSkill = new int[2] { 7, 8 };
 
         [Tunable, TunableComment("Whether or not NPC aliens can have an occult life state.")]
         public static bool kAllowOccultAliens = false;
@@ -48,17 +48,6 @@ namespace NRaas
         [Tunable, TunableComment("Maximum possible number of occult life states an NPC alien can have.")]
         public static int kMaxAlienOccults = 1;
 
-        public static List<OccultTypes> kAllowedAlienOccults = new List<OccultTypes>()
-            {
-                OccultTypes.Fairy,
-                OccultTypes.Genie,
-                OccultTypes.ImaginaryFriend,
-                OccultTypes.Mermaid,
-                OccultTypes.PlantSim,
-                OccultTypes.Vampire,
-                OccultTypes.Werewolf,
-                OccultTypes.Witch
-            };
             
         // Alien Activity Settings
         [Tunable, TunableComment("Range(0 - 23): Earliest hour that alien activity can occur")]
@@ -134,18 +123,5 @@ namespace NRaas
 
         [Tunable, TunableComment("Max number of occult life states an alien baby can inherit")]
         public static int kMaxBabyOccults = 1;
-
-        public static List<OccultTypes> kAllowedBabyOccults = new List<OccultTypes>()
-            {
-                OccultTypes.Fairy,
-                OccultTypes.Genie,
-                OccultTypes.Ghost,
-                OccultTypes.ImaginaryFriend,
-                OccultTypes.Mermaid,
-                OccultTypes.PlantSim,
-                OccultTypes.Vampire,
-                OccultTypes.Werewolf,
-                OccultTypes.Witch
-            };
     }
 }

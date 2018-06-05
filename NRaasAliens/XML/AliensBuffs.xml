@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<buffs>
+<Buffs>
   <BuffList>
     <Hex></Hex>
     <SKU>BaseGame</SKU>
@@ -66,4 +66,4 @@
     <EffectValue>0</EffectValue>
     <SpeciesAvailability>Human</SpeciesAvailability>
   </BuffList>
-</buffs>
+</Buffs>

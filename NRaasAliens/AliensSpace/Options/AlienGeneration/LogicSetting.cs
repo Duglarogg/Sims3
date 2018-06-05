@@ -14,8 +14,8 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
 
         protected override Pair<int, int> Value
         {
-            get => Aliens.Settings.mLogicSkill;
-            set => Aliens.Settings.mLogicSkill = Validate(value.First, value.Second);
+            get => new Pair<int,int>(Aliens.Settings.mLogicSkill[0], Aliens.Settings.mLogicSkill[1]);
+            set => Validate(value.First, value.Second);
         }
 
         public override string GetTitlePrefix()
@@ -32,6 +32,9 @@ namespace NRaas.AliensSpace.Options.AlienGeneration
 
             if (result.Second > 10)
                 result.Second = 10;
+
+            Aliens.Settings.mLogicSkill[0] = result.First;
+            Aliens.Settings.mLogicSkill[1] = result.Second;
 
             return result;
         }

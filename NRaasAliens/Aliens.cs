@@ -19,13 +19,7 @@ namespace NRaas
 
         public static PersistedSettings Settings
         {
-            get
-            {
-                if (sSettings == null)
-                    sSettings = new PersistedSettings();
-
-                return sSettings;
-            }
+            get => (sSettings == null) ? sSettings = new PersistedSettings() : sSettings;
         }
 
         static Aliens()
@@ -37,8 +31,7 @@ namespace NRaas
             BooterHelper.Add(new TraitBooter());
         }
 
-        public Aliens()
-        { }
+        public Aliens() { }
 
         public static InteractionTuning InjectAndReset<Target, OldType, NewType>(bool clone)
             where Target : IGameObject
