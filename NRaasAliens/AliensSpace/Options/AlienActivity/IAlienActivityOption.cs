@@ -8,6 +8,5 @@ using System.Text;
 namespace NRaas.AliensSpace.Options.AlienActivity
 {
     public interface IAlienActivityOption : IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
-    {
-    }
+    { }
 }

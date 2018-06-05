@@ -48,7 +48,6 @@ namespace NRaas
         [Tunable, TunableComment("Maximum possible number of occult life states an NPC alien can have.")]
         public static int kMaxAlienOccults = 1;
 
-        [Tunable, TunableComment("Which occult life states that NPC aliens can have.")]
         public static List<OccultTypes> kAllowedAlienOccults = OccultTypeHelper.CreateListOfMissingOccults(new List<OccultTypes>
             {
                 OccultTypes.Frankenstein,
@@ -133,7 +132,6 @@ namespace NRaas
         [Tunable, TunableComment("Max number of occult life states an alien baby can inherit")]
         public static int kMaxBabyOccults = 1;
 
-        [Tunable, TunableComment("Which occult life states can be inherited by alien babies")]
         public static List<OccultTypes> kAllowedBabyOccults = new List<OccultTypes>(
             OccultTypeHelper.CreateListOfMissingOccults( new List<OccultTypes>()
                 {

@@ -10,7 +10,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options
 {
-    public abstract class AllowedOccultOption : BooleanSettingOption<GameObject>, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public abstract class AllowedOccultOption : BooleanSettingOption<GameObject>, IAllowedOccultsOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
     {
         protected abstract OccultTypes Type { get; }
 

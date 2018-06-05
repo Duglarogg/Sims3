@@ -25,7 +25,7 @@ using System.Text;
 
 namespace NRaas
 {
-    public class Aliens : Common, Common.IPreLoad, Common.IWorldLoadFinished, Common.IWorldQuit
+    public class Aliens : Common, Common.IWorldLoadFinished
     {
         [Tunable, TunableComment("Scripting Mod Instantiator")]
         protected static bool kInstantiator = false;
@@ -64,16 +64,10 @@ namespace NRaas
             return AbductionTuningControl.ResetTuning(Tunings.Inject<Target, OldType, NewType>(clone), false, false);
         }
 
-        public void OnPreLoad()
-        { }
-
         public void OnWorldLoadFinished()
         {
             kDebugging = Settings.Debugging;
         }
-
-        public void OnWorldQuit()
-        { }
 
         public static void ResetSettings()
         {
