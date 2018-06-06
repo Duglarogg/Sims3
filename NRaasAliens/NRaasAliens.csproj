@@ -67,9 +67,6 @@
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Booters\BuffBooter.cs">
       <Link>CommonSpace\Booters\BuffBooter.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Booters\TraitBooter.cs">
-      <Link>CommonSpace\Booters\TraitBooter.cs</Link>
-    </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Common.cs">
       <Link>CommonSpace\Common.cs</Link>
     </Compile>
@@ -332,6 +329,7 @@
     <Compile Include="AliensSpace\Options\OptionList.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
+    <Compile Include="AliensSpace\TraitBooter.cs" />
     <Compile Include="AliensTuning.cs" />
     <Compile Include="CommonSpace\Stores\OpportunityStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

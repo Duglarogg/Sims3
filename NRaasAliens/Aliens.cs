@@ -1,4 +1,5 @@
 ﻿using NRaas.AliensSpace;
+using NRaas.AliensSpace.Booters;
 using NRaas.AliensSpace.Helpers;
 using NRaas.CommonSpace.Booters;
 using NRaas.CommonSpace.Helpers;
@@ -28,7 +29,8 @@ namespace NRaas
             StatValueCount.sFullLog = true;
             Bootstrap();
             BooterHelper.Add(new BuffBooter());
-            BooterHelper.Add(new TraitBooter());
+            new TraitBooter().LoadTraitData();
+            //BooterHelper.Add(new TraitBooter());
         }
 
         public Aliens() { }
