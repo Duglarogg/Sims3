@@ -88,8 +88,14 @@
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Dialogs\ObjectPickerDialogEx.cs">
       <Link>CommonSpace\Dialogs\ObjectPickerDialogEx.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Aging.cs">
+      <Link>CommonSpace\Helpers\Aging.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\BaseWorldRevision.cs">
       <Link>CommonSpace\Helpers\BaseWorldRevision.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\CareerManagerEx.cs">
+      <Link>CommonSpace\Helpers\CareerManagerEx.cs</Link>
     </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\CASParts.cs">
       <Link>CommonSpace\Helpers\CASParts.cs</Link>
@@ -97,11 +103,44 @@
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Corrections.cs">
       <Link>CommonSpace\Helpers\Corrections.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\DreamCatcher.cs">
+      <Link>CommonSpace\Helpers\DreamCatcher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\FacialBlends.cs">
+      <Link>CommonSpace\Helpers\FacialBlends.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\GameflowEx.cs">
+      <Link>CommonSpace\Helpers\GameflowEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Genealogies.cs">
+      <Link>CommonSpace\Helpers\Genealogies.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\HouseholdEx.cs">
+      <Link>CommonSpace\Helpers\HouseholdEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\HouseholdMemberEx.cs">
+      <Link>CommonSpace\Helpers\HouseholdMemberEx.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Households.cs">
+      <Link>CommonSpace\Helpers\Households.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Instantiation.cs">
       <Link>CommonSpace\Helpers\Instantiation.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\InteractionsEx.cs">
+      <Link>CommonSpace\Helpers\InteractionsEx.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Inventories.cs">
       <Link>CommonSpace\Helpers\Inventories.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Lots.cs">
+      <Link>CommonSpace\Helpers\Lots.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\MiniSims.cs">
+      <Link>CommonSpace\Helpers\MiniSims.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\ObjectComponents.cs">
+      <Link>CommonSpace\Helpers\ObjectComponents.cs</Link>
     </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\OccultFairyEx.cs">
       <Link>CommonSpace\Helpers\OccultFairyEx.cs</Link>
@@ -121,6 +160,24 @@
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Persistence.cs">
       <Link>CommonSpace\Helpers\Persistence.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Pregnancies.cs">
+      <Link>CommonSpace\Helpers\Pregnancies.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Relationships.cs">
+      <Link>CommonSpace\Helpers\Relationships.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Roles.cs">
+      <Link>CommonSpace\Helpers\Roles.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\Routes.cs">
+      <Link>CommonSpace\Helpers\Routes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\SavedOutfit.cs">
+      <Link>CommonSpace\Helpers\SavedOutfit.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\SimDescriptionEx.cs">
+      <Link>CommonSpace\Helpers\SimDescriptionEx.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\SimEx.cs">
       <Link>CommonSpace\Helpers\SimEx.cs</Link>
     </Compile>
@@ -132,6 +189,9 @@
     </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\SimTypes.cs">
       <Link>CommonSpace\Helpers\SimTypes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\StackTracer.cs">
+      <Link>CommonSpace\Helpers\StackTracer.cs</Link>
     </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Helpers\StoryProgressionServiceEx.cs">
       <Link>CommonSpace\Helpers\StoryProgressionServiceEx.cs</Link>
@@ -262,6 +322,9 @@
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\SpeedTrap.cs">
       <Link>CommonSpace\SpeedTrap.cs</Link>
     </Compile>
+    <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Stores\OpportunityStore.cs">
+      <Link>CommonSpace\Stores\OpportunityStore.cs</Link>
+    </Compile>
     <Compile Include="..\..\..\NRaas Master 5-24-17\NRaas-master\NRaas\Stores\SafeStore.cs">
       <Link>CommonSpace\Stores\SafeStore.cs</Link>
     </Compile>
@@ -276,6 +339,8 @@
     <Compile Include="AliensSpace\Helpers\CommonPregnancy.cs" />
     <Compile Include="AliensSpace\Interactions\AbductSimAEx.cs" />
     <Compile Include="AliensSpace\Interactions\DebugTriggerAbduction.cs" />
+    <Compile Include="AliensSpace\Interactions\GetMedicalAdviceEx.cs" />
+    <Compile Include="AliensSpace\Interactions\GoToHospitalEx.cs" />
     <Compile Include="AliensSpace\Interactions\HaveAlienBabyHome.cs" />
     <Compile Include="AliensSpace\Interactions\HaveAlienBabyHomeInternal.cs" />
     <Compile Include="AliensSpace\Interactions\HaveAlienBabyHospital.cs" />
@@ -331,7 +396,6 @@
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
     <Compile Include="AliensSpace\TraitBooter.cs" />
     <Compile Include="AliensTuning.cs" />
-    <Compile Include="CommonSpace\Stores\OpportunityStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VersionStamp.cs" />
   </ItemGroup>

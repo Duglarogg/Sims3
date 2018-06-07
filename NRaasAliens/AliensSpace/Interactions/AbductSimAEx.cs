@@ -1,5 +1,6 @@
 ﻿using NRaas.CommonSpace.Helpers;
 using NRaas.AliensSpace.Helpers;
+using Sims3.Gameplay;
 using Sims3.Gameplay.Actors;
 using Sims3.Gameplay.ActorSystems;
 using Sims3.Gameplay.Autonomy;
@@ -16,18 +17,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-/* <NOTES>
- *  Run()
- *      Need to apply the new "Abducted" moodlet once it has been implemented.
- */
-
 namespace NRaas.AliensSpace.Interactions
 {
     public class AbductSimAEx : CarUFO.AbductSimA, Common.IPreLoad, Common.IAddInteraction
     {
         static InteractionDefinition sOldSingleton;
 
-        public class NewDefinition : Definition
+        public new class Definition : CarUFO.AbductSimA.Definition
         {
             public static new bool CanBeAbducted(Sim abductee, Sim abductor)
             {
@@ -35,6 +31,9 @@ namespace NRaas.AliensSpace.Interactions
                     return false;
 
                 if (abductee.SimDescription.ChildOrBelow)
+                    return false;
+
+                if (!abductee.IsHuman)
                     return false;
 
                 if (AlienUtils.IsHouseboatAndNotDocked(abductee.LotCurrent))
@@ -48,172 +47,183 @@ namespace NRaas.AliensSpace.Interactions
 
             public override string GetInteractionName(Sim actor, CarUFO target, InteractionObjectPair iop)
             {
-                return Common.Localize("AbductSimAEx:MenuName");
-            }
-
-            public static new List<Sim> GetValidCandidates(Sim a, CarUFO target)
-            {
-                List<Sim> list = new List<Sim>();
-                Relationship[] relationships = Relationship.GetRelationships(a);
-
-                foreach(Relationship current in relationships)
-                {
-                    Sim otherSim = current.GetOtherSim(a);
-
-                    if (otherSim != null && a.Household != otherSim.Household && CanBeAbducted(a, otherSim))
-                        list.Add(otherSim);
-                }
-
-                return list;
-            }
-
-            public override void PopulatePieMenuPicker(ref InteractionInstanceParameters parameters, out List<ObjectPicker.TabInfo> listObjs, out List<ObjectPicker.HeaderInfo> headers, out int NumSelectableRows)
-            {
-                if (parameters.Actor.Household.IsAlienHousehold)
-                {
-                    base.PopulatePieMenuPicker(ref parameters, out listObjs, out headers, out NumSelectableRows);
-                    return;
-                }
-
-                NumSelectableRows = 1;
-                List<Sim> validCandidates = GetValidCandidates(parameters.Actor as Sim, parameters.Target as CarUFO);
-                base.PopulatePieMenuPicker(ref parameters, out listObjs, out headers, out NumSelectableRows);
-            }
-
-            public override bool Test(Sim a, CarUFO target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
-            {
-                if (!target.CanBeUsedBy(a, false))
-                    return false;
-
-                if (target.InUse)
-                {
-                    greyedOutTooltipCallback = CreateTooltipCallback(Localization.LocalizeString(a.IsFemale, "Ui/Tooltip:ObjectInUse", new object[0]));
-                    return false;
-                }
-
-                if (!a.Household.IsAlienHousehold && GetValidCandidates(a, target).Count == 0)
-                {
-                    greyedOutTooltipCallback = CreateTooltipCallback(Localization.LocalizeString(a.IsFemale, "AbductSimNoSimsTooltip", new object[0]));
-                    return false;
-                }
-
-                return true;
+                return base.GetInteractionName(actor, target, new InteractionObjectPair(sOldSingleton, target));
             }
         }
 
         public void AddInteraction(Common.InteractionInjectorList interactions)
         {
-            interactions.Replace<CarUFO, Definition>(Singleton);
+            interactions.Replace<CarUFO, CarUFO.AbductSimA.Definition>(Singleton);
+        }
+
+        public new Vector3 GetLandingRefPos(bool isNPCAbductor)
+        {
+            Mailbox mailbox = null;
+
+            if (isNPCAbductor)
+                mailbox = SimToAbduct.LotHome.FindMailbox();
+            else
+                mailbox = Actor.LotHome.FindMailbox();
+
+            if (mailbox != null)
+                Target.mTakeOffPos = mailbox.Position;
+
+            return Target.mTakeOffPos;
         }
 
         public void OnPreLoad()
         {
-            InteractionTuning tuning = Tunings.GetTuning<CarUFO, Definition>();
+            InteractionTuning tuning = Tunings.GetTuning<CarUFO, CarUFO.AbductSimA.Definition>();
 
             if (tuning != null)
+            {
                 tuning.Availability.Teens = true;
+                tuning.Availability.Adults = true;
+                tuning.Availability.Elders = true;
+            }
 
-            Tunings.Inject<CarUFO, Definition, NewDefinition>(false);
+            Tunings.Inject<CarUFO, CarUFO.AbductSimA.Definition, Definition>(false);
 
             sOldSingleton = Singleton;
-            Singleton = new NewDefinition();
+            Singleton = new Definition();
         }
 
         public override bool Run()
         {
-            if (Target.InUse)
+            return Run(this);
+        }
+
+        public static bool Run(CarUFO.AbductSimA abduct)
+        {
+            if (abduct.Target.InUse)
                 return false;
 
-            mNPCAbductor = (SimToAbduct != null);
+            abduct.mNPCAbductor = abduct.SimToAbduct != null;
 
-            if (!mNPCAbductor)
-                SimToAbduct = GetSelectedObject() as Sim;
-            else
+            if (!abduct.mNPCAbductor)
+                abduct.SimToAbduct = abduct.GetSelectedObject() as Sim;
+
+            if (abduct.SimToAbduct == null)
                 return false;
 
-            StandardEntry();
+            abduct.StandardEntry();
 
-            if (!SetupAbductee())
+            if (!abduct.SetupAbductee())
             {
-                StandardExit();
+                abduct.StandardExit();
                 return false;
             }
 
-            Animation.ForceAnimation(Actor.ObjectId, true);
-            Animation.ForceAnimation(Target.ObjectId, true);
-            Target.mTakeOffPos = Actor.Position;
+            Animation.ForceAnimation(abduct.Actor.ObjectId, true);
+            Animation.ForceAnimation(abduct.Target.ObjectId, true);
+            abduct.Target.mTakeOffPos = abduct.Actor.Position;
 
-            if (!Target.RouteToUFOAndTakeOff(Actor))
+            if (!abduct.Target.RouteToUFOAndTakeOff(abduct.Actor))
             {
-                StandardExit();
+                abduct.StandardExit();
                 return false;
             }
 
-            Camera.FocusOnGivenPosition(mJig.Position, CarUFO.kAbductLerpParams, true);
-            BeginCommodityUpdates();
-            bool flag = AbductSim();
-            EndCommodityUpdates(true);
-            Sim[] sims;
+            Camera.FocusOnGivenPosition(abduct.mJig.Position, CarUFO.kAbductLerpParams, true);
+            abduct.BeginCommodityUpdates();
+            bool flag = abduct.AbductSim();
+            abduct.EndCommodityUpdates(true);
+            Sim[] sims = null;
 
             if (flag)
             {
-                EventTracker.SendEvent(EventTypeId.kAbductSimUFO, Actor, SimToAbduct);
-                sims = new Sim[] { Actor, SimToAbduct };
+                EventTracker.SendEvent(EventTypeId.kAbductSimUFO, abduct.Actor, abduct.SimToAbduct);
+                sims = new Sim[] { abduct.Actor, abduct.SimToAbduct };
 
-                if (mNPCAbductor)
-                    DoTimedLoop(Aliens.Settings.mAbductionLength, ExitReason.None);
+                if (abduct.mNPCAbductor)
+                    abduct.DoTimedLoop(Aliens.Settings.mAbductionLength, ExitReason.None);
             }
             else
-            {
-                sims = new Sim[] { Actor };
-            }
+                sims = new Sim[] { abduct.Actor };
 
+            abduct.mFromInventory = abduct.mFromInventory || abduct.mNPCAbductor;
             DateAndTime previous = SimClock.CurrentTime();
-            Vector3 landRefPos = GetLandingRefPos(mNPCAbductor);
+            Vector3 landRefPos = abduct.GetLandingRefPos(abduct.mNPCAbductor);
 
-            while (!Target.TryLandUFOAndExitSims(sims, landRefPos, true))
+            while (!abduct.Target.TryLandUFOAndExitSims(sims, landRefPos, true))
             {
-                Simulator.Sleep(30u);
+                SpeedTrap.Sleep(30u);
 
-                if (SimClock.ElapsedTime(TimeUnit.Minutes, previous) > 30f)
+                if (SimClock.ElapsedTime(TimeUnit.Minutes, previous) > 30)
                 {
-                    Target.ForceExitUFODueToLandingFailure(sims);
+                    abduct.Target.ForceExitUFODueToLandingFailure(sims);
                     break;
                 }
             }
 
-            mFromInventory = (mFromInventory || mNPCAbductor);
+            if (abduct.mFromInventory)
+                abduct.mFromInventory = abduct.Actor.Inventory.TryToAdd(abduct.Target);
 
-            if (mFromInventory)
-                mFromInventory = Actor.Inventory.TryToAdd(Target);
-            else
-                Target.ParkUFO(Actor.LotHome, Actor);
+            if (!abduct.mFromInventory)
+                abduct.Target.ParkUFO(abduct.Actor.LotHome, abduct.Actor);
 
             if (flag)
             {
-                if (mNPCAbductor)
+                if (abduct.mNPCAbductor)
                 {
-                    /*<NOTE> Apply new "Abducted" moodlet here </NOTE>*/
-                    ThoughtBalloonManager.BalloonData data = new ThoughtBalloonManager.BalloonData(Actor.GetThumbnailKey());
+                    abduct.SimToAbduct.BuffManager.AddElement(BuffsAndTraits.sAbductedEx, Origin.FromAbduction);
+                    ThoughtBalloonManager.BalloonData data = new ThoughtBalloonManager.BalloonData(abduct.Actor.GetThumbnailKey());
                     data.BalloonType = ThoughtBalloonTypes.kThoughtBalloon;
                     data.LowAxis = ThoughtBalloonAxis.kDislike;
                     data.Duration = ThoughtBalloonDuration.Medium;
                     data.mPriority = ThoughtBalloonPriority.High;
-                    SimToAbduct.ThoughtBalloonManager.ShowBalloon(data);
-                    SimToAbduct.PlayReaction(RandomUtil.GetRandomObjectFromList(AlienUtils.kAbductionReactions), ReactionSpeed.NowOrLater);
-                    SimToAbduct.ShowTNSIfSelectable(CarUFO.LocalizeString(SimToAbduct.IsFemale, "NPCAbductionTNS", new object[] { SimToAbduct.ObjectId }),
-                        StyledNotification.NotificationStyle.kGameMessagePositive, ObjectGuid.InvalidObjectGuid, SimToAbduct.ObjectId);
+                    abduct.SimToAbduct.ThoughtBalloonManager.ShowBalloon(data);
+                    abduct.SimToAbduct.PlayReaction(RandomUtil.GetRandomObjectFromList(AlienUtils.kAbductionReactions), ReactionSpeed.NowOrLater);
+                    StyledNotification.Show(new StyledNotification.Format(CarUFO.LocalizeString(abduct.SimToAbduct.IsFemale, "NPCAbductionTNS",
+                        new object[] { abduct.SimToAbduct.ObjectId }), StyledNotification.NotificationStyle.kGameMessagePositive));
                 }
                 else
-                    Sim.ForceSocial(Actor, SimToAbduct, "Reveal Prank", InteractionPriorityLevel.High, true);
+                    Sim.ForceSocial(abduct.Actor, abduct.SimToAbduct, "Reveal Prank", InteractionPriorityLevel.High, true);
+
+                abduct.FinishLinkedInteraction(true);
             }
 
-            StandardExit();
+            abduct.StandardExit();
 
             if (flag)
-                WaitForSyncComplete();
+                abduct.WaitForSyncComplete();
 
             return flag;
+        }
+
+        public new bool TryPlaceJigOnLot()
+        {
+            Vector3 position = SimToAbduct.Position;
+            Vector3 randomDirXZ = RandomUtil.GetRandomDirXZ();
+            FindGoodLocationBooleans fglBools = FindGoodLocationBooleans.Routable | FindGoodLocationBooleans.AllowOnStreets 
+                | FindGoodLocationBooleans.AllowOnSideWalks | FindGoodLocationBooleans.AllowOffLot;
+
+            if (!GlobalFunctions.FindGoodLocationNearby(mJig, ref position, ref randomDirXZ, 0f, GlobalFunctions.FindGoodLocationStrategies.All, fglBools))
+                return false;
+
+            mJig.SetPosition(position);
+            mJig.SetForward(randomDirXZ);
+            mJig.SetOpacity(0f, 0f);
+            mJig.AddToWorld();
+
+            return true;
+        }
+
+        public new bool TryPlaceJigOnRoad()
+        {
+            Vector3 zero = Vector3.Zero;
+            Quaternion identity = Quaternion.Identity;
+
+            if (!World.FindPlaceOnRoad(mJig.Proxy, SimToAbduct.Position, 0u, ref zero, ref identity))
+                return false;
+
+            mJig.SetPosition(zero);
+            Vector3 v = identity.ToMatrix().at.V3;
+            mJig.SetForward(v);
+            mJig.SetOpacity(0f, 0f);
+            mJig.AddToWorld();
+
+            return true;
         }
     }
 }

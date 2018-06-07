@@ -36,7 +36,6 @@ namespace NRaas.AliensSpace.Interactions
     public class HaveAlienBabyHome : Interaction<Sim, Lot>, Common.IPreLoad, Common.IAddInteraction
     {
         public static readonly InteractionDefinition Singleton = new Definition();
-
         public List<Sim> mNewborns;
         public static ulong kIconNameHash = ResourceUtils.HashString64("hud_interactions_baby");
 
@@ -44,7 +43,7 @@ namespace NRaas.AliensSpace.Interactions
         {
             public override string GetInteractionName(Sim actor, Lot target, InteractionObjectPair iop)
             {
-                return Common.Localize("HaveAlienBabyHome:MenuName");
+                return Localization.LocalizeString("Gameplay/Core/Lot/HaveBabyHome:InteractionName", new object[0]);
             }
 
             public override bool Test(Sim actor, Lot target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
@@ -55,7 +54,7 @@ namespace NRaas.AliensSpace.Interactions
 
         public void AddInteraction(Common.InteractionInjectorList interactions)
         {
-            interactions.Add<Sim>(Singleton);
+            //interactions.Add<Sim>(Singleton);
         }
 
         public override void Cleanup()
@@ -107,15 +106,17 @@ namespace NRaas.AliensSpace.Interactions
             return new ThumbnailKey(new ResourceKey(kIconNameHash, 796721156u, 0u), ThumbnailSize.Medium);
         }
 
-        public void GetNewborns()
-        {
-            AlienPregnancy pregnancy = Actor.SimDescription.Pregnancy as AlienPregnancy;
-            Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");
-            mNewborns = pregnancy.CreateNewborns(0f, Actor.IsSelectable, true);
-        }
-
         public void OnPreLoad()
         {
+            InteractionTuning tuning = Tunings.GetTuning<Lot, Pregnancy.HaveBabyHome.Definition>();
+
+            if (tuning != null)
+            {
+                tuning.Availability.Teens = true;
+                tuning.Availability.Adults = true;
+                tuning.Availability.Elders = true;
+            }
+
             Tunings.Inject<Sim, Pregnancy.HaveBabyHome.Definition, Definition>(true);
         }
 
@@ -173,7 +174,8 @@ namespace NRaas.AliensSpace.Interactions
                 }
 
                 AlienPregnancy pregnancy = Actor.SimDescription.Pregnancy as AlienPregnancy;
-                GetNewborns();
+                Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");
+                mNewborns = pregnancy.CreateNewborns(0f, Actor.IsSelectable, true);
                 mCurrentStateMachine = StateMachineClient.Acquire(Actor, "Pregnancy");
                 mCurrentStateMachine.SetActor("x", Actor);
 

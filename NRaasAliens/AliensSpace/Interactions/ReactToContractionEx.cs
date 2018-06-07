@@ -45,7 +45,7 @@ namespace NRaas.AliensSpace.Interactions
         {
             public override string GetInteractionName(Sim actor, Sim target, InteractionObjectPair iop)
             {
-                return Common.Localize("ReactToContractionEx:MenuName");
+                return Localization.LocalizeString("Gameplay/ActorSystems/Pregnancy:ReactToContraction", new object[0]);
             }
 
             public override bool Test(Sim actor, Sim target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
@@ -58,24 +58,19 @@ namespace NRaas.AliensSpace.Interactions
         {
             Relationship relationship = Actor.GetRelationship(Target, false);
 
-            // <WISHLIST> May checks for good Samaritan Sims </WISHLIST>
-            if (relationship == null)
+            if (relationship != null && relationship.AreEnemies())
                 return false;
 
             // <WISHLIST> May checks for good Samaritan Sims </WISHLIST>
-            if (!relationship.AreFriends())
+            if (relationship == null || !relationship.AreFriends())
                 return false;
-
-            // Check if actor is married to target, and on good terms
+ 
             if (relationship.MarriedInGame)
                 return true;
-            // Check if actor is parent of target
             else if (Target.Genealogy.IsParentOrStepParent(Actor.Genealogy))
                 return true;
-            // Check if actor is blood related to target (children and extended family)
             else if (Actor.IsBloodRelated(Target))
                 return true;
-            // Check if actor and target are roommates
             else if (relationship.AreRoommates())
                 return true;
 
@@ -84,6 +79,16 @@ namespace NRaas.AliensSpace.Interactions
 
         public void OnPreLoad()
         {
+            InteractionTuning tuning = Tunings.GetTuning<Sim, Pregnancy.ReactToContraction.Definition>();
+
+            if (tuning != null)
+            {
+                tuning.Availability.Children = true;
+                tuning.Availability.Teens = true;
+                tuning.Availability.Adults = true;
+                tuning.Availability.Elders = true;
+            }
+
             Tunings.Inject<Sim, Pregnancy.ReactToContraction.Definition, Definition>(true);
         }
 

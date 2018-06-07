@@ -54,6 +54,7 @@ namespace NRaas.AliensSpace.Interactions
                 if (AlienUtilsEx.GetValidAbductees(target) == null)
                 {
                     greyedOutTooltipCallback = CreateTooltipCallback("No valid abductees.");
+                    return false;
                 }
 
                 return true;

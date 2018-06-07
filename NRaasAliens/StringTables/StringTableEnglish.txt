@@ -195,9 +195,6 @@
 <STR>You were the product of an alien pregnancy.</STR>
 
 
-<KEY>NRaas.Aliens.GoToHospitalEx:MenuName</KEY>
-<STR>Go to Hospital</STR>
-
 <KEY>NRaas.Aliens.TakeToHospitalEx:MenuName</KEY>
 <STR>Take to Hospital</STR>
 
@@ -206,12 +203,6 @@
 
 <KEY>NRaas.Aliens.HaveAlienBabyHospital:MenuName</KEY>
 <STR>Have Baby at Hospital</STR>
-
-<KEY>NRaas.Aliens.HaveAlienBabyHome:MenuName</KEY>
-<STR>Have Baby at Home</STR>
-
-<KEY>NRaas.Aliens.AbductSimAEx:MenuName</KEY>
-<STR>Abduct a Sim</STR>
 
 <KEY>NRaas.Aliens.ReturnAlienBabyEx:MenuName</KEY>
 <STR>Return Baby</STR>

@@ -4,8 +4,8 @@ using NRaas.CommonSpace.Helpers;
 using Sims3.Gameplay;
 using Sims3.Gameplay.Abstracts;
 using Sims3.Gameplay.Actors;
-using Sims3.Gameplay.ActorSystems.Children;
 using Sims3.Gameplay.ActorSystems;
+using Sims3.Gameplay.ActorSystems.Children;
 using Sims3.Gameplay.Autonomy;
 using Sims3.Gameplay.Careers;
 using Sims3.Gameplay.CAS;
@@ -36,7 +36,6 @@ namespace NRaas.AliensSpace.Interactions
     public class HaveAlienBabyHospital : RabbitHole.RabbitHoleInteraction<Sim, RabbitHole>, Common.IPreLoad, Common.IAddInteraction
     {
         public static readonly InteractionDefinition Singleton = new Definition();
-
         public bool BabyShouldBeBorn = false;
         public bool BabyBorn = false;
         public List<Sim> mNewborns = null;
@@ -56,7 +55,36 @@ namespace NRaas.AliensSpace.Interactions
 
         public void AddInteraction(Common.InteractionInjectorList interactions)
         {
-            interactions.Add<Sim>(Singleton);
+            interactions.Add<RabbitHole>(Singleton);
+        }
+
+        public override bool BeforeEnteringRabbitHole()
+        {
+            CancellableByPlayer = false;
+            Sim dad = Actor.SimDescription.Pregnancy.mDad;
+            bool flag = true;
+
+            if (dad != null && !dad.HasBeenDestroyed && !BabyShouldBeBorn)
+            {
+                Relationship relationship = Relationship.Get(Actor, dad, false);
+
+                if (relationship == null || relationship.LTR.Liking < Pregnancy.HaveBabyHospital.kLikingGateToGoToHospital)
+                    flag = false;
+
+                if (flag)
+                    SendToHospital(dad);
+            }
+
+            if (HasFollowers())
+            {
+                foreach (Sim current in SimFollowers)
+                {
+                    if (current != dad || !flag)
+                        SendToHospital(current);
+                }
+            }
+
+            return base.BeforeEnteringRabbitHole();
         }
 
         public override void Cleanup()
@@ -68,7 +96,7 @@ namespace NRaas.AliensSpace.Interactions
                 if (!Actor.SimDescription.IsVampire)
                     Actor.Motives.CreateMotive(CommodityKind.Hunger);
 
-                BabyShouldBeBorn = true;
+                BabyShouldBeBorn = false;
                 BabyBorn = true;
             }
             catch (ResetException)
@@ -80,7 +108,7 @@ namespace NRaas.AliensSpace.Interactions
                 if (wasPregnant)
                     Common.Exception(Actor, Target, e);
                 else
-                    Common.DebugException(Actor, Target, e);
+                    Common.Exception(Actor, Target, e);
             }
             finally
             {
@@ -108,14 +136,19 @@ namespace NRaas.AliensSpace.Interactions
                     return false;
 
                 msg += "B";
+
                 AlienPregnancy pregnancy = Actor.SimDescription.Pregnancy as AlienPregnancy;
                 Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");
                 mNewborns = pregnancy.CreateNewborns(Pregnancy.HaveBabyHospital.kBonusMoodPointsForHospitalBirth, Actor.IsSelectable, false);
+
                 msg += "C";
+
                 Actor.SimDescription.SetPregnancy(0f);
                 List<Sim> followers = SimFollowers;
                 pregnancy.PregnancyComplete(mNewborns, followers);
+
                 msg += "D";
+
                 SpeedTrap.Sleep(0x0);
                 List<Sim> list2 = new List<Sim>();
                 list2.Add(Actor);
@@ -181,7 +214,24 @@ namespace NRaas.AliensSpace.Interactions
 
         public void OnPreLoad()
         {
+            InteractionTuning tuning = Tunings.GetTuning<Sim, Pregnancy.HaveBabyHospital.Definition>();
+
+            if (tuning != null)
+            {
+                tuning.Availability.Teens = true;
+                tuning.Availability.Adults = true;
+                tuning.Availability.Elders = true;
+            }
+
             Tunings.Inject<Sim, Pregnancy.HaveBabyHospital.Definition, Definition>(true);
+        }
+
+        public void SendToHospital(Sim sim)
+        {
+            GoToHospitalEx goToHospital = GoToHospitalEx.Singleton.CreateInstance(Target, sim, 
+                new InteractionPriority(InteractionPriorityLevel.Pregnancy), false, true) as GoToHospitalEx;
+            goToHospital.haveBabyInstance = this;
+            sim.InteractionQueue.AddNext(goToHospital);
         }
     }
 }
