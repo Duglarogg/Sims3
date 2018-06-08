@@ -19,7 +19,7 @@ namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {
-            return Aliens.Settings.mBaseAbductionChance > 0 || Aliens.Settings.mBaseVisitChance > 0;
+            return (Aliens.Settings.mBaseAbductionChance > 0 || Aliens.Settings.mBaseVisitChance > 0) && Aliens.Settings.mSpaceRockFoundBonus > 0;
         }
 
         public override string GetTitlePrefix()
@@ -29,6 +29,9 @@ namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 
         protected override int Validate(int value)
         {
+            if (value < Aliens.Settings.mSpaceRockFoundBonus)
+                value = Aliens.Settings.mSpaceRockFoundBonus;
+
             if (value < 0)
                 return 0;
 

@@ -15,7 +15,7 @@ namespace NRaas
     {
         // General Settings
         [Tunable, TunableComment("Whether debug messages and interactions are enabled")]
-        public static bool kDebugging = true;
+        public static bool kDebugging = false;
 
         [Tunable, TunableComment("Whether or not to link alien activity to Story Progression options")]
         public static bool kLinkToStoryProgression = false;
@@ -48,6 +48,9 @@ namespace NRaas
 
         [Tunable, TunableComment("Maximum possible number of occult life states an NPC alien can have.")]
         public static int kMaxAlienOccults = 1;
+
+        [Tunable, TunableComment("Chance of an NPC alien having one or more occult life states")]
+        public static int kOccultAlienChance = 25;
 
             
         // Alien Activity Settings

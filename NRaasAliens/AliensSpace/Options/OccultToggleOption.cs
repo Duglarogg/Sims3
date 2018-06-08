@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options
 {
-    public abstract class AllowedAlienOccultsOption : ToggleSettingOption<OccultTypes>
+    public abstract class OccultToggleOption : ToggleSettingOption<OccultTypes>
     {
         public override string Name => OccultTypeHelper.GetLocalizedName(Type);
 

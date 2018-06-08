@@ -4,15 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace NRaas.AliensSpace.Options.AlienGeneration.AllowedAlienAges
+namespace NRaas.AliensSpace.Options.AlienPregnancy.AllowedBabyOccults
 {
-    public class ListingOption : OptionList<IAllowedAlienAgesOption>, IPrimaryOption<GameObject>, IAliensOption
+    public class ListingOption : OptionList<IAllowedBabyOccultsOption>, IPrimaryOption<GameObject>, IAlienPregnancyOption
     {
         public override ITitlePrefixOption ParentListingOption => null;
 
         public override string GetTitlePrefix()
         {
-            return "AllowedAlienAges";
+            return "AllowedBabyOccults";
         }
     }
 }

@@ -6,7 +6,7 @@ using Sims3.UI.Hud;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration.AllowedAlienOccults
 {
-    public abstract class AllowedAlienOccultsOption : Options.AllowedAlienOccultsOption
+    public abstract class AllowedAlienOccultsOption : OccultToggleOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 

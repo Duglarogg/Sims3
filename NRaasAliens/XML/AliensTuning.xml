@@ -24,6 +24,21 @@
 
     <kFutureSkill value="10,10" />
       <!-- Min and max levels of the Advanced Technology skill that NPC aliens obtain. -->
+    
+    <kAlienScience value="False" />
+      <!-- Whether or not NPC aliens start with levels in the Science skill. -->
+    
+    <kScienceSkill value="7,8" />
+      <!-- Min and max levels of the Science skill that NPC aliens obtain. -->
+    
+    <kAllowOccultAliens value="False" />
+      <!-- Whether or not NPC aliens can have one or more occult life states. -->
+    
+    <kMaxAlienOccults value="1" />
+      <!-- Max possible number of occult life states an NPC alien can receive. -->
+    
+    <kOccultAlienChance value="25" />
+      <!-- Chance that an NPC alien receives occult life states. -->
 
 
     <!-- Alien Activity Settings -->
@@ -93,7 +108,12 @@
       <!-- Chance for a Sim to get a backache during an alien pregnancy. -->
 
     <kNumPuddles value ="2" />
-      <!-- Number of puddles to generate when labor begins. -->    
-
+      <!-- Number of puddles to generate when labor begins. -->
+    
+    <kAllowOccultBabies value="false" />
+      <!-- Whether or not alien babies can inherit occult life states. -->
+    
+    <kMaxBabyOccults value="1" />
+      <!-- Max possible number of occult life states an alien baby can inherit. -->
   </CurrentTuning>
 </base>

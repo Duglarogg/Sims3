@@ -399,6 +399,18 @@
     <Compile Include="AliensSpace\Options\AlienGeneration\MaxAlienOccultsSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\OccultAlienChanceSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\ScienceSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowedBabyOccultsOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowedWerewolfSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowFairySetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowGenieSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowGhostSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowImaginaryFriendSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowMermaidSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowPlantSimSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowVampireSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowWitchSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\IAllowedBabyOccultsOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\ListingOption.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowOccultBabiesSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowTeensSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\BackacheChanceSetting.cs" />
@@ -462,8 +474,6 @@
       <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0xF7C3ADE896D4E765_UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -41,37 +41,37 @@
 <KEY>NRaas.Aliens.BaseActivityChance:MenuName</KEY>
 <STR>Base Activity Chance</STR>
 <KEY>NRaas.Aliens.BaseActivityChance:Prompt</KEY>
-<STR>Enter the base chance [0 - 100] that alien activity occurs on any given hour when aliens are active (enter 0 to disable):</STR>
+<STR>Enter the base chance that alien activity occurs on any given hour when aliens are active (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.BaseAbductionChance:MenuName</KEY>
 <STR>Base Abduction Chance</STR>
 <KEY>NRaas.Aliens.BaseAbductionChance:Prompt</KEY>
-<STR>Enter the base chance [0 - 100] that aliens attempt an abduction (enter 0 to disable):</STR>
+<STR>Enter the base chance that aliens attempt an abduction (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.BaseVisitChance:MenuName</KEY>
 <STR>Base Visitation Chance</STR>
 <KEY>NRaas.Aliens.BaseVisitChance:Prompt</KEY>
-<STR>Enter the base chance [0 - 100] that aliens visit the activce household (enter 0 to disable):</STR>
+<STR>Enter the base chance that aliens visit the activce household (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.EarliestHour:MenuName</KEY>
 <STR>Starting Time</STR>
 <KEY>NRaas.Aliens.EarliestHour:Prompt</KEY>
-<STR>Enter the hour of the day [0 - 23] that aliens become active:</STR>
+<STR>Enter the hour of the day that aliens become active:</STR>
 
 <KEY>NRaas.Aliens.ActivityWindow:MenuName</KEY>
 <STR>Activity Window</STR>
 <KEY>NRaas.Aliens.ActivityWindow:Prompt</KEY>
-<STR>Enter the number of hours [1 - 24] during which aliens are active (enter 24 for always active):</STR>
+<STR>Enter the number of hours during which aliens are active (enter 24 for always active):</STR>
 
 <KEY>NRaas.Aliens.ActivityCooldown:MenuName</KEY>
 <STR>Cooldown</STR>
 <KEY>NRaas.Aliens.ActivityCooldown:Prompt</KEY>
-<STR>Enter the minimum number of hours [0 - 24] that must pass between alien activities:</STR>
+<STR>Enter the minimum number of hours that must pass between alien activities:</STR>
 
 <KEY>NRaas.Aliens.AbductionDuration:MenuName</KEY>
 <STR>Abduction Duration</STR>
 <KEY>NRaas.Aliens.AbductionDuration:Prompt</KEY>
-<STR>Enter the duration (in mintues) [1 - 120] of an alien abduction:</STR>
+<STR>Enter the duration (in mintues) of an alien abduction:</STR>
 
 
 <KEY>NRaas.Aliens.AlienActivityBonuses:MenuName</KEY>
@@ -80,32 +80,32 @@
 <KEY>NRaas.Aliens.HighLTRBonus:MenuName</KEY>
 <STR>High LTR Bonus</STR>
 <KEY>NRaas.Aliens.HighLTRBonus:Prompt</KEY>
-<STR>Enter the additional chance [0 - 100] of an alien visit for having a high LTR with an alien:</STR>
+<STR>Enter the additional chance of an alien visit for having a high LTR with an alien (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.HighLTRThreshold:MenuName</KEY>
 <STR>High LTR Threshold</STR>
 <KEY>NRaas.Aliens.HighLTRThreshold:Prompt</KEY>
-<STR>Enter the minimum LTR [0 - 100] needed to earn the high LTR bonus:</STR>
+<STR>Enter the minimum LTR needed to earn the high LTR bonus:</STR>
 
 <KEY>NRaas.Aliens.MaxSpaceRockBonus:MenuName</KEY>
 <STR>Maximum Space Rock Found Bonus</STR>
 <KEY>NRaas.Aliens.MaxSpaceRockBonus:Prompt</KEY>
-<STR>Enter the maximum additional chance [0 - 100] of activity for finding space rocks:</STR>
+<STR>Enter the maximum additional chance of activity for finding space rocks:</STR>
 
 <KEY>NRaas.Aliens.OffspringBonus:MenuName</KEY>
 <STR>Offspring Bonus</STR>
 <KEY>NRaas.Aliens.OffspringBonus:Prompt</KEY>
-<STR>Enter the additional chance [0 - 100] of a visitation for being an alien's offspring:</STR>
+<STR>Enter the additional chance of a visitation for being an alien's offspring:</STR>
 
 <KEY>NRaas.Aliens.SpaceRockBonus:MenuName</KEY>
 <STR>Space Rocks on Lot Bonus</STR>
 <KEY>NRaas.Aliens.SpaceRockBonus:Prompt</KEY>
-<STR>Enter the additional chance [0 - 100] of a visitation for having space rocks on your lot:</STR>
+<STR>Enter the additional chance of a visitation for having space rocks on your lot (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.SpaceRockFoundBonus:MenuName</KEY>
 <STR>Space Rocks Found Bonus</STR>
 <KEY>NRaas.Aliens.SpaceRockFoundBonus:Prompt</KEY>
-<STR>Enter the additional chance [0 - 100] of activity for each space rock found:</STR>
+<STR>Enter the additional chance of activity for each space rock found (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.SpaceRockThreshold:MenuName</KEY>
 <STR>Space Rocks on Lot Threshold</STR>
@@ -115,7 +115,7 @@
 <KEY>NRaas.Aliens.TelescopeBonus:MenuName</KEY>
 <STR>Telescope Use Bonus</STR>
 <KEY>NRaas.Aliens.TelescopeBonus:Prompt</KEY>
-<STR>Enter the additional chance [0 - 100] of activity for using a telescope:</STR>
+<STR>Enter the additional chance of activity for using a telescope (enter 0 to disable):</STR>
 
 
 <KEY>NRaas.Aliens.AlienPregnancy:MenuName</KEY>
@@ -127,17 +127,17 @@
 <KEY>NRaas.Aliens.BackacheChance:MenuName</KEY>
 <STR>Backache Chance</STR>
 <KEY>NRaas.Aliens.BackacheChance:Prompt</KEY>
-<STR>Enter the chance [0 - 100] of a Sim getting a backache during an alien pregnancy (enter 0 to disable):</STR>
+<STR>Enter the chance of a Sim getting a backache during an alien pregnancy (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.LaborLength:MenuName</KEY>
 <STR>Labor Length</STR>
 <KEY>NRaas.Aliens.LaborLength:Promp</KEY>
-<STR>Enter the duration (in hours) of the labor phase for alien pregnancies:</STR>
+<STR>Enter the duration (in hours) of the labor phase for alien pregnancies (minimum 1):</STR>
 
 <KEY>NRaas.Aliens.PregnancyChance:MenuName</KEY>
 <STR>Pregnancy Chance</STR>
 <KEY>NRaas.Aliens.PregnancyChance:Prompt</KEY>
-<STR>Enter the base chance [0 -100] of a Sim being impregnated during an abduction (enter 0 to disable):</STR>
+<STR>Enter the base chance of a Sim being impregnated during an abduction (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.PregnancyLength:MenuName</KEY>
 <STR>Pregnancy Length</STR>
@@ -147,10 +147,13 @@
 <KEY>NRaas.Aliens.Puddles:MenuName</KEY>
 <STR>Puddles</STR>
 <KEY>NRaas.Aliens.Puddles:Prompt</KEY>
-<STR>Enter the number of puddles to spawn at the start of the labor phase for alien pregnancies:</STR>
+<STR>Enter the number of puddles to spawn at the start of the labor phase for alien pregnancies (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.UseFertility:MenuName</KEY>
 <STR>Use Fertility</STR>
+
+<KEY>NRaas.Aliens.AllowedBabyOccults:MenuName</KEY>
+<STR>Valid Baby Occults</STR>
 
 
 <KEY>NRaas.Aliens.AlienGeneration:MenuName</KEY>
@@ -208,7 +211,7 @@
 <KEY>Gameplay/Excel/Buffs/BuffList:NRaasAlienBabyIsComing</KEY>
 <STR>Baby is Coming!</STR>
 <KEY>Gameplay/Excel/Buffs/BuffList:NRaasAlienBabyIsComingDescription</KEY>
-<STR>Your future alien overlord is eager to come out and meet you.  Hail!</STR>
+<STR>Your future alien overlord is eager to meet you.  Hail to the overlord!</STR>
 
 <KEY>Gameplay/Excel/Traits/TraitList:NRaasAlienChild</KEY>
 <STR>Alien Child (Hidden)</STR>
