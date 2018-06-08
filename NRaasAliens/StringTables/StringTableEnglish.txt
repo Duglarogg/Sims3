@@ -185,6 +185,26 @@
 <KEY>NRaas.Aliens.Science:Prompt</KEY>
 <STR>Enter the minimum and maximum possible Science skill levels for NPC aliens:</STR>
 
+<KEY>NRaas.Aliens.Spellcraft:MenuName</KEY>
+<STR>Alchemy Skill</STR>
+<KEY>NRaas.Aliens.Spellcraft:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Alchemy skill levels for NPC alien witches:</STR>
+
+<KEY>NRaas.Aliens.FairyMagic:MenuName</KEY>
+<STR>Fairy Magic Skill</STR>
+<KEY>NRaas.Aliens.FairyMagic:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Fairy Magic skill levels for NPC alien fairies:</STR>
+
+<KEY>NRaas.Aliens.Lycanthropy:MenuName</KEY>
+<STR>Lycanthropy Skill</STR>
+<KEY>NRaas.Aliens.Lycanthropy:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Lycanthropy skill levels for NPC alien werewolves:</STR>
+
+<KEY>NRaas.Aliens.Gardening:MenuName</KEY>
+<STR>Gardening Skill</STR>
+<KEY>NRaas.Aliens.Gardening:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Gardening skill levels for NPC alien fairies and plant Sims:</STR>
+
 <KEY>NRaas.Aliens.AllowOccultAliens:MenuName</KEY>
 <STR>Occult Aliens</STR>
 

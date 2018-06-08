@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" ?>
-<Traits>
+<traits>
   <TraitList>
     <Name></Name>
     <Description></Description>
     <Hex></Hex>
-    <CodeVersion>BaseGame</CodeVersion>
+    <CodeVersion>EP8</CodeVersion>
     <AgeSpeciesVisible>None</AgeSpeciesVisible>
     <SetNumbers></SetNumbers>
     <Points>0</Points>
@@ -55,6 +55,6 @@
   <TraitList>
     <Name>NRaasAlienChild</Name>
     <Description>NRaasAlienChildDescription</Description>
-    <Hex>NRaasAlienChild=63C2B89420FEAA2B</Hex>
+    <Hex>NRaasAlienChild=0x63C2B89420FEAA2B</Hex>
   </TraitList>
-</Traits>
+</traits>

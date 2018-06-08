@@ -23,6 +23,11 @@ namespace NRaas.AliensSpace
         public int[] mHandinessSkill = AliensTuning.kHandinessSkill;
         public int[] mFutureSkill = AliensTuning.kFutureSkill;
         public int[] mScienceSkill = AliensTuning.kScienceSkill;
+        public int[] mFairyMagicSkill = AliensTuning.kFairyMagicSkill;
+        public int[] mLycanthropySkill = AliensTuning.kLycanthropySkill;
+        public int[] mSpellcraftSkill = AliensTuning.kSpellcraftSkill;
+        public int[] mSpellcastingSkill = AliensTuning.kSpellcastingSkill;
+        public int[] mGardeningSkill = AliensTuning.kGardeningSkill;
         public bool mAlienScience = AliensTuning.kAlienScience;
         public bool mAllowOccultAliens = AliensTuning.kAllowOccultAliens;
         public int mMaxAlienOccults = AliensTuning.kMaxAlienOccults;

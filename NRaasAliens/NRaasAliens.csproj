@@ -370,6 +370,7 @@
     <Compile Include="AliensSpace\Options\AlienActivity\IAlienActivityOption.cs" />
     <Compile Include="AliensSpace\Options\AlienActivity\ListingOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AdvancedTechSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AlchemySetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AlienScienceSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\AllowAdultSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\AllowedAlienAgeOption.cs" />
@@ -391,14 +392,18 @@
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\IAllowedAlienOccultsOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\ListingOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowOccultAliensSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\FairyMagicSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\FutureSimSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\GardeningSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\HandinessSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\IAliensOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\ListingOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\LogicSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\LycanthropySetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\MaxAlienOccultsSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\OccultAlienChanceSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\ScienceSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\SpellcastingSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowedBabyOccultsOption.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowedWerewolfSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\AllowFairySetting.cs" />
@@ -426,6 +431,7 @@
     <Compile Include="AliensSpace\Options\OccultToggleOption.cs" />
     <Compile Include="AliensSpace\Options\OptionItem.cs" />
     <Compile Include="AliensSpace\Options\OptionList.cs" />
+    <Compile Include="AliensSpace\Options\SkillRangeOption.cs" />
     <Compile Include="AliensSpace\Options\ToggleSettingOption.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />

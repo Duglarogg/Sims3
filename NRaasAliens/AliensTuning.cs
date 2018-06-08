@@ -43,6 +43,21 @@ namespace NRaas
         [Tunable, TunableComment("Min and max Science skill levels for aliesn")]
         public static int[] kScienceSkill = new int[] { 7, 8 };
 
+        [Tunable, TunableComment("Min and max Fairy Magic skill levels for alien fairies.")]
+        public static int[] kFairyMagicSkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Min and max Lycanthropy skill levels for alien werewolves.")]
+        public static int[] kLycanthropySkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Min and max Alchemy skill levels for alien witches.")]
+        public static int[] kSpellcraftSkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Min and max Spellcasting skill levels for alien witches.")]
+        public static int[] kSpellcastingSkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Min and max Gardening skill level for alien fairies and plantSims.")]
+        public static int[] kGardeningSkill = new int[] { 3, 6 };
+
         [Tunable, TunableComment("Whether or not NPC aliens can have an occult life state.")]
         public static bool kAllowOccultAliens = false;
 

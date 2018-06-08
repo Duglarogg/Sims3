@@ -1,4 +1,5 @@
-﻿using Sims3.Gameplay.Abstracts;
+﻿using NRaas.CommonSpace.Helpers;
+using Sims3.Gameplay.Abstracts;
 using Sims3.Gameplay.Actors;
 using Sims3.Gameplay.ActorSystems;
 using Sims3.Gameplay.Autonomy;
@@ -24,13 +25,16 @@ using System.Text;
 
 /* <NOTES>
  *  static AlienUtilsEx()
- *      Setting valid ages for NPC alien generation could be done through tuning files instead
+ *      - Setting valid ages for NPC alien generation could be done through tuning files instead
+ *      - The alarm for alien activity may be converted to singular, hourly repeating alarm instead
+ *        of 24 daily alarms (one for each hour of the day).
  *      
  *  CanASimBeAbucted(...)
- *      Currently not referenced by anything; candidate for culling.
+ *      - Currently not referenced by anything; candidate for culling.
  *      
  *  MakeAlien(...)
- *      May make this method private, as it should not be called outside AlienRefreshCallback and MakeAlienBaby methods
+ *      - May make this method private, as it should not be called outside AlienRefreshCallback and MakeAlienBaby methods
+ *      - Add checks for occult aliens
  *
  *  ResetAlienActivityAlarm()
  *      May need to uncomment a for-loop that clears outs the sAlienActivityAlarm array before creating new alarms
@@ -66,21 +70,10 @@ namespace NRaas.AliensSpace.Helpers
 
         static AlienUtilsEx()
         {
-            // <NOTE> This could be done through tuning files instead
-            AlienUtils.kAlienHouseholdValidAges = new CASAgeGenderFlags[]
-            {
-                CASAgeGenderFlags.Teen,
-                CASAgeGenderFlags.YoungAdult,
-                CASAgeGenderFlags.Adult,
-                CASAgeGenderFlags.Elder
-            };
-
-            /*
             for (int i = 0; i < 24; i++)
             {
                 sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
             }
-            */
         }
 
         public static void AlienActivityCallback()
@@ -89,8 +82,8 @@ namespace NRaas.AliensSpace.Helpers
 
             if (cooldown > 0)
             {
-                cooldown = -1;
-                Common.DebugNotify("Alien Activity: On Cooldown: " + cooldown.ToString() + " hours to go");
+                cooldown -= 1;
+                Common.DebugNotify("Alien Activity: On Cooldown - " + cooldown.ToString() + " hours to go");
                 return;
             }
 
@@ -207,9 +200,33 @@ namespace NRaas.AliensSpace.Helpers
 
             if (Household.AlienHousehold.NumMembers < AlienUtils.kAlienHouseholdNumMembers)
             {
-                CASAgeGenderFlags age = RandomUtil.GetRandomObjectFromList(AlienUtils.kAlienHouseholdValidAges);
+                CASAgeGenderFlags age = RandomUtil.GetRandomObjectFromList(Aliens.Settings.mValidAlienAges);
                 CASAgeGenderFlags gender = RandomUtil.CoinFlip() ? CASAgeGenderFlags.Male : CASAgeGenderFlags.Female;
                 SimDescription description = MakeAlien(age, gender, GameUtils.GetCurrentWorld(), 1f, true);
+
+                if (Aliens.Settings.mAllowOccultAliens && RandomUtil.RandomChance(Aliens.Settings.mOccultAlienChance))
+                {
+                    int numOccults = RandomUtil.GetInt(1, Aliens.Settings.mMaxAlienOccults);
+                    List<OccultTypes> validOccults = new List<OccultTypes>(Aliens.Settings.mValidAlienOccults);
+
+                    for (int i = 0; i < numOccults; i++)
+                    {
+                        if (validOccults.Count == 0)
+                            break;
+
+                        OccultTypes type = RandomUtil.GetRandomObjectFromList(validOccults);
+
+                        if (type != OccultTypes.Ghost)
+                            OccultTypeHelper.Add(description, type, false, false);
+                        else
+                        {
+                            SimDescription.DeathType deathType = 
+                                RandomUtil.GetRandomObjectFromList((SimDescription.DeathType[])Enum.GetValues(typeof(SimDescription.DeathType)));
+                            Urnstones.SimToPlayableGhost(description, deathType);
+                        }
+                        validOccults.Remove(type);
+                    }
+                }
 
                 Skill element = null;
 
@@ -247,6 +264,43 @@ namespace NRaas.AliensSpace.Helpers
 
                     if (element != null)
                         element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mScienceSkill[0], Aliens.Settings.mScienceSkill[1]));
+                }
+
+                if (OccultTypeHelper.HasType(description, OccultTypes.Fairy) || OccultTypeHelper.HasType(description, OccultTypes.PlantSim))
+                {
+                    element = description.SkillManager.AddElement(SkillNames.Gardening);
+
+                    if (element != null)
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
+                }
+
+                if (OccultTypeHelper.HasType(description, OccultTypes.Fairy))
+                {
+                    element = description.SkillManager.AddElement(SkillNames.FairyMagic);
+
+                    if (element != null)
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFairyMagicSkill[0], Aliens.Settings.mFairyMagicSkill[1]));
+                }
+
+                if (OccultTypeHelper.HasType(description, OccultTypes.Werewolf))
+                {
+                    element = description.SkillManager.AddElement(SkillNames.Lycanthropy);
+
+                    if (element != null)
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLycanthropySkill[0], Aliens.Settings.mLycanthropySkill[1]));
+                }
+
+                if (OccultTypeHelper.HasType(description, OccultTypes.Witch))
+                {
+                    element = description.SkillManager.AddElement(SkillNames.Spellcasting);
+
+                    if (element != null)
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
+
+                    element = description.SkillManager.AddElement(SkillNames.Spellcraft);
+
+                    if (element != null)
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
                 }
 
                 Household.AlienHousehold.AddSilent(description);
@@ -815,7 +869,6 @@ namespace NRaas.AliensSpace.Helpers
 
             sAlienActivityAlarm = null;
 
-            /*
             for (int hour = 0; hour < 24; hour++)
             {
                 //  <NOTE> Uncomment this block if there are issues with the alarms
@@ -828,7 +881,6 @@ namespace NRaas.AliensSpace.Helpers
                 sAlienActivityAlarm[hour] = AlarmManager.Global.AddAlarmDay((float)hour, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
                     "Alien Activity Hourly Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
             }
-        */
         }
 
         private void ResetAlienRefreshAlarm()

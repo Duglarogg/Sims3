@@ -40,7 +40,22 @@
     <kOccultAlienChance value="25" />
       <!-- Chance that an NPC alien receives occult life states. -->
 
+    <kFairyMagicSkill value="3,6" />
+      <!-- Min and max levels of the Fairy Magic skill that NPC alien fairies obtain. -->
 
+    <kLycanthropySkill value="3,6" />
+      <!-- Min and max levels of the Lycanthropy skill that NPC alien werewolves obtain. -->
+
+    <kSpellcraftSkill value="3,6" />
+      <!-- Min and max levels of the Alchemy skill that NPC alien witches obtain. -->
+
+    <kSpellcastingSkill value="3,6" />
+      <!-- Min and max levels of the Spellcasting skill that NPC alien witches obtain. -->
+
+    <kGardeningSkill value="3,6" />
+      <!-- Min and max levles of the Gardening skill that NPC alien fairies and plantSims obtain. -->
+
+    
     <!-- Alien Activity Settings -->
     <kEarliestHour value="20" />
       <!-- Range(0 - 23): The hour of the day that aliens become active. -->
