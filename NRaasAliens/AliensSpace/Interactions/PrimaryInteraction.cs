@@ -18,7 +18,6 @@ namespace NRaas.AliensSpace.Interactions
         public override void AddInteraction(Common.InteractionInjectorList interactions)
         {
             interactions.AddRoot(Singleton);
-            //interactions.Add<Sim>(Singleton);
         }
 
         protected override bool Test(IActor actor, GameObject target, GameObjectHit hit, ref GreyedOutTooltipCallback greyedOutTooltipCallback)

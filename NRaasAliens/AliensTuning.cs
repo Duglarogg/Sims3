@@ -3,6 +3,7 @@ using Sims3.Gameplay.Roles;
 using Sims3.Gameplay.Services;
 using Sims3.Gameplay.Socializing;
 using Sims3.SimIFace;
+using Sims3.SimIFace.CAS;
 using Sims3.UI.Hud;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace NRaas
         public static bool kAlienScience = false;
 
         [Tunable, TunableComment("Min and max Science skill levels for aliesn")]
-        public static int[] kScienceSkill = new int[2] { 7, 8 };
+        public static int[] kScienceSkill = new int[] { 7, 8 };
 
         [Tunable, TunableComment("Whether or not NPC aliens can have an occult life state.")]
         public static bool kAllowOccultAliens = false;

@@ -2,7 +2,7 @@
 <Buffs>
   <BuffList>
     <Hex></Hex>
-    <SKU>BaseGame</SKU>
+    <SKU>EP8</SKU>
     <BuffName></BuffName>
     <BuffDescription></BuffDescription>
     <BuffHelpText></BuffHelpText>
@@ -29,13 +29,12 @@
     <Travel>False</Travel>
     <DisallowedOccults></DisallowedOccults>
     <JazzStateSuffix></JazzStateSuffix>
-    <SpeciesAvailability>All</SpeciesAvailability>
+    <SpeciesAvailability>Human</SpeciesAvailability>
     <Version>1</Version>
   </BuffList>
   <BuffList>
-    <Hex>Abducted=CFDEF00B5671CB3F</Hex>
-    <SKU>EP8</SKU>
-    <BuffName>Abducted</BuffName>
+    <Hex>NRaasAbductedEx=0xC4DB14A3558B7B27</Hex>
+    <BuffName>NRaasAbductedEx</BuffName>
     <BuffDescription>AbductedDescription</BuffDescription>
     <ThumbFilename>moodlet_abducted</ThumbFilename>
     <Category>Physical</Category>
@@ -43,27 +42,24 @@
     <EffectValue>-10</EffectValue>
     <TimeoutLength>600</TimeoutLength>
     <CustomClassName>NRaas.AliensSpace.Buffs.BuffAbductedEx, NRaasAliens</CustomClassName>
-    <SpeciesAvailability>Human</SpeciesAvailability>
   </BuffList>
   <BuffList>
-    <Hex>NRaasXenogenesis=65FC66045F97FFF8</Hex>
+    <Hex>NRaasXenogenesis=0x65FC66045F97FFF8</Hex>
     <BuffName>NRaasXenogenesis</BuffName>
     <BuffDescription>NRaasXenogenesisDescription</BuffDescription>
     <ThumbFilename>moodlet_hadspaceadventure</ThumbFilename>
-    <Category>Physical</Category>
+    <Category>Mental</Category>
     <AxisEffected>Happy</AxisEffected>
     <EffectValue>20</EffectValue>
     <Travel>True</Travel>
-    <SpeciesAvailability>Humans</SpeciesAvailability>
   </BuffList>
   <BuffList>
-    <Hex>NRaasAlienBabyIsComing=2FD2FE55F1B9C136</Hex>
+    <Hex>NRaasAlienBabyIsComing=0x2FD2FE55F1B9C136</Hex>
     <BuffName>NRaasAlienBabyIsComing</BuffName>
     <BuffDescription>NRaasAlienBabyIsComingDescription</BuffDescription>
     <ThumbFilename>moodlet_invader</ThumbFilename>
     <Category>Physical</Category>
     <AxisEffected>Uncomfortable</AxisEffected>
-    <EffectValue>0</EffectValue>
-    <SpeciesAvailability>Human</SpeciesAvailability>
+    <EffectValue>-40</EffectValue>
   </BuffList>
 </Buffs>

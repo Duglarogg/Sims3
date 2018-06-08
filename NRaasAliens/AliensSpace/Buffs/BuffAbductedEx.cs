@@ -18,7 +18,7 @@ namespace NRaas.AliensSpace.Buffs
 {
     public class BuffAbductedEx : SharedTemperatureBuffs
     {
-        private const ulong kGuid = 0xCFDEF00B5671CB3F;
+        private const ulong kGuid = 0xC4DB14A3558B7B27;
 
         public static ulong GUID => kGuid;
 

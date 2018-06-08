@@ -26,6 +26,13 @@ namespace NRaas.AliensSpace
         public bool mAlienScience = AliensTuning.kAlienScience;
         public bool mAllowOccultAliens = AliensTuning.kAllowOccultAliens;
         public int mMaxAlienOccults = AliensTuning.kMaxAlienOccults;
+        public List<CASAgeGenderFlags> mValidAlienAges = new List<CASAgeGenderFlags>()
+            {
+                CASAgeGenderFlags.Teen,
+                CASAgeGenderFlags.YoungAdult,
+                CASAgeGenderFlags.Adult,
+                CASAgeGenderFlags.Elder
+            };
         public List<OccultTypes> mValidAlienOccults = OccultTypeHelper.CreateListOfMissingOccults(
             new List<OccultTypes>()
             {

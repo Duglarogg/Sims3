@@ -349,6 +349,7 @@
     <Compile Include="AliensSpace\Interactions\ReturnAlienBabyEx.cs" />
     <Compile Include="AliensSpace\Interactions\ShowAlienPregnancy.cs" />
     <Compile Include="AliensSpace\Interactions\TakeToHospitalEx.cs" />
+    <Compile Include="AliensSpace\Options\AgeToggleOption.cs" />
     <Compile Include="AliensSpace\Options\AlienActivity\AbductionDurationSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienActivity\ActivityCooldownSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienActivity\ActivityWindowSetting.cs" />
@@ -370,6 +371,25 @@
     <Compile Include="AliensSpace\Options\AlienActivity\ListingOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AdvancedTechSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AlienScienceSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\AllowAdultSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\AllowedAlienAgeOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\AllowElderSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\AllowTeenSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\AllowYoungAdultSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\IAllowedAlienAgesOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienAges\ListingOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowedAlienOccultsOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowFairySetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowGenieSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowGhostSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowImaginaryFriendSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowMermaidSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowPlantSimSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowVampireSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowWerewolfSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowWitchSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\IAllowedAlienOccultsOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\ListingOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowOccultAliensSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\FutureSimSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\HandinessSetting.cs" />
@@ -377,6 +397,7 @@
     <Compile Include="AliensSpace\Options\AlienGeneration\ListingOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\LogicSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\MaxAlienOccultsSetting.cs" />
+    <Compile Include="AliensSpace\Options\AlienGeneration\OccultAlienChanceSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\ScienceSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowOccultBabiesSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\AllowTeensSetting.cs" />
@@ -390,8 +411,10 @@
     <Compile Include="AliensSpace\Options\AlienPregnancy\UseFertilitySetting.cs" />
     <Compile Include="AliensSpace\Options\DebuggingSetting.cs" />
     <Compile Include="AliensSpace\Options\IOptionItem.cs" />
+    <Compile Include="AliensSpace\Options\OccultToggleOption.cs" />
     <Compile Include="AliensSpace\Options\OptionItem.cs" />
     <Compile Include="AliensSpace\Options\OptionList.cs" />
+    <Compile Include="AliensSpace\Options\ToggleSettingOption.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
     <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
     <Compile Include="AliensSpace\TraitBooter.cs" />
@@ -438,6 +461,9 @@
     <Reference Include="0xF7C3ADE896D4E765_UI">
       <HintPath>..\..\..\NRaas Master 5-24-17\NRaas-master\Sims3\Compiler\0xF7C3ADE896D4E765_UI.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AliensSpace\Options\AlienPregnancy\AllowedBabyOccults\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,6 +16,18 @@
 <KEY>NRaas.Aliens.Version:Prompt</KEY>
 <STR>Version: {0.Number}</STR>
 
+<KEY>NRaas.Aliens.OptionList:OptionTitle</KEY>
+<STR>Option</STR>
+<KEY>NRaas.Aliens.OptionList:OptionTooltip</KEY>
+<STR>Option</STR>
+<KEY>NRaas.Aliens.OptionList:CountTitle</KEY>
+<STR>Count</STR>
+<KEY>NRaas.Aliens.OptionList:CountTooltip</KEY>
+<STR>Count</STR>
+<KEY>NRaas.Aliens.OptionList:ValueTitle</KEY>
+<STR>Value</STR>
+<KEY>NRaas.Aliens.OptionList:ValueTooltip</KEY>
+<STR>Value</STR>
 
 <KEY>NRaas.Aliens.Boolean:True</KEY>
 <STR>True</STR>
@@ -178,11 +190,20 @@
 <KEY>NRaas.Aliens.MaxAlienOccults:Prompt</KEY>
 <STR>Enter the maximum possible number of occult life states (minimum 1) that an NPC alien can have:</STR>
 
+<KEY>NRaas.Aliens.AllowedAlienOccults:MenuName</KEY>
+<STR>Valid Alien Occults</STR>
+
+<KEY>NRaas.Aliens.AllowedAlienAges:MenuName</KEY>
+<STR>Valid Alien Ages</STR>
+
+
+<KEY>Gameplay/Excel/Buffs/BuffList:NRaasAbductedEx</KEY>
+<STR>Abducted!</STR>
 
 <KEY>Gameplay/Excel/Buffs/BuffList:NRaasXenogenesis</KEY>
 <STR>Xenogenesis</STR>
 <KEY>Gameplay/Excel/Buffs/BuffList:NRaasXenogenesisDescription</KEY>
-<STR>Looks like you pitched up an extraterrestrial hitch-hiker during that last abduction.</STR>
+<STR>Looks like you picked up an extraterrestrial hitch-hiker during that abduction.</STR>
 
 <KEY>Gameplay/Excel/Buffs/BuffList:NRaasAlienBabyIsComing</KEY>
 <STR>Baby is Coming!</STR>
@@ -193,16 +214,6 @@
 <STR>Alien Child (Hidden)</STR>
 <KEY>Gameplay/Excel/Traits/TraitList:NRaasAlienChildDescription</KEY>
 <STR>You were the product of an alien pregnancy.</STR>
-
-
-<KEY>NRaas.Aliens.TakeToHospitalEx:MenuName</KEY>
-<STR>Take to Hospital</STR>
-
-<KEY>NRaas.Aliens.ReactToContractionEx:MenuName</KEY>
-<STR>React to Contraction</STR>
-
-<KEY>NRaas.Aliens.HaveAlienBabyHospital:MenuName</KEY>
-<STR>Have Baby at Hospital</STR>
 
 <KEY>NRaas.Aliens.ReturnAlienBabyEx:MenuName</KEY>
 <STR>Return Baby</STR>

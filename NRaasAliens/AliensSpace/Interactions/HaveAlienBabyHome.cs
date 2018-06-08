@@ -33,7 +33,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Interactions
 {
-    public class HaveAlienBabyHome : Interaction<Sim, Lot>, Common.IPreLoad, Common.IAddInteraction
+    public class HaveAlienBabyHome : Interaction<Sim, Lot>, Common.IPreLoad
     {
         public static readonly InteractionDefinition Singleton = new Definition();
         public List<Sim> mNewborns;
@@ -50,11 +50,6 @@ namespace NRaas.AliensSpace.Interactions
             {
                 return actor.Household == target.Household && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
             }
-        }
-
-        public void AddInteraction(Common.InteractionInjectorList interactions)
-        {
-            //interactions.Add<Sim>(Singleton);
         }
 
         public override void Cleanup()
