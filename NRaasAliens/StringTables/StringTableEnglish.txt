@@ -185,6 +185,11 @@
 <KEY>NRaas.Aliens.Science:Prompt</KEY>
 <STR>Enter the minimum and maximum possible Science skill levels for NPC aliens:</STR>
 
+<KEY>NRaas.Aliens.Spellcasting:MenuName</KEY>
+<STR>Spellcasting Skill</STR>
+<KEY>NRaas.Aliens.Spellcasting:Prompt</KEY>
+<STR>Enter the minimum and maximum possible Spellcasting skill levels for NPC alien witches:</STR>
+
 <KEY>NRaas.Aliens.Spellcraft:MenuName</KEY>
 <STR>Alchemy Skill</STR>
 <KEY>NRaas.Aliens.Spellcraft:Prompt</KEY>

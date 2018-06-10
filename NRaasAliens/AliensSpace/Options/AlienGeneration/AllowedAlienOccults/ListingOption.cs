@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration.AllowedAlienOccults
 {
-    public class ListingOption : OptionList<IAllowedAlienOccultsOption>, IPrimaryOption<GameObject>, IAliensOption
+    public class ListingOption : OptionList<IAllowedAlienOccultsOption>, IAliensOption
     {
         public override ITitlePrefixOption ParentListingOption => null;
 

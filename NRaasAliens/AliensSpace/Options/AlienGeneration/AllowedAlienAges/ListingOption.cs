@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration.AllowedAlienAges
 {
-    public class ListingOption : OptionList<IAllowedAlienAgesOption>, IPrimaryOption<GameObject>, IAliensOption
+    public class ListingOption : OptionList<IAllowedAlienAgesOption>, IAliensOption
     {
         public override ITitlePrefixOption ParentListingOption => null;
 

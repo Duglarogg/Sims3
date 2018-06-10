@@ -43,6 +43,7 @@ namespace NRaas.AliensSpace
             new List<OccultTypes>()
             {
                 OccultTypes.Frankenstein,
+                OccultTypes.Ghost,
                 OccultTypes.Mummy,
                 OccultTypes.Robot,
                 OccultTypes.Unicorn

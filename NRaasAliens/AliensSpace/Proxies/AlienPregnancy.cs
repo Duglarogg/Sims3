@@ -1,5 +1,6 @@
 ﻿using NRaas.AliensSpace.Helpers;
 using NRaas.AliensSpace.Interactions;
+using NRaas.CommonSpace.Helpers;
 using Sims3.Gameplay;
 using Sims3.Gameplay.Abstracts;
 using Sims3.Gameplay.Actors;
@@ -25,6 +26,7 @@ using Sims3.SimIFace;
 using Sims3.SimIFace.CAS;
 using Sims3.UI;
 using Sims3.UI.Controller;
+using Sims3.UI.Hud;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -79,6 +81,12 @@ namespace NRaas.AliensSpace.Proxies
 
             if (description != null && description.TeenOrAbove)
                 mDad = description.CreatedSim;
+        }
+
+        public override void CheckForGhostBaby(Sim s)
+        {
+            if ((mMomWasGhostFromPotion || mDadWasGhostFromPotion) && RandomUtil.RandomChance(kChanceForGhostBaby))
+                Urnstones.SimToPlayableGhost(s.SimDescription, SimDescription.DeathType.OldAge);
         }
 
         public override void ClearPregnancyData()

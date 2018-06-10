@@ -308,199 +308,8 @@ namespace NRaas.AliensSpace.Helpers
             }
         }
 
-        public static bool CheckAlarm(AlarmHandle handle, AlarmTimerCallback callback)
+        public static void ApplyAlienFaceBlend(CASAgeGenderFlags gender, ref SimBuilder sb)
         {
-            List<AlarmManager.Timer> list = AlarmManager.Global.mTimers[handle];
-
-            foreach (AlarmManager.Timer current in list)
-            {
-                if (current.CallBack == callback)
-                    return true;
-            }
-
-            return false;
-        }
-
-        public static float CheckForLTRBonuses(Household household, SimDescription alien)
-        {
-            float result = 0;
-
-            foreach (SimDescription current in household.SimDescriptions)
-            {
-                Relationship relationship = Relationship.Get(alien, current, false);
-
-                if (relationship != null && relationship.LTR.Liking >= Aliens.Settings.mHighLTRThreshold)
-                    result += Aliens.Settings.mHighLTRBonus;
-
-                if (current.Genealogy.Parents.Contains(alien.Genealogy))
-                    result += Aliens.Settings.mOffspringBonus;
-            }
-
-            return result;
-        }
-
-        public static float CheckForSpaceRocksOnLot(Lot lot)
-        {
-            float result = 0;
-
-            if (lot == null)
-                return result;
-
-            int count = lot.GetObjects(new Predicate<RockGemMetalBase>(AlienUtils.IsSpaceRock)).Count;
-
-            if (count <= Aliens.Settings.mSpaceRockThreshold)
-                result += Aliens.Settings.mSpaceRockBonus;
-
-            return result;
-        }
-
-        private static float GetAbductionChance()
-        {
-            float result = Aliens.Settings.mBaseAbductionChance;
-
-            if (result <= 0)
-            {
-                Common.DebugNotify("Alien Activity: Abductions disabled");
-                return 0;
-            }
-
-            if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
-                result += Aliens.Settings.mTelescopeBonus;
-
-            if (AlienUtils.sAlienAbductionHelper.SpaceRocksFound > 0)
-                result += Math.Min(AlienUtils.sAlienAbductionHelper.SpaceRocksFound * Aliens.Settings.mSpaceRockFoundBonus, 
-                    Aliens.Settings.mMaxSpaceRockBonus);
-
-            return result;
-        }
-
-        private static float GetActivityChance()
-        {
-            float result = Aliens.Settings.mBaseActivityChance;
-
-            if (result <= 0)
-            {
-                Common.DebugNotify("Alien Activity: All activity disabled");
-                return 0;
-            }
-
-            if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
-                result += Aliens.Settings.mTelescopeBonus;
-
-            return result;
-        }
-
-        public static List<Sim> GetValidAbductees(Household household)
-        {
-            List<Sim> list = new List<Sim>();
-
-            foreach (Sim current in household.mMembers.SimList)
-            {
-                if (current.SimDescription.TeenOrAbove && current.LotCurrent != null && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
-                    list.Add(current);
-            }
-
-            if (list.Count == 0)
-                return null;
-            else
-                return list;
-        }
-
-        public static List<Sim> GetValidAbductees(Lot lot)
-        {
-            List<Sim> list = new List<Sim>();
-
-            foreach (Sim current in lot.GetSims())
-            {
-                if (current.SimDescription.TeenOrAbove && current.LotCurrent != null && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
-                    list.Add(current);
-            }
-
-            if (list.Count == 0)
-                return null;
-            else
-                return list;
-        }
-
-        public static List<SimDescription> GetValidAliens()
-        {
-            List<SimDescription> list = new List<SimDescription>();
-
-            if (Household.AlienHousehold != null)
-                foreach(SimDescription current in Household.AlienHousehold.SimDescriptions)
-                {
-                    if (current.CreatedSim == null)
-                        list.Add(current);
-                }
-
-            if (list.Count == 0)
-                return null;
-            else
-                return list;
-        }
-
-        public static List<Lot> GetValidLots()
-        {
-            List<Lot> list = new List<Lot>();
-
-            foreach (Lot current in LotManager.AllLotsWithoutCommonExceptions)
-            {
-                if (current.LotType != LotType.Tutorial && current != Household.ActiveHousehold.LotHome && !AlienUtils.IsHouseboatAndNotDocked(current))
-                    list.Add(current);
-            }
-
-            if (list.Count == 0)
-                return null;
-            else
-                return list;
-        }
-
-        public static float GetVisitationChance(Household household, SimDescription alien)
-        {
-            float result = Aliens.Settings.mBaseVisitChance;
-
-            if (result <= 0)
-            {
-                Common.DebugNotify("Alien Activity: Visitations Disabled");
-                return 0;
-            }
-
-            if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
-                result += Aliens.Settings.mTelescopeBonus;
-
-            if (AlienUtils.sAlienAbductionHelper.SpaceRocksFound > 0)
-                result += Math.Min(AlienUtils.sAlienAbductionHelper.SpaceRocksFound * Aliens.Settings.mSpaceRockFoundBonus, 
-                    Aliens.Settings.mMaxSpaceRockBonus);
-
-            result += CheckForLTRBonuses(household, alien);
-            result += CheckForSpaceRocksOnLot(household.LotHome);
-
-            return result;
-        }
-
-        // <NOTE> May make this method private </NOTE>
-        public static SimDescription MakeAlien(CASAgeGenderFlags age, CASAgeGenderFlags gender, WorldName homeworld, float alienDNAPercentage, bool assignRandomTraits)
-        {
-            ResourceKey skinTone = RandomUtil.GetRandomObjectFromList(AlienSkinTones);
-            float skinToneIndex;
-
-            if (skinTone == AlienSkinTones[0])
-                skinToneIndex = 1f;
-            else if (skinTone == AlienSkinTones[1] || skinTone == AlienSkinTones[3] || skinTone == AlienSkinTones[4])
-                skinToneIndex = 0.25f + (0.50f * RandomUtil.GetFloat(1f));
-            else if (skinTone == AlienSkinTones[2])
-                skinToneIndex = 0.50f + (0.50f * RandomUtil.GetFloat(1f));
-            else
-                skinToneIndex = 0.25f + (0.75f * RandomUtil.GetFloat(1f));
-
-            SimBuilder sb = new SimBuilder();
-            sb.Age = age;
-            sb.Gender = gender;
-            sb.Species = CASAgeGenderFlags.Human;
-            sb.SkinTone = skinTone;
-            sb.SkinToneIndex = skinToneIndex;
-            sb.TextureSize = 1024u;
-            sb.UseCompression = true;
             bool flag = (gender == CASAgeGenderFlags.Female);
 
             float num = flag ? Genetics.kAlienHeadWide[0] : Genetics.kAlienHeadWide[1];
@@ -758,7 +567,236 @@ namespace NRaas.AliensSpace.Helpers
                 ResourceKey key32 = new ResourceKey(ResourceUtils.HashString64("NoseTipDepthIn"), 56144010u, 0u);
                 sb.SetFacialBlend(key32, num);
             }
+        }
 
+        public static bool CheckAlarm(AlarmHandle handle, AlarmTimerCallback callback)
+        {
+            List<AlarmManager.Timer> list = AlarmManager.Global.mTimers[handle];
+
+            foreach (AlarmManager.Timer current in list)
+            {
+                if (current.CallBack == callback)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static float CheckForLTRBonuses(Household household, SimDescription alien)
+        {
+            float result = 0;
+
+            foreach (SimDescription current in household.SimDescriptions)
+            {
+                Relationship relationship = Relationship.Get(alien, current, false);
+
+                if (relationship != null && relationship.LTR.Liking >= Aliens.Settings.mHighLTRThreshold)
+                    result += Aliens.Settings.mHighLTRBonus;
+
+                if (current.Genealogy.Parents.Contains(alien.Genealogy))
+                    result += Aliens.Settings.mOffspringBonus;
+            }
+
+            return result;
+        }
+
+        public static float CheckForSpaceRocksOnLot(Lot lot)
+        {
+            float result = 0;
+
+            if (lot == null)
+                return result;
+
+            int count = lot.GetObjects(new Predicate<RockGemMetalBase>(AlienUtils.IsSpaceRock)).Count;
+
+            if (count <= Aliens.Settings.mSpaceRockThreshold)
+                result += Aliens.Settings.mSpaceRockBonus;
+
+            return result;
+        }
+
+        private static float GetAbductionChance()
+        {
+            float result = Aliens.Settings.mBaseAbductionChance;
+
+            if (result <= 0)
+            {
+                Common.DebugNotify("Alien Activity: Abductions disabled");
+                return 0;
+            }
+
+            if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
+                result += Aliens.Settings.mTelescopeBonus;
+
+            if (AlienUtils.sAlienAbductionHelper.SpaceRocksFound > 0)
+                result += Math.Min(AlienUtils.sAlienAbductionHelper.SpaceRocksFound * Aliens.Settings.mSpaceRockFoundBonus, 
+                    Aliens.Settings.mMaxSpaceRockBonus);
+
+            return result;
+        }
+
+        private static float GetActivityChance()
+        {
+            float result = Aliens.Settings.mBaseActivityChance;
+
+            if (result <= 0)
+            {
+                Common.DebugNotify("Alien Activity: All activity disabled");
+                return 0;
+            }
+
+            if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
+                result += Aliens.Settings.mTelescopeBonus;
+
+            return result;
+        }
+
+        private static SimDescription.DeathType GetGhostBabyType(SimDescription abductee, SimDescription alien)
+        {
+            if (abductee.DeathStyle != SimDescription.DeathType.None && alien.DeathStyle != SimDescription.DeathType.None)
+            {
+                if (RandomUtil.CoinFlip())
+                    return abductee.DeathStyle;
+                else
+                    return alien.DeathStyle;
+            }
+            else if (abductee.DeathStyle != SimDescription.DeathType.None)
+                return abductee.DeathStyle;
+            else if (alien.DeathStyle != SimDescription.DeathType.None)
+                return alien.DeathStyle;
+            else
+                return SimDescription.DeathType.None;
+        }
+
+        private static List<OccultTypes> GetSharedOccults(List<OccultTypes> valid, ref List<OccultTypes> abductee, ref List<OccultTypes> alien)
+        {
+            List<OccultTypes> types = new List<OccultTypes>();
+
+            foreach(OccultTypes current in valid)
+            {
+                if (abductee.Contains(current) && alien.Contains(current))
+                {
+                    types.Add(current);
+                    abductee.Remove(current);
+                    alien.Remove(current);
+                }
+            }
+
+            return types;
+        }
+
+        public static List<Sim> GetValidAbductees(Household household)
+        {
+            List<Sim> list = new List<Sim>();
+
+            foreach (Sim current in household.mMembers.SimList)
+            {
+                if (current.SimDescription.TeenOrAbove && current.LotCurrent != null && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
+                    list.Add(current);
+            }
+
+            if (list.Count == 0)
+                return null;
+            else
+                return list;
+        }
+
+        public static List<Sim> GetValidAbductees(Lot lot)
+        {
+            List<Sim> list = new List<Sim>();
+
+            foreach (Sim current in lot.GetSims())
+            {
+                if (current.SimDescription.TeenOrAbove && current.LotCurrent != null && !AlienUtils.IsHouseboatAndNotDocked(current.LotCurrent))
+                    list.Add(current);
+            }
+
+            if (list.Count == 0)
+                return null;
+            else
+                return list;
+        }
+
+        public static List<SimDescription> GetValidAliens()
+        {
+            List<SimDescription> list = new List<SimDescription>();
+
+            if (Household.AlienHousehold != null)
+                foreach(SimDescription current in Household.AlienHousehold.SimDescriptions)
+                {
+                    if (current.CreatedSim == null)
+                        list.Add(current);
+                }
+
+            if (list.Count == 0)
+                return null;
+            else
+                return list;
+        }
+
+        public static List<Lot> GetValidLots()
+        {
+            List<Lot> list = new List<Lot>();
+
+            foreach (Lot current in LotManager.AllLotsWithoutCommonExceptions)
+            {
+                if (current.LotType != LotType.Tutorial && current != Household.ActiveHousehold.LotHome && !AlienUtils.IsHouseboatAndNotDocked(current))
+                    list.Add(current);
+            }
+
+            if (list.Count == 0)
+                return null;
+            else
+                return list;
+        }
+
+        public static float GetVisitationChance(Household household, SimDescription alien)
+        {
+            float result = Aliens.Settings.mBaseVisitChance;
+
+            if (result <= 0)
+            {
+                Common.DebugNotify("Alien Activity: Visitations Disabled");
+                return 0;
+            }
+
+            if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
+                result += Aliens.Settings.mTelescopeBonus;
+
+            if (AlienUtils.sAlienAbductionHelper.SpaceRocksFound > 0)
+                result += Math.Min(AlienUtils.sAlienAbductionHelper.SpaceRocksFound * Aliens.Settings.mSpaceRockFoundBonus, 
+                    Aliens.Settings.mMaxSpaceRockBonus);
+
+            result += CheckForLTRBonuses(household, alien);
+            result += CheckForSpaceRocksOnLot(household.LotHome);
+
+            return result;
+        }
+
+        // <NOTE> May make this method private </NOTE>
+        public static SimDescription MakeAlien(CASAgeGenderFlags age, CASAgeGenderFlags gender, WorldName homeworld, float alienDNAPercentage, bool assignRandomTraits)
+        {
+            ResourceKey skinTone = RandomUtil.GetRandomObjectFromList(AlienSkinTones);
+            float skinToneIndex;
+
+            if (skinTone == AlienSkinTones[0])
+                skinToneIndex = 1f;
+            else if (skinTone == AlienSkinTones[1] || skinTone == AlienSkinTones[3] || skinTone == AlienSkinTones[4])
+                skinToneIndex = 0.25f + (0.50f * RandomUtil.GetFloat(1f));
+            else if (skinTone == AlienSkinTones[2])
+                skinToneIndex = 0.50f + (0.50f * RandomUtil.GetFloat(1f));
+            else
+                skinToneIndex = 0.25f + (0.75f * RandomUtil.GetFloat(1f));
+
+            SimBuilder sb = new SimBuilder();
+            sb.Age = age;
+            sb.Gender = gender;
+            sb.Species = CASAgeGenderFlags.Human;
+            sb.SkinTone = skinTone;
+            sb.SkinToneIndex = skinToneIndex;
+            sb.TextureSize = 1024u;
+            sb.UseCompression = true;
+            ApplyAlienFaceBlend(gender, ref sb);
             SimDescription alienDescription = Genetics.MakeSim(sb, age, gender, skinTone, skinToneIndex, AlienHairColors, homeworld, 4294967295u, true);
 
             if (alienDescription != null)
@@ -823,6 +861,25 @@ namespace NRaas.AliensSpace.Helpers
                 if (Aliens.Settings.mFutureSim)
                     baby.TraitManager.AddHiddenElement(TraitNames.FutureSim);
 
+                if (Aliens.Settings.mAllowOccultBabies)
+                {
+                    List<OccultTypes> toInherit = OccultsToInherit(OccultTypeHelper.CreateList(abductee), OccultTypeHelper.CreateList(alien));
+
+                    if (toInherit != null && toInherit.Count > 0)
+                    {
+                        for (int i = 0; i < toInherit.Count; i++)
+                        {
+                            if (toInherit[i] != OccultTypes.Ghost)
+                                OccultTypeHelper.Add(baby, toInherit[i], false, false);
+                            else
+                            {
+                                SimDescription.DeathType deathType = GetGhostBabyType(abductee, alien);
+                                Urnstones.SimToPlayableGhost(baby, deathType);
+                            }
+                        }
+                    }
+                }
+
                 baby.CelebrityManager.SetBabyLevel(Genetics.AssignBabyCelebrityLevel(null, abductee));
                 abductee.Genealogy.AddChild(baby.Genealogy);
 
@@ -831,6 +888,65 @@ namespace NRaas.AliensSpace.Helpers
             }
 
             return baby;
+        }
+
+        private static List<OccultTypes> OccultsToInherit(List<OccultTypes> abductee, List<OccultTypes> alien)
+        {
+            // First, make sure that at least one "parent" has an occult state to pass down
+            if (abductee.Count == 0 && alien.Count == 0)
+                return null;
+
+            List<OccultTypes> list = new List<OccultTypes>();
+            int numOccults = Aliens.Settings.mMaxBabyOccults;
+
+            // Get list of occult states shared by the "parents"
+            List<OccultTypes> shared = GetSharedOccults(Aliens.Settings.mValidBabyOccults, ref abductee, ref alien);
+
+            // If number of shared states is equal to the max, return all shared occults to inherit
+            if (shared.Count == numOccults)
+                return shared;
+
+            // If number of shared states is greater than the max, return a random list to inherit
+            else if (shared.Count > numOccults)
+            {
+                for (int i = 0; i < numOccults; i++)
+                {
+                    OccultTypes type = RandomUtil.GetRandomObjectFromList(shared);
+                    list.Add(type);
+                    shared.Remove(type);
+                }
+
+                return list;
+            }
+
+            // If number of shared states is less than the max, add all shared states to inheritance list
+            for (int i = 0; i < shared.Count; i++)
+                list.Add(shared[i]);
+
+            // Check if either "parent" has any remaining occult states
+            if (abductee.Count > 0 || alien.Count > 0)
+            {
+                // Create a list of remaining occults to inherit
+                List<OccultTypes> pool = new List<OccultTypes>();
+
+                foreach (OccultTypes current in abductee)
+                    pool.Add(current);
+
+                foreach (OccultTypes current2 in alien)
+                    pool.Add(current2);
+
+                // Determine how many more occults are needed
+                int toGo = numOccults - shared.Count;
+
+                for (int i = 0; i < toGo; i++)
+                {
+                    OccultTypes type = RandomUtil.GetRandomObjectFromList(pool);
+                    list.Add(type);
+                    pool.Remove(type);
+                }
+            }
+
+            return list;
         }
 
         public void OnWorldLoadFinished()

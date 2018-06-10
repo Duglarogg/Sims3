@@ -422,6 +422,7 @@
     <Compile Include="AliensSpace\Options\AlienPregnancy\IAlienPregnancyOption.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\LaborLengthSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\ListingOption.cs" />
+    <Compile Include="AliensSpace\Options\AlienPregnancy\MaxBabyOccultsSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\PregnancyChanceSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\PregnancyLengthSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienPregnancy\PuddlesSetting.cs" />
