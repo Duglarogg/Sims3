@@ -7,5 +7,5 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration.AllowedAlienOccults
 {
-    public interface IAllowedAlienOccultsOption : IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>> { }
+    public interface IAllowedAlienOccultsOption : IOptionItem { }
 }

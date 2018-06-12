@@ -25,7 +25,6 @@ using System.Text;
 
 /* <NOTES>
  *  static AlienUtilsEx()
- *      - Setting valid ages for NPC alien generation could be done through tuning files instead
  *      - The alarm for alien activity may be converted to singular, hourly repeating alarm instead
  *        of 24 daily alarms (one for each hour of the day).
  *      
@@ -34,7 +33,6 @@ using System.Text;
  *      
  *  MakeAlien(...)
  *      - May make this method private, as it should not be called outside AlienRefreshCallback and MakeAlienBaby methods
- *      - Add checks for occult aliens
  *
  *  ResetAlienActivityAlarm()
  *      May need to uncomment a for-loop that clears outs the sAlienActivityAlarm array before creating new alarms
@@ -146,7 +144,7 @@ namespace NRaas.AliensSpace.Helpers
                         return;
                     }
 
-                    // <NOTE> Start AlienAbductionSituationEx on abductee's current lot
+                    AlienAbductionSituationEx.Create(alien, abductee, lot);
                     cooldown = Aliens.Settings.mActivityCooldown;
                     ResetAbductionHelper();
                 }
@@ -668,17 +666,26 @@ namespace NRaas.AliensSpace.Helpers
                 return SimDescription.DeathType.None;
         }
 
-        private static List<OccultTypes> GetSharedOccults(List<OccultTypes> valid, ref List<OccultTypes> abductee, ref List<OccultTypes> alien)
+        private static List<OccultTypes> GetSharedOccults(ref List<OccultTypes> abductee, ref List<OccultTypes> alien)
         {
             List<OccultTypes> types = new List<OccultTypes>();
+            List<OccultTypes> valid = OccultTypeHelper.CreateListOfMissingOccults(new List<OccultTypes>()
+                {
+                    OccultTypes.Frankenstein,
+                    OccultTypes.Mummy,
+                    OccultTypes.Robot,
+                    OccultTypes.Unicorn
+                }, false);
 
             foreach(OccultTypes current in valid)
             {
-                if (abductee.Contains(current) && alien.Contains(current))
+                OccultTypes type = current;
+
+                if (abductee.Contains(type) && alien.Contains(type))
                 {
-                    types.Add(current);
-                    abductee.Remove(current);
-                    alien.Remove(current);
+                    types.Add(type);
+                    abductee.Remove(type);
+                    alien.Remove(type);
                 }
             }
 
@@ -892,21 +899,16 @@ namespace NRaas.AliensSpace.Helpers
 
         private static List<OccultTypes> OccultsToInherit(List<OccultTypes> abductee, List<OccultTypes> alien)
         {
-            // First, make sure that at least one "parent" has an occult state to pass down
             if (abductee.Count == 0 && alien.Count == 0)
                 return null;
 
             List<OccultTypes> list = new List<OccultTypes>();
             int numOccults = Aliens.Settings.mMaxBabyOccults;
+            List<OccultTypes> shared = GetSharedOccults(ref abductee, ref alien);
 
-            // Get list of occult states shared by the "parents"
-            List<OccultTypes> shared = GetSharedOccults(Aliens.Settings.mValidBabyOccults, ref abductee, ref alien);
-
-            // If number of shared states is equal to the max, return all shared occults to inherit
             if (shared.Count == numOccults)
                 return shared;
 
-            // If number of shared states is greater than the max, return a random list to inherit
             else if (shared.Count > numOccults)
             {
                 for (int i = 0; i < numOccults; i++)
@@ -919,14 +921,11 @@ namespace NRaas.AliensSpace.Helpers
                 return list;
             }
 
-            // If number of shared states is less than the max, add all shared states to inheritance list
             for (int i = 0; i < shared.Count; i++)
                 list.Add(shared[i]);
 
-            // Check if either "parent" has any remaining occult states
             if (abductee.Count > 0 || alien.Count > 0)
             {
-                // Create a list of remaining occults to inherit
                 List<OccultTypes> pool = new List<OccultTypes>();
 
                 foreach (OccultTypes current in abductee)
@@ -935,11 +934,13 @@ namespace NRaas.AliensSpace.Helpers
                 foreach (OccultTypes current2 in alien)
                     pool.Add(current2);
 
-                // Determine how many more occults are needed
                 int toGo = numOccults - shared.Count;
 
                 for (int i = 0; i < toGo; i++)
                 {
+                    if (pool.Count == 0)
+                        break;
+
                     OccultTypes type = RandomUtil.GetRandomObjectFromList(pool);
                     list.Add(type);
                     pool.Remove(type);

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 {
-    public class SpaceRockBonusSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption
+    public class SpaceRockOnLotBonusSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 
@@ -24,7 +24,7 @@ namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 
         public override string GetTitlePrefix()
         {
-            return "SpaceRockBonus";
+            return "SpaceRockOnLotBonus";
         }
 
         protected override int Validate(int value)

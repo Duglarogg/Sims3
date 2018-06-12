@@ -7,5 +7,5 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration.AllowedAlienAges
 {
-    public interface IAllowedAlienAgesOption : IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>> { }
+    public interface IAllowedAlienAgesOption : IOptionItem { }
 }

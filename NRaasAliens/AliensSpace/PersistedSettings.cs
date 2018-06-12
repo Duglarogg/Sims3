@@ -47,7 +47,7 @@ namespace NRaas.AliensSpace
                 OccultTypes.Mummy,
                 OccultTypes.Robot,
                 OccultTypes.Unicorn
-            }, true);
+            }, false);
 
         // Alien Activity Settings
         public int mEarliestHour = AliensTuning.kEarliestHour;
@@ -79,15 +79,8 @@ namespace NRaas.AliensSpace
         public bool mAllowOccultBabies = AliensTuning.kAllowOccultBabies;
         public int mMaxBabyOccults = AliensTuning.kMaxBabyOccults;
         // Only occults shared between abductee and alien yes/no
-        public List<OccultTypes> mValidBabyOccults = OccultTypeHelper.CreateListOfMissingOccults(
-            new List<OccultTypes>()
-            {
-                OccultTypes.Frankenstein,
-                OccultTypes.Mummy,
-                OccultTypes.Robot,
-                OccultTypes.Unicorn
-            }, true);
 
+        
         // Derived Pregnancy Settings (in hours)
         public int mPregnancyShow = 10;
         public int mStartLabor = 82;

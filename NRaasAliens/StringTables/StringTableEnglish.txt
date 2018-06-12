@@ -97,9 +97,9 @@
 <KEY>NRaas.Aliens.OffspringBonus:Prompt</KEY>
 <STR>Enter the additional chance of a visitation for being an alien's offspring:</STR>
 
-<KEY>NRaas.Aliens.SpaceRockBonus:MenuName</KEY>
+<KEY>NRaas.Aliens.SpaceRockOnLotBonus:MenuName</KEY>
 <STR>Space Rocks on Lot Bonus</STR>
-<KEY>NRaas.Aliens.SpaceRockBonus:Prompt</KEY>
+<KEY>NRaas.Aliens.SpaceRockOnLotBonus:Prompt</KEY>
 <STR>Enter the additional chance of a visitation for having space rocks on your lot (enter 0 to disable):</STR>
 
 <KEY>NRaas.Aliens.SpaceRockFoundBonus:MenuName</KEY>
@@ -212,6 +212,11 @@
 
 <KEY>NRaas.Aliens.AllowOccultAliens:MenuName</KEY>
 <STR>Occult Aliens</STR>
+
+<KEY>NRaas.Aliens.OccultAlienChance:MenuName</KEY>
+<STR>Occult Alien Chance</STR>
+<KEY>NRaas.Aliens.OccultAlienChance:Prompt</KEY>
+<STR>Enter the chance that a newly created NPC alien is an occult Sim:</STR>
 
 <KEY>NRaas.Aliens.MaxAlienOccults:MenuName</KEY>
 <STR>Maximum Alien Occults</STR>
