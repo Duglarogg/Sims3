@@ -32,7 +32,7 @@
     <Version>1</Version>
   </BuffList>
   <BuffList>
-    <Hex>Abducted=CFDEF00B5671CB3F</Hex>
+    <Hex>NRaasAbductedEx=CFDEF00B5671CB3F</Hex>
     <SKU>EP8</SKU>
     <BuffName>Abducted</BuffName>
     <BuffDescription>AbductedDescription</BuffDescription>

@@ -8,7 +8,7 @@ namespace NRaas
     public class AliensModule
     {
         [Tunable, TunableComment("Scripting Mod Instantiator")]
-        protected static bool kInstantiator = false;
+        protected static bool kInstantiator = true;
 
         static AliensModule()
         { }

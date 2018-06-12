@@ -25,8 +25,10 @@ namespace NRaas.AliensSpace.Helpers
         static Common.MethodStore sStoryProgressionAllowImpregnation = new Common.MethodStore("NRaasStoryProgression", "NRaas.StoryProgression",
             "AllowImpregnation", new Type[] { typeof(SimDescription), typeof(bool) });
 
+        /*
         static Common.MethodStore sWoohooerAllowPlantSimPregnancy = new Common.MethodStore("NRaasWoohooer", "NRaas.Woohooer", "AllowPlantSimPregnancy",
             new Type[] { });
+            */
 
         public delegate float GetChanceOfSuccess(Sim a, SimDescription b);
         public static GetChanceOfSuccess sGetChanceOfSuccess = OnGetChanceOfSuccess;
@@ -34,19 +36,15 @@ namespace NRaas.AliensSpace.Helpers
 
         public static bool AllowPlantSimPregnancy()
         {
-            if (sWoohooerAllowPlantSimPregnancy.Valid)
-                return sWoohooerAllowPlantSimPregnancy.Invoke<bool>(new Type[] { });
-            else
-                return true;
+            return true;
         }
 
-        public static bool CanGetPregnant(Sim sim, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback, out string reason)
+        public static bool CanGetPregnant(Sim sim, bool isAutonomous, out string reason)
         {
             using (Common.TestSpan span = new Common.TestSpan(ScoringLookup.Stats, "Duration CanGetPregnant", Common.DebugLevel.Stats))
             {
                 if (SimTypes.IsPassporter(sim.SimDescription))
                 {
-                    greyedOutTooltipCallback = Common.DebugTooltip("Passporter");
                     reason = "Passporter";
                     return false;
                 }
@@ -56,26 +54,27 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (!Household.CanSpeciesGetAddedToHousehold(sim.SimDescription.Species, numHumans, numPets))
                 {
-                    greyedOutTooltipCallback = Common.DebugTooltip("House Full");
                     reason = "House Full";
                     return false;
                 }
 
-                if (SimTypes.IsSkinJob(sim.SimDescription))
+                if (sim.SimDescription.Teen && !Aliens.Settings.mAllowTeens)
                 {
-                    greyedOutTooltipCallback = Common.DebugTooltip("Skin Job Fail");
+                    reason = "Teens Not Allowed";
+                    return false;
+                }
+                else if (SimTypes.IsSkinJob(sim.SimDescription))
+                {
                     reason = "Skin Job Fail";
                     return false;
                 }
                 else if (sim.BuffManager.HasTransformBuff())
                 {
-                    greyedOutTooltipCallback = Common.DebugTooltip("Transform Buff");
                     reason = "Transform Buff";
                     return false;
                 }
                 else if (sim.SimDescription.IsPregnant || sim.SimDescription.IsVisuallyPregnant)
                 {
-                    greyedOutTooltipCallback = Common.DebugTooltip("Already Pregnant");
                     reason = "Already Pregnant";
                     return false;
                 }
@@ -86,26 +85,22 @@ namespace NRaas.AliensSpace.Helpers
 
                     if (description == null)
                     {
-                        greyedOutTooltipCallback = Common.DebugTooltip("House Full");
                         reason = "House Full";
                         return false;
                     }
                 }
                 else if (sim.LotHome == null)
                 {
-                    greyedOutTooltipCallback = Common.DebugTooltip("House Full");
                     reason = "House Full";
                     return false;
                 }
                 else if (sim.SimDescription.IsDueToAgeUp() || (sim.SimDescription.AgingState != null && sim.SimDescription.AgingState.IsAgingInProgress()))
                 {
-                    greyedOutTooltipCallback = Common.DebugTooltip("Aging Up Fail");
                     reason = "Aging Up Fail";
                     return false;
                 }
                 else if (SimTypes.IsLampGenie(sim.SimDescription))
                 {
-                    greyedOutTooltipCallback = Common.DebugTooltip("Lamp Genie");
                     reason = "Lamp Genie";
                     return false;
                 }
@@ -115,10 +110,7 @@ namespace NRaas.AliensSpace.Helpers
                     reason = sStoryProgressionAllowImpregnation.Invoke<string>(new object[] { sim.SimDescription, isAutonomous });
 
                     if (reason != null)
-                    {
-                        greyedOutTooltipCallback = Aliens.StoryProgressionTooltip(reason, Aliens.Settings.Debugging);
                         return false;
-                    }
                 }
 
                 reason = null;

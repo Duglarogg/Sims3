@@ -36,7 +36,6 @@ namespace NRaas.AliensSpace.Interactions
     public class HaveAlienBabyHomeInternal : Interaction<Sim, Sim>
     {
         public static readonly InteractionDefinition Singleton = new Definition();
-
         public int TotalCount;
         public int BabyIndex;
         public static ulong kIconNameHash = ResourceUtils.HashString64("hud_interactions_baby");

@@ -1,13 +1,14 @@
 ﻿using NRaas.CommonSpace.Options;
 using Sims3.Gameplay.Abstracts;
 using Sims3.Gameplay.Interfaces;
+using Sims3.SimIFace;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienActivity
 {
-    public class ActivityWindowSetting : IntegerSettingOption<GameObject>, IAlienActivityOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class ActivityWindowSetting : IntegerSettingOption<GameObject>, IAlienActivityOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 

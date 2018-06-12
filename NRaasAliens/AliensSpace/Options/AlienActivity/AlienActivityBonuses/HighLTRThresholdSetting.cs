@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 {
-    public class HighLTRThresholdSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class HighLTRThresholdSetting : IntegerSettingOption<GameObject>, IAlienActivityBonusesOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 
@@ -19,7 +19,7 @@ namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {
-            return Aliens.Settings.mBaseVisitChance > 0;
+            return Aliens.Settings.mBaseVisitChance > 0 && Aliens.Settings.mHighLTRBonus > 0;
         }
 
         public override string GetTitlePrefix()

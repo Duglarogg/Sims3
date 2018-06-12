@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienPregnancy
 {
-    public class PregnancyChanceSetting : IntegerSettingOption<GameObject>, IAlienPregnancyOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class PregnancyChanceSetting : IntegerSettingOption<GameObject>, IAlienPregnancyOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 

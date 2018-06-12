@@ -83,7 +83,7 @@ namespace Duglarogg
         [Tunable, TunableComment("Minimum: 1. Duration (in days) of an alien pregnancy.")]
         public static int kPregnancyLength = 3;
 
-        [Tunable, TunableComment("Minimum: 1. Duration (in hours) of an alien pregnnacy's labor.")]
+        [Tunable, TunableComment("Minimum: 1. Duration (in hours) of an alien pregnancy's labor.")]
         public static int kLaborLength = 4;
 
         [Tunable, TunableComment("Whether to use fertility factors when determining chance of impregnation.")]

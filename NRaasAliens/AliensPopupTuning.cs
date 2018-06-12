@@ -8,6 +8,6 @@ namespace NRaas
     public class AliensPopupTuning
     {
         [Tunable, TunableComment("Whether to use a popup menu approach when displaying the interactions")]
-        public static bool kPopupMenuStyle;
+        public static bool kPopupMenuStyle = false;
     }
 }

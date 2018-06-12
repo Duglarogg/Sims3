@@ -7,7 +7,5 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options
 {
-    public interface IOptionItem : IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
-    {
-    }
+    public interface IOptionItem : IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>> { }
 }

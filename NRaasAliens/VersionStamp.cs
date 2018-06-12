@@ -1,6 +1,5 @@
 ﻿using NRaas.CommonSpace.Options;
 using Sims3.Gameplay.Abstracts;
-using Sims3.SimIFace;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,8 +8,8 @@ namespace NRaas
 {
     class VersionStamp : Common.ProtoVersionStamp, Common.IPreLoad
     {
-        public static readonly string sNameSpace = "NRaas.Aliens";
-        public static readonly int sVersion = 5;
+        public static readonly string sNamespace = "NRaas.Aliens";
+        public static readonly int sVersion = 6;
 
         public class Version : ProtoVersion<GameObject>
         { }

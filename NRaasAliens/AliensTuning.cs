@@ -1,7 +1,10 @@
-﻿using Sims3.Gameplay.Roles;
+﻿using NRaas.CommonSpace.Helpers;
+using Sims3.Gameplay.Roles;
 using Sims3.Gameplay.Services;
 using Sims3.Gameplay.Socializing;
 using Sims3.SimIFace;
+using Sims3.SimIFace.CAS;
+using Sims3.UI.Hud;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +15,7 @@ namespace NRaas
     {
         // General Settings
         [Tunable, TunableComment("Whether debug messages and interactions are enabled")]
-        public static bool kDebugging = true;
+        public static bool kDebugging = false;
 
         [Tunable, TunableComment("Whether or not to link alien activity to Story Progression options")]
         public static bool kLinkToStoryProgression = false;
@@ -34,7 +37,37 @@ namespace NRaas
         [Tunable, TunableComment("Min and max Advanced Technology skill levels for aliens")]
         public static int[] kFutureSkill = new int[] { 10, 10 };
 
+        [Tunable, TunableComment("Whether or NPC aliens get the Science skill")]
+        public static bool kAlienScience = false;
 
+        [Tunable, TunableComment("Min and max Science skill levels for aliesn")]
+        public static int[] kScienceSkill = new int[] { 7, 8 };
+
+        [Tunable, TunableComment("Min and max Fairy Magic skill levels for alien fairies.")]
+        public static int[] kFairyMagicSkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Min and max Lycanthropy skill levels for alien werewolves.")]
+        public static int[] kLycanthropySkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Min and max Alchemy skill levels for alien witches.")]
+        public static int[] kSpellcraftSkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Min and max Spellcasting skill levels for alien witches.")]
+        public static int[] kSpellcastingSkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Min and max Gardening skill level for alien fairies and plantSims.")]
+        public static int[] kGardeningSkill = new int[] { 3, 6 };
+
+        [Tunable, TunableComment("Whether or not NPC aliens can have an occult life state.")]
+        public static bool kAllowOccultAliens = false;
+
+        [Tunable, TunableComment("Maximum possible number of occult life states an NPC alien can have.")]
+        public static int kMaxAlienOccults = 1;
+
+        [Tunable, TunableComment("Chance of an NPC alien having one or more occult life states")]
+        public static int kOccultAlienChance = 25;
+
+            
         // Alien Activity Settings
         [Tunable, TunableComment("Range(0 - 23): Earliest hour that alien activity can occur")]
         public static int kEarliestHour = 20;
@@ -104,6 +137,10 @@ namespace NRaas
         [Tunable, TunableComment("Number of puddles to spawn when labor begins.")]
         public static int kNumPuddles = 2;
 
+        [Tunable, TunableComment("Whether or not alien babies can inherit occults")]
+        public static bool kAllowOccultBabies = false;
 
+        [Tunable, TunableComment("Max number of occult life states an alien baby can inherit")]
+        public static int kMaxBabyOccults = 1;
     }
 }

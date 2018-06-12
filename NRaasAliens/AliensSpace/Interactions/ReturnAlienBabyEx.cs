@@ -26,36 +26,46 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Interactions
 {
-    public class ReturnAlienBabyEx : SocialInteraction, Common.IAddInteraction, Common.IPreLoad
+    public class ReturnAlienBabyEx : AlienUtils.ReturnAlienBaby, Common.IAddInteraction, Common.IPreLoad
     {
-        public static readonly InteractionDefinition Singleton = new Definition();
+        static InteractionDefinition sOldSingleton;
 
-        VisualEffect mEffect;
-
-        public class Definition : InteractionDefinition<Sim, Sim, ReturnAlienBabyEx>
+        public new class Definition : AlienUtils.ReturnAlienBaby.Definition
         {
             public override string GetInteractionName(Sim actor, Sim target, InteractionObjectPair iop)
             {
-                return Common.Localize("ReturnAlienBabyEx:MenuName");
+                return base.GetInteractionName(actor, target, new InteractionObjectPair(sOldSingleton, target));
             }
 
             public override bool Test(Sim actor, Sim target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
             {
                 if (!target.TraitManager.HasElement(BuffsAndTraits.sAlienChild))
                 {
-                    greyedOutTooltipCallback = Aliens.Settings.Debugging ? CreateTooltipCallback("Target is not alien child.") : null;
+                    greyedOutTooltipCallback = Common.DebugTooltip("Target is not the product of an alien pregnancy.");
                     return false;
                 }
 
                 if (target.SimDescription.ToddlerOrAbove)
                 {
-                    greyedOutTooltipCallback = Aliens.Settings.Debugging ? CreateTooltipCallback("Target is too old.") : null;
+                    greyedOutTooltipCallback = Common.DebugTooltip("Target is too old to return.");
                     return false;
                 }
 
                 if (target.Genealogy.IsParentOrStepParent(actor.Genealogy))
                 {
-                    greyedOutTooltipCallback = Aliens.Settings.Debugging ? CreateTooltipCallback("Your are not a parent of this child.") : null;
+                    greyedOutTooltipCallback = Common.DebugTooltip("Actor is not a parent of the target.");
+                    return false;
+                }
+
+                if (actor.Household != target.Household)
+                {
+                    greyedOutTooltipCallback = Common.DebugTooltip("Actor and target are not in the same household.");
+                    return false;
+                }
+
+                if (target.SimDescription.AgingState != null && target.SimDescription.AgingState.IsAgingInProgress())
+                {
+                    greyedOutTooltipCallback = Common.DebugTooltip("Target is aging up.");
                     return false;
                 }
 
@@ -65,51 +75,59 @@ namespace NRaas.AliensSpace.Interactions
 
         public void AddInteraction(Common.InteractionInjectorList interactions)
         {
-            interactions.Add<Sim>(Singleton);
-        }
-
-        public override void Cleanup()
-        {
-            if (mEffect != null)
-            {
-                mEffect.Stop();
-                mEffect.Dispose();
-                mEffect = null;
-            }
-
-            base.Cleanup();
+            interactions.Replace<Sim, AlienUtils.ReturnAlienBaby.Definition>(Singleton);
         }
 
         public void OnPreLoad()
         {
-            Tunings.Inject<Sim, AlienUtils.ReturnAlienBaby.Definition, Definition>(true);
+            InteractionTuning tuning = Tunings.GetTuning<Sim, AlienUtils.ReturnAlienBaby.Definition>();
+
+            if (tuning != null)
+            {
+                tuning.Availability.Teens = true;
+                tuning.Availability.Adults = true;
+                tuning.Availability.Elders = true;
+            }
+
+            Tunings.Inject<Sim, AlienUtils.ReturnAlienBaby.Definition, Definition>(false);
+
+            sOldSingleton = Singleton;
+            Singleton = new Definition();
         }
 
         public override bool Run()
         {
-            bool flag = TwoButtonDialog.Show(Common.Localize("ReturnAlienBabyEx:Dialogue", Actor.IsFemale, new object[] { Actor }),
-                Common.Localize("ReturnAlienBabyEx:DialogueAccept"), Common.Localize("ReturnAlienBabyEx:DialogueReject"));
+            return Run(this);
+        }
+
+        public static bool Run(AlienUtils.ReturnAlienBaby returnBaby)
+        {
+            bool flag = TwoButtonDialog.Show(
+                Common.Localize("ReturnAlienBabyEx:Dialogue"),
+                Common.Localize("ReturnAlienBabyEx:DialogueAccept"),
+                Common.Localize("ReturnAlienBabyEx:DialogueReject"));
 
             if (flag)
             {
-                Target.DisableInteractions();
-                Target.InteractionQueue.CancelAllInteractions();
-                mEffect = VisualEffect.Create("ep8BabyTeleportFx");
-                mEffect.SetPosAndOrient(Target.Position, Target.ForwardVector, Target.UpVector);
-                mEffect.Start();
-                Target.FadeOut(true);
-                List<IGenealogy> list = new List<IGenealogy>(Target.SimDescription.Genealogy.IParents);
-                list.AddRange(Target.SimDescription.Genealogy.ISiblings);
+                AgingManager.Singleton.CancelAgingAlarmsForSim(returnBaby.Target.SimDescription.AgingState);
+                returnBaby.Target.DisableInteractions();
+                returnBaby.Target.InteractionQueue.CancelAllInteractions();
+                returnBaby.mEffect = VisualEffect.Create("ep8BabyTeleportFx");
+                returnBaby.mEffect.SetPosAndOrient(returnBaby.Target.Position, returnBaby.Target.ForwardVector, returnBaby.Target.UpVector);
+                returnBaby.mEffect.Start();
+                returnBaby.Target.FadeOut(true);
+                List<IGenealogy> list = new List<IGenealogy>(returnBaby.Target.Genealogy.IParents);
+                list.AddRange(returnBaby.Target.Genealogy.ISiblings);
 
                 foreach (IGenealogy current in list)
-                    Target.SimDescription.Genealogy.RemoveDirectRelation(current);
+                    returnBaby.Target.Genealogy.RemoveDirectRelation(current);
 
-                Actor.Household.Remove(Target.SimDescription);
-                Target.SimDescription.Dispose();
+                returnBaby.Actor.Household.Remove(returnBaby.Target.SimDescription);
+                returnBaby.Target.SimDescription.Dispose();
                 Simulator.Sleep(30u);
             }
 
-            return base.Run();
+            return true;
         }
     }
 }

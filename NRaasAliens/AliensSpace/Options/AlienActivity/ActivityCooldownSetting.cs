@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienActivity
 {
-    public class ActivityCooldownSetting : IntegerSettingOption<GameObject>, IAlienActivityOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class ActivityCooldownSetting : IntegerSettingOption<GameObject>, IAlienActivityOption
     {
         public override ITitlePrefixOption ParentListingOption => new ListingOption();
 

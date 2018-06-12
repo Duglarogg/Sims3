@@ -8,7 +8,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienGeneration
 {
-    public class FutureSimSetting : BooleanSettingOption<GameObject>, IAliensOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class FutureSimSetting : BooleanSettingOption<GameObject>, IAliensOption
     {
         protected override bool Allow(GameHitParameters<GameObject> parameters)
         {

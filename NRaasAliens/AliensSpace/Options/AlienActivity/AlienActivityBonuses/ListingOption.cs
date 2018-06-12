@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Options.AlienActivity.AlienActivityBonuses
 {
-    public class ListingOption : OptionList<IAlienActivityBonusesOption>, IAlienActivityOption, IOptionItem, IInteractionOptionItem<IActor, GameObject, GameHitParameters<GameObject>>, ICommonOptionItem
+    public class ListingOption : OptionList<IAlienActivityBonusesOption>, IAlienActivityOption
     {
         public override ITitlePrefixOption ParentListingOption => null;
 

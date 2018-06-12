@@ -24,8 +24,38 @@
 
     <kFutureSkill value="10,10" />
       <!-- Min and max levels of the Advanced Technology skill that NPC aliens obtain. -->
+    
+    <kAlienScience value="False" />
+      <!-- Whether or not NPC aliens start with levels in the Science skill. -->
+    
+    <kScienceSkill value="7,8" />
+      <!-- Min and max levels of the Science skill that NPC aliens obtain. -->
+    
+    <kAllowOccultAliens value="False" />
+      <!-- Whether or not NPC aliens can have one or more occult life states. -->
+    
+    <kMaxAlienOccults value="1" />
+      <!-- Max possible number of occult life states an NPC alien can receive. -->
+    
+    <kOccultAlienChance value="25" />
+      <!-- Chance that an NPC alien receives occult life states. -->
 
+    <kFairyMagicSkill value="3,6" />
+      <!-- Min and max levels of the Fairy Magic skill that NPC alien fairies obtain. -->
 
+    <kLycanthropySkill value="3,6" />
+      <!-- Min and max levels of the Lycanthropy skill that NPC alien werewolves obtain. -->
+
+    <kSpellcraftSkill value="3,6" />
+      <!-- Min and max levels of the Alchemy skill that NPC alien witches obtain. -->
+
+    <kSpellcastingSkill value="3,6" />
+      <!-- Min and max levels of the Spellcasting skill that NPC alien witches obtain. -->
+
+    <kGardeningSkill value="3,6" />
+      <!-- Min and max levles of the Gardening skill that NPC alien fairies and plantSims obtain. -->
+
+    
     <!-- Alien Activity Settings -->
     <kEarliestHour value="20" />
       <!-- Range(0 - 23): The hour of the day that aliens become active. -->
@@ -86,14 +116,19 @@
     <kPregnancyLength value="3" />
       <!-- Duration (in days) of an alien pregnancy. -->
 
-    <kLaborLength value="4" />
+    <kLaborLength value="8" />
       <!-- Duration (in hours) of labor for an alien pregnancy. -->
 
     <kBackachChance value="25" />
       <!-- Chance for a Sim to get a backache during an alien pregnancy. -->
 
     <kNumPuddles value ="2" />
-      <!-- Number of puddles to generate when labor begins. -->    
-
+      <!-- Number of puddles to generate when labor begins. -->
+    
+    <kAllowOccultBabies value="false" />
+      <!-- Whether or not alien babies can inherit occult life states. -->
+    
+    <kMaxBabyOccults value="1" />
+      <!-- Max possible number of occult life states an alien baby can inherit. -->
   </CurrentTuning>
 </base>

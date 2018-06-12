@@ -41,9 +41,9 @@ namespace NRaas.AliensSpace.Interactions
             public override string GetInteractionName(Sim actor, Sim target, InteractionObjectPair iop)
             {
                 if (actor == target)
-                    return Common.Localize("GoToHospitalEx:MenuName");
+                    return Localization.LocalizeString("Gameplay/ActorSystems/Pregnancy:GoToHospital", new object[0]);
 
-                return Common.Localize("TakeToHospitalEx:MenuName");
+                return Localization.LocalizeString("Gameplay/ActorSystems/Pregnancy:TakeToHospital", new object[0]);
             }
 
             public override bool Test(Sim actor, Sim target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
