@@ -382,7 +382,6 @@
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowedAlienOccultsOption.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowFairySetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowGenieSetting.cs" />
-    <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowGhostSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowImaginaryFriendSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowMermaidSetting.cs" />
     <Compile Include="AliensSpace\Options\AlienGeneration\AllowedAlienOccults\AllowPlantSimSetting.cs" />
