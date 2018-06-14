@@ -64,24 +64,17 @@ namespace NRaas.AliensSpace.Helpers
         static AlarmHandle[] sAlienActivityAlarm = new AlarmHandle[24];
         static int cooldown = 0;
 
-        static AlarmTimerCallback refreshCallback = new AlarmTimerCallback(AlienRefreshCallback);
-
-        static AlienUtilsEx()
-        {
-            for (int i = 0; i < 24; i++)
-            {
-                sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
-            }
-        }
+        static AlarmTimerCallback sActivityCallback = new AlarmTimerCallback(AlienActivityCallback);
+        static AlarmTimerCallback sRefreshCallback = new AlarmTimerCallback(AlienRefreshCallback);
 
         public static void AlienActivityCallback()
         {
-            Common.DebugNotify("Alien Activity: Alarm Triggered");
+            Common.DebugNotify("Alien Activity - Triggered");
 
             if (cooldown > 0)
             {
                 cooldown -= 1;
-                Common.DebugNotify("Alien Activity: On Cooldown - " + cooldown.ToString() + " hours to go");
+                Common.DebugNotify("Alien Activity - On Cooldown: " + cooldown.ToString() + " hours to go");
                 return;
             }
 
@@ -91,7 +84,7 @@ namespace NRaas.AliensSpace.Helpers
             {
                 if (Household.AlienHousehold == null || Household.AlienHousehold.NumMembers == 0)
                 {
-                    Common.DebugNotify("Alien Activity: Alien Household is Empty");
+                    Common.DebugNotify("Alien Activity - Alien household does not exist or it is empty");
                     return;
                 }
 
@@ -99,25 +92,25 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (!RandomUtil.RandomChance(chance))
                 {
-                    Common.DebugNotify("Alien Activity: Activity Roll Failed - " + chance + " %");
+                    Common.DebugNotify("Alien Activity - Activity Roll Fail (" + chance + "%)");
                     return;
                 }
 
+                Common.DebugNotify("Alien Activity - Activity Roll Pass (" + chance + "%)");
                 List<SimDescription> aliens = GetValidAliens();
 
                 if (aliens == null)
                 {
-                    Common.DebugNotify("Alien Activity: No valid aliens");
+                    Common.DebugNotify("Alien Activity - No valid aliens");
                     return;
                 }
 
                 SimDescription alien = RandomUtil.GetRandomObjectFromList(aliens);
-
                 chance = GetAbductionChance();
 
                 if (RandomUtil.RandomChance(chance))
                 {
-                    Common.DebugNotify("Alien Activity: Abduction Roll Pass - " + chance + "%");
+                    Common.DebugNotify("Alien Activity - Abduction Roll Pass (" + chance + "%)");
 
                     /* <WISHLIST>
                      *      For now, abductions will only target the active household.  This is due to how alien babies are treated
@@ -131,7 +124,7 @@ namespace NRaas.AliensSpace.Helpers
 
                     if (validAbductees == null)
                     {
-                        Common.DebugNotify("Alien Activity: Abduction Fail - No valid abductees");
+                        Common.DebugNotify("Alien Activity - Abduction Fail: No valid abductees");
                         return;
                     }
 
@@ -140,7 +133,7 @@ namespace NRaas.AliensSpace.Helpers
 
                     if (lot == null)
                     {
-                        Common.DebugNotify("Alien Activity: Abduction Fail - Abductee not on valid lot");
+                        Common.DebugNotify("Alien Activity - Abduction Fail: Abductee not on valid lot");
                         return;
                     }
 
@@ -150,13 +143,13 @@ namespace NRaas.AliensSpace.Helpers
                 }
                 else
                 {
-                    Common.DebugNotify("Alien Activity: Abduction Roll Fail - " + chance + "%");
+                    Common.DebugNotify("Alien Activity - Abduction Roll Fail (" + chance + "%)");
 
                     chance = GetVisitationChance(Household.ActiveHousehold, alien);
 
                     if (RandomUtil.RandomChance(chance))
                     {
-                        Common.DebugNotify("Alien Activity: Visit Active Roll Pass - " + chance + "%");
+                        Common.DebugNotify("Alien Activity - Visit Active Roll Pass (" + chance + "%)");
 
                         Sim visitor = alien.InstantiateOffScreen(LotManager.GetFarthestLot(Household.ActiveHousehold.LotHome));
                         AlienSituation.Create(visitor, Household.ActiveHousehold.LotHome);
@@ -165,13 +158,13 @@ namespace NRaas.AliensSpace.Helpers
                     }
                     else
                     {
-                        Common.DebugNotify("Alien Activity: Visit Active Roll Fail - " + chance + "%");
+                        Common.DebugNotify("Alien Activity - Visit Active Roll Fail (" + chance + "%)");
 
                         List<Lot> lots = GetValidLots();
 
                         if (lots == null)
                         {
-                            Common.DebugNotify("Alien Activity: Visit Fail - No valid lots");
+                            Common.DebugNotify("Alien Activity - Visit Fail: No valid lots");
                             return;
                         }
 
@@ -184,26 +177,31 @@ namespace NRaas.AliensSpace.Helpers
                 }
             }
             else
-                Common.DebugNotify("Alien Activity Alarm: Outside active hours");
+                Common.DebugNotify("Alien Activity - Outside active hours");
         }
 
         public static void AlienRefreshCallback()
         {
-            if (Aliens.Settings.Debugging)
-                StyledNotification.Show(new StyledNotification.Format("Alien Household Refresh Triggered!",
-                    StyledNotification.NotificationStyle.kDebugAlert));
+            Common.DebugNotify("Alien Household Refresh - Triggered");
 
             if (Household.AlienHousehold == null)
+            {
+                Common.DebugNotify("Alien Household Refresh - Alien household does not exist");
                 return;
+            }
 
             if (Household.AlienHousehold.NumMembers < AlienUtils.kAlienHouseholdNumMembers)
             {
+                Common.DebugNotify("Alien Household Refresh - Adding new member to alien household");
+
                 CASAgeGenderFlags age = RandomUtil.GetRandomObjectFromList(Aliens.Settings.mValidAlienAges);
                 CASAgeGenderFlags gender = RandomUtil.CoinFlip() ? CASAgeGenderFlags.Male : CASAgeGenderFlags.Female;
                 SimDescription description = MakeAlien(age, gender, GameUtils.GetCurrentWorld(), 1f, true);
 
                 if (Aliens.Settings.mAllowOccultAliens && RandomUtil.RandomChance(Aliens.Settings.mOccultAlienChance))
                 {
+                    Common.DebugNotify("Alien Household Refresh - Creating occult alien");
+
                     int numOccults = RandomUtil.GetInt(1, Aliens.Settings.mMaxAlienOccults);
                     List<OccultTypes> validOccults = new List<OccultTypes>(Aliens.Settings.mValidAlienOccults);
 
@@ -861,9 +859,9 @@ namespace NRaas.AliensSpace.Helpers
                 if (interactive)
                     baby.FirstName = string.Empty;
 
-                baby.LastName = alien.LastName;
-                Genetics.AssignTraits(baby, alien, abductee, interactive, averageMood, pregoRandom);
-                baby.TraitManager.AddHiddenElement(BuffsAndTraits.sAlienChild);
+                baby.LastName = abductee.LastName;
+                Genetics.AssignTraits(baby, null, abductee, interactive, averageMood, pregoRandom);
+                // baby.TraitManager.AddHiddenElement(BuffsAndTraits.sAlienChild);
 
                 if (Aliens.Settings.mFutureSim)
                     baby.TraitManager.AddHiddenElement(TraitNames.FutureSim);
@@ -954,14 +952,33 @@ namespace NRaas.AliensSpace.Helpers
         {
             if (GameUtils.GetCurrentWorldType() != WorldType.Vacation)
             {
-                ResetAlienRefreshAlarm();
-                ResetAlienActivityAlarm();
+                for (int i = 0; i < 24; i++)
+                {
+                    if (sAlienActivityAlarm[i] != AlarmHandle.kInvalidHandle)
+                    {
+                        AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[i]);
+                        sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
+                    }
+
+                    sAlienActivityAlarm[i] = AlarmManager.Global.AddAlarmDay(i, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
+                        "Alien Actiivty Ex Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
+                }
+
+                if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle)
+                {
+                    AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienHouseholdRefreshAlarm);
+                    AlienUtils.sAlienHouseholdRefreshAlarm = AlarmHandle.kInvalidHandle;
+                }
+
+                AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All,
+                    new AlarmTimerCallback(AlienRefreshCallback), "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
             }
         }
 
         public void OnWorldQuit()
         {
-            AlienUtils.Shutdown();
+            AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienHouseholdRefreshAlarm);
+            AlienUtils.sAlienHouseholdRefreshAlarm = AlarmHandle.kInvalidHandle;
 
             for (int i = 0; i < 24; i++)
             {
@@ -976,15 +993,14 @@ namespace NRaas.AliensSpace.Helpers
             AlienUtils.sAlienAbductionHelper.TelescopeUsed = false;
         }
 
-        private void ResetAlienActivityAlarm()
+        /*
+        private static void ResetAlienActivityAlarm()
         {
             if (AlienUtils.sAlienVisitationAlarm != AlarmHandle.kInvalidHandle)
             {
                 AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienVisitationAlarm);
                 AlienUtils.sAlienVisitationAlarm = AlarmHandle.kInvalidHandle;
             }
-
-            sAlienActivityAlarm = null;
 
             for (int hour = 0; hour < 24; hour++)
             {
@@ -995,12 +1011,12 @@ namespace NRaas.AliensSpace.Helpers
                     sAlienActivityAlarm[hour] = AlarmHandle.kInvalidHandle;
                 }
 
-                sAlienActivityAlarm[hour] = AlarmManager.Global.AddAlarmDay((float)hour, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
+                sAlienActivityAlarm[hour] = AlarmManager.Global.AddAlarmDay(hour, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
                     "Alien Activity Hourly Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
             }
         }
 
-        private void ResetAlienRefreshAlarm()
+        private static void ResetAlienRefreshAlarm()
         {
             if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle && !CheckAlarm(AlienUtils.sAlienHouseholdRefreshAlarm, refreshCallback))
             {
@@ -1011,5 +1027,6 @@ namespace NRaas.AliensSpace.Helpers
             AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All, new AlarmTimerCallback(AlienRefreshCallback),
                 "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
         }
+        */
     }
 }

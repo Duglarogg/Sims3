@@ -26,6 +26,9 @@ namespace NRaas.AliensSpace.Buffs
         {
             public Sim Abductee { get; set; }
             public SimDescription Alien { get; set; }
+            public bool IsAlienPregnant { get; set; }
+
+            public DateAndTime LastTimeUpdated { get; set; }
 
             public BuffInstanceAbductedEx()
             { }
@@ -38,10 +41,33 @@ namespace NRaas.AliensSpace.Buffs
             {
                 return new BuffInstanceAbductedEx(mBuff, mBuffGuid, mEffectValue, mTimeoutCount);
             }
+
+            public override void OnTimeOutUpdated()
+            {
+                if (IsAlienPregnant && SimClock.ElapsedTime(TimeUnit.Minutes, LastTimeUpdated) >= sInspectFrequency)
+                {
+                    Abductee.PlaySoloAnimation("a_alien_pregnancy_inspectStomach", false);
+                }
+
+                base.OnTimeOutUpdated();
+
+                /*
+                if (SimClock.ElapsedTime(TimeUnit.Minutes, LastTimeUpdated) >= sInspectFrequency && IsAlienPregnant)
+                {
+                    if (RandomUtil.RandomChance(BuffAbductedEx.sInspectChance))
+                        Abductee.PlaySoloAnimation("a_alien_pregnancy_inspectStomach");
+
+                    LastTimeUpdated = SimClock.CurrentTime();
+                }
+                base.OnTimeOutUpdated();
+                */
+            }
         }
 
-        public BuffAbductedEx(BuffData info) : base(info)
-        { }
+        public static int sInspectChance = 33;
+        public static int sInspectFrequency = 60;
+
+        public BuffAbductedEx(BuffData info) : base(info) { }
 
         public override BuffInstance CreateBuffInstance()
         {
@@ -57,7 +83,7 @@ namespace NRaas.AliensSpace.Buffs
 
             foreach(SimDescription current in Household.AlienHousehold.SimDescriptions)
             {
-                if (!description.IsBloodRelated(current) && current.TeenOrAbove)
+                if (current.TeenOrAbove)
                     list.Add(current);
             }
 
@@ -66,7 +92,13 @@ namespace NRaas.AliensSpace.Buffs
                 buffInstance.Alien = RandomUtil.GetRandomObjectFromList(list);
 
                 if (AlienPregnancy.ShouldImpregnate(buffInstance.Abductee, buffInstance.Alien))
+                {
                     AlienPregnancy.Start(buffInstance.Abductee, buffInstance.Alien);
+                    buffInstance.IsAlienPregnant = true;
+                    buffInstance.LastTimeUpdated = SimClock.CurrentTime();
+                }
+                else
+                    buffInstance.IsAlienPregnant = false;
             }
         }
     }

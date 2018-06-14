@@ -92,13 +92,19 @@ namespace NRaas.AliensSpace
 
         public PersistedSettings()
         {
+            Debugging = mDebugging;
             UpdatePregnancyTuning();
         }
 
         public bool Debugging
         {
             get => mDebugging;
-            set => Common.kDebugging = mDebugging = value;
+
+            set
+            {
+                Common.kDebugging = value;
+                mDebugging = value;
+            }
         }
 
         public bool LinkToStoryProgression(bool autonomous)

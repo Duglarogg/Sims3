@@ -54,8 +54,8 @@ namespace NRaas.AliensSpace.Interactions
 
         public override void Cleanup()
         {
-            AlienPregnancy pregnancy = Actor.SimDescription.Pregnancy as AlienPregnancy;
-            bool wasPregnant = (pregnancy != null);
+            AlienPregnancy pregnancy = new AlienPregnancy(Actor.SimDescription.Pregnancy);
+            bool wasPregnant = pregnancy != null;
 
             try
             {
@@ -81,6 +81,9 @@ namespace NRaas.AliensSpace.Interactions
                     if (pregnancy != null)
                         Common.Exception(Actor, Target, e);
                 }
+
+                Sims3.Gameplay.Gameflow.Singleton.EnableSave(this);
+                Actor.BuffManager.RemoveElement(BuffsAndTraits.sXenogenesis);
             }
             catch(ResetException)
             {
@@ -117,6 +120,8 @@ namespace NRaas.AliensSpace.Interactions
 
         public override bool Run()
         {
+            bool result;
+
             try
             {
                 if (Actor.LotCurrent != Target)
@@ -124,51 +129,47 @@ namespace NRaas.AliensSpace.Interactions
                     Vector3 point = World.LotGetPtInside(Target.LotId);
 
                     if (point == Vector3.Invalid)
-                        return false;
-
-                    if (!Actor.RouteToPointRadius(point, 3f))
                     {
-                        if (!GlobalFunctions.PlaceAtGoodLocation(Actor, new World.FindGoodLocationParams(point), false)
-                            || !SimEx.IsPointInLotSafelyRoutable(Actor, Target, Actor.Position))
-                            Actor.AttemptToPutInSafeLocation(true);
-                    }    
-                }
-
-                if (Actor.Posture is SwimmingInPool)
-                {
-                    SwimmingInPool posture = Actor.Posture as SwimmingInPool;
-
-                    if (!posture.ContainerPool.RouteToEdge(Actor))
-                    {
-                        if (Actor.BridgeOrigin != null)
-                            Actor.BridgeOrigin.MakeRequest();
-
-                        Actor.PopPosture();
-                        IGameObject reservedTile = null;
-                        Actor.FindRoutablePointInsideNearFrontDoor(Actor.Household.LotHome, out reservedTile);
-                        Vector3 position = reservedTile.Position;
-                        Terrain.TeleportMeHere here = Terrain.TeleportMeHere.Singleton.CreateInstance(Terrain.Singleton, Actor, 
-                            new InteractionPriority(InteractionPriorityLevel.Pregnancy), false, false) as Terrain.TeleportMeHere;
-                        here.SetAndReserveDestination(reservedTile);
-
-                        try
-                        {
-                            here.RunInteractionWithoutCleanup();
-                        }
-                        catch
-                        {
-                            Actor.SetPosition(position);
-                        }
-                        finally
-                        {
-                            here.Cleanup();
-                        }
-
-                        Actor.LoopIdle();
+                        result = false;
+                        return result;
                     }
+
+                    if (!Actor.RouteToPointRadius(point, 3f) 
+                        && (!GlobalFunctions.PlaceAtGoodLocation(Actor, new World.FindGoodLocationParams(point), false) 
+                        || !SimEx.IsPointInLotSafelyRoutable(Actor, Target, Actor.Position)))
+                            Actor.AttemptToPutInSafeLocation(true);
                 }
 
-                AlienPregnancy pregnancy = Actor.SimDescription.Pregnancy as AlienPregnancy;
+                if (Actor.Posture is SwimmingInPool && !(Actor.Posture as SwimmingInPool).ContainerPool.RouteToEdge(Actor))
+                {
+                    if (Actor.BridgeOrigin != null)
+                        Actor.BridgeOrigin.MakeRequest();
+
+                    Actor.PopPosture();
+                    IGameObject reservedTile = null;
+                    Actor.FindRoutablePointInsideNearFrontDoor(Actor.Household.LotHome, out reservedTile);
+                    Vector3 position = reservedTile.Position;
+                    Terrain.TeleportMeHere here = Terrain.TeleportMeHere.Singleton.CreateInstance(Terrain.Singleton, Actor,
+                        new InteractionPriority(InteractionPriorityLevel.Pregnancy), false, false) as Terrain.TeleportMeHere;
+                    here.SetAndReserveDestination(reservedTile);
+
+                    try
+                    {
+                        here.RunInteractionWithoutCleanup();
+                    }
+                    catch
+                    {
+                        Actor.SetPosition(position);
+                    }
+                    finally
+                    {
+                        here.Cleanup();
+                    }
+
+                    Actor.LoopIdle();
+                }
+
+                AlienPregnancy pregnancy = new AlienPregnancy(Actor.SimDescription.Pregnancy);
                 Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");
                 mNewborns = pregnancy.CreateNewborns(0f, Actor.IsSelectable, true);
                 mCurrentStateMachine = StateMachineClient.Acquire(Actor, "Pregnancy");
@@ -196,7 +197,7 @@ namespace NRaas.AliensSpace.Interactions
                 if (Actor.IsSelectable)
                     OccultImaginaryFriend.DeliverDollToHousehold(mNewborns);
 
-                return true;
+                result = true;
             }
             catch (ResetException)
             {
@@ -206,8 +207,10 @@ namespace NRaas.AliensSpace.Interactions
             {
                 Common.Exception(Actor, Target, e);
 
-                return false;
+                result = false;
             }
+
+            return result;
         }
     }
 }

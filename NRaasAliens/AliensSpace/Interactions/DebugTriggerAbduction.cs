@@ -76,13 +76,12 @@ namespace NRaas.AliensSpace.Interactions
 
             if (aliens == null || abductees == null)
             {
-                Common.DebugNotify("DEBUG - Trigger Abduction: No Valid Aliens or Abductees");
+                Common.DebugNotify("DEBUG - Trigger Abduction: No Valid Aliens and/or Abductees");
                 return false;
             }
 
             Sim abductee = RandomUtil.GetRandomObjectFromList(abductees);
             SimDescription alien = RandomUtil.GetRandomObjectFromList(aliens);
-
             AlienAbductionSituationEx.Create(alien, abductee, Target);
 
             return true;

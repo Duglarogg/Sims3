@@ -23,7 +23,7 @@ namespace NRaas.AliensSpace.Interactions
         {
             public override string GetInteractionName(Sim actor, RabbitHole target, InteractionObjectPair iop)
             {
-                return Localization.LocalizeString("Gameplay/ActorSystems/Pregnancy:GoToHospital", new object[0]);
+                return Localization.LocalizeString("NRaas.Aliens.GoToHospitalEx:MenuName", new object[0]);
             }
 
             public override bool Test(Sim actor, RabbitHole target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
@@ -38,9 +38,7 @@ namespace NRaas.AliensSpace.Interactions
             {
                 haveBabyInstance.AddFollower(Actor);
 
-                while (!Actor.WaitForExitReason(Sim.kWaitForExitReasonDefaultTime, ExitReason.Canceled) && haveBabyInstance.BabyBorn)
-                {
-                }
+                while (!Actor.WaitForExitReason(Sim.kWaitForExitReasonDefaultTime, ExitReason.Canceled) && !haveBabyInstance.BabyBorn) { }
 
                 return true;
             }

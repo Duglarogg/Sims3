@@ -88,7 +88,7 @@ namespace NRaas
         public static int kBaseVisitChance = 25;
 
         [Tunable, TunableComment("Range(0 - 24): Number of hours it takes to complete an abduction")]
-        public static int kAbductionLength = 1;
+        public static int kAbductionLength = 30;
 
         [Tunable, TunableComment("Range(0 - 100): Minimum LTR needed to earn the high LTR bonus")]
         public static int kHightLTRThreshold = 60;

@@ -256,3 +256,10 @@
 <STR>Return the Baby</STR>
 <KEY>NRaas.Aliens.ReturnAlienBabyEx:DialogueReject</KEY>
 <STR>Keep the Baby</STR>
+
+<KEY>NRaas.Aliens.GoToHospitalEx:MenuName</KEY>
+<STR>Go to Hospital</STR>
+
+<KEY>NRaas.Aliens.HaveAlienBabyHospital:MenuName</KEY>
+<STR>Have Baby at Hospital</STR>
+

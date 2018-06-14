@@ -45,7 +45,7 @@ namespace NRaas.AliensSpace.Interactions
         {
             public override string GetInteractionName(Sim actor, Sim target, InteractionObjectPair iop)
             {
-                return Common.Localize("HaveAlienBabyHome:MenuName");
+                return Localization.LocalizeString("Gameplay/Core/Lot/HaveBabyHome:InteractionName", new object[0]);
             }
 
             public override bool Test(Sim actor, Sim target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)

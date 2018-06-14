@@ -52,7 +52,7 @@ namespace NRaas.AliensSpace.Interactions
                 PlumbBob.SelectActor(Actor);
                 Camera.FocusOnSim(Actor, Pregnancy.kShowPregnancyCameraLerp.Zoom, Pregnancy.kShowPregnancyCameraLerp.Pitch,
                     Pregnancy.kShowPregnancyCameraLerp.Time, true, false);
-                Audio.StartSound("sting_alien_visit");
+                Audio.StartObjectSound(Actor.ObjectId, "sting_alien_visit", false);
             }
 
             Actor.SimDescription.ShowPregnancy();
@@ -62,7 +62,7 @@ namespace NRaas.AliensSpace.Interactions
                 Actor.BuffManager.GetElement(BuffNames.Nauseous).mBuffOrigin = Origin.FromPregnancy;
 
             ActiveTopic.AddToSim(Actor, "Announce Pregnancy");
-            Actor.SimDescription.Pregnancy.TryToGiveLeave();
+            // Actor.SimDescription.Pregnancy.TryToGiveLeave();
             Tutorialette.TriggerLesson(Lessons.Pregnancy, Actor);
             Actor.PlaySoloAnimation("a_alien_pregnancy_inspectStomach");
 

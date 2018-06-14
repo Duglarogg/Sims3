@@ -45,8 +45,7 @@ namespace NRaas
             BooterHelper.Add(new TraitBooter());
         }
 
-        public Abductor()
-        { }
+        public Abductor() { }
 
         public static PersistedSettings Settings
         {
@@ -66,19 +65,16 @@ namespace NRaas
             sSettings = null;
         }
 
-        public void OnPreLoad()
-        { }
+        public void OnPreLoad() { }
 
         public void OnWorldLoadFinished()
         {
             kDebugging = Settings.Debugging;
         }
 
-        protected static new void OnNewObject(Event e)
-        { }
+        protected static new void OnNewObject(Event e) { }
 
-        public void OnWorldQuit()
-        { }
+        public void OnWorldQuit() { }
 
         public static GreyedOutTooltipCallback StoryProgessionTooltip(string debuggingReason, bool debuggingOnly)
         {

@@ -26,7 +26,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Interactions
 {
-    public class ReturnAlienBabyEx : AlienUtils.ReturnAlienBaby, Common.IAddInteraction, Common.IPreLoad
+    public class ReturnAlienBabyEx : AlienUtils.ReturnAlienBaby, Common.IPreLoad
     {
         static InteractionDefinition sOldSingleton;
 
@@ -39,11 +39,13 @@ namespace NRaas.AliensSpace.Interactions
 
             public override bool Test(Sim actor, Sim target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
             {
+                /*
                 if (!target.TraitManager.HasElement(BuffsAndTraits.sAlienChild))
                 {
                     greyedOutTooltipCallback = Common.DebugTooltip("Target is not the product of an alien pregnancy.");
                     return false;
                 }
+                */
 
                 if (target.SimDescription.ToddlerOrAbove)
                 {
@@ -51,7 +53,7 @@ namespace NRaas.AliensSpace.Interactions
                     return false;
                 }
 
-                if (target.Genealogy.IsParentOrStepParent(actor.Genealogy))
+                if (!target.Genealogy.IsParentOrStepParent(actor.Genealogy))
                 {
                     greyedOutTooltipCallback = Common.DebugTooltip("Actor is not a parent of the target.");
                     return false;
@@ -73,10 +75,12 @@ namespace NRaas.AliensSpace.Interactions
             }
         }
 
+        /*
         public void AddInteraction(Common.InteractionInjectorList interactions)
         {
             interactions.Replace<Sim, AlienUtils.ReturnAlienBaby.Definition>(Singleton);
         }
+        */
 
         public void OnPreLoad()
         {

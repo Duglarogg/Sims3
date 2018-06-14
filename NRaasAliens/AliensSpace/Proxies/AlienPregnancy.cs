@@ -64,6 +64,20 @@ namespace NRaas.AliensSpace.Proxies
             CopyPregnancy(this, src);
         }
 
+        public new void ApplyInitialMutationFactors()
+        {
+            if (mMom.BuffManager != null && mMom.BuffManager.HasElement(BuffNames.MagicInTheAir))
+            {
+                mChanceOfRandomOccultMutation += BuffMagicInTheAir.kRandomOccultMutationChanceIncrease;
+                mMom.BuffManager.RemoveElement(BuffNames.MagicInTheAir);
+            }
+
+            if (mMom.LotCurrent != null && mMom.LotCurrent.IsHouseboatLot() && RandomUtil.RandomChance(TraitTuning.kSailorChanceOfForcedTraitOnHouseboat))
+            {
+                SetForcedBabyTrait(TraitNames.Sailor);
+            }
+        }
+
         public static new bool CanAskToDetermineBabyGender(Sim pregnantSim, Sim doctor)
         {
             return pregnantSim.BuffManager.HasElement(BuffsAndTraits.sXenogenesis) && doctor.Occupation is Medical 
@@ -350,6 +364,7 @@ namespace NRaas.AliensSpace.Proxies
                 SimDescription babyDescription = AlienUtilsEx.MakeAlienBaby(alien, mMom.SimDescription, gender, averageMoodForBirth, pregoRandom, interactive);
                 mMom.Household.Add(babyDescription);
                 Sim baby = babyDescription.Instantiate(Vector3.Empty);
+                baby.AddInteraction(ReturnAlienBabyEx.Singleton);
                 baby.SetPosition(mMom.Position);
 
                 if (homeBirth)
@@ -541,7 +556,7 @@ namespace NRaas.AliensSpace.Proxies
 
             foreach (InteractionInstance current in mMom.InteractionQueue.InteractionList)
             {
-                HaveAlienBabyHospital haveBabyHospital = current as HaveAlienBabyHospital;
+                HaveAlienBabyHospital haveBabyHospital = (HaveAlienBabyHospital)current;
 
                 if (haveBabyHospital != null)
                 {
@@ -575,7 +590,7 @@ namespace NRaas.AliensSpace.Proxies
                 {
                     instance = HaveAlienBabyHospital.Singleton.CreateInstance(rabbitHole, mMom, 
                         new InteractionPriority(InteractionPriorityLevel.Pregnancy), false, false);
-                    (instance as HaveAlienBabyHospital).BabyShouldBeBorn = true;
+                    ((HaveAlienBabyHospital)instance).BabyShouldBeBorn = true;
                 }
                 else
                     instance = HaveAlienBabyHome.Singleton.CreateInstance(mMom.LotHome, mMom, 
@@ -658,8 +673,11 @@ namespace NRaas.AliensSpace.Proxies
                 EventTracker.SendEvent(EventTypeId.kPregnancyContractionsStarted, mMom);
             }
 
-            if (mHourOfPregnancy == Aliens.Settings.mPregnancyDuration)
+            if (mHourOfPregnancy >= Aliens.Settings.mPregnancyDuration)
                 HaveTheBaby();
+
+            if (mHourOfPregnancy > Aliens.Settings.mPregnancyDuration)
+                mHourOfPregnancy = Aliens.Settings.mPregnancyDuration;
 
             SetPregoBlendShape();
         }
@@ -755,7 +773,7 @@ namespace NRaas.AliensSpace.Proxies
 
                 mMom.SimDescription.SetPregnancy(num2, false);
 
-                if (RandomUtil.RandomChance01(Aliens.Settings.mBackacheChance))
+                if (mHourOfPregnancy < Aliens.Settings.mStartLabor && RandomUtil.RandomChance01(Aliens.Settings.mBackacheChance))
                     mMom.BuffManager.AddElement(BuffNames.Backache, Origin.FromPregnancy);
             }
         }
@@ -827,7 +845,7 @@ namespace NRaas.AliensSpace.Proxies
                     return false;
                 }
 
-                (abductee.SimDescription.Pregnancy as AlienPregnancy).ApplyInitialMutationFactors();
+                ((AlienPregnancy)abductee.SimDescription.Pregnancy).ApplyInitialMutationFactors();
                 return true;
             }
         }
