@@ -118,7 +118,8 @@ namespace NRaas.AliensSpace.Proxies
 
                 if (!mMom.HasBeenDestroyed)
                 {
-                    mMom.BuffManager.RemoveElement(BuffsAndTraits.sAlienBabyIsComing);
+                    mMom.BuffManager.RemoveElement(BuffNames.BabyIsComing);
+                    //mMom.BuffManager.RemoveElement(BuffsAndTraits.sAlienBabyIsComing);
 
                     if (!mMom.SimDescription.IsVampire)
                     {
@@ -177,7 +178,8 @@ namespace NRaas.AliensSpace.Proxies
 
             if (mHourOfPregnancy >= Aliens.Settings.mStartLabor)
             {
-                mMom.BuffManager.AddElement(BuffsAndTraits.sAlienBabyIsComing, Origin.FromPregnancy);
+                mMom.BuffManager.AddElement(BuffNames.BabyIsComing, Origin.FromPregnancy);
+                //mMom.BuffManager.AddElement(BuffsAndTraits.sAlienBabyIsComing, Origin.FromPregnancy);
 
                 if (mContractionBroadcast != null)
                     mContractionBroadcast.Dispose();
@@ -504,14 +506,11 @@ namespace NRaas.AliensSpace.Proxies
 
                     if (num != 4)
                     {
-                        mMultipleBabiesMultiplier = Math.Min(mMultipleBabiesMultiplier, Pregnancy.kMaxBabyMultiplier);
+                        mMultipleBabiesMultiplier = Math.Min(mMultipleBabiesMultiplier, kMaxBabyMultiplier);
 
                         if (mMom.HasTrait(TraitNames.FertilityTreatment))
                             mMultipleBabiesMultiplier *= TraitTuning.kFertilityMultipleBabiesMultiplier;
                         else if (mMom.BuffManager != null && mMom.BuffManager.HasElement(BuffNames.ATwinkleInTheEye))
-                            mMultipleBabiesMultiplier *= TraitTuning.kFertilityMultipleBabiesMultiplier;
-
-                        if (dadDescription != null && dadDescription.HasTrait(TraitNames.FertilityTreatment))
                             mMultipleBabiesMultiplier *= TraitTuning.kFertilityMultipleBabiesMultiplier;
 
                         double num2 = pregoRandom.NextDouble();
@@ -547,28 +546,48 @@ namespace NRaas.AliensSpace.Proxies
 
         public override void HaveTheBaby()
         {
+            string msg = mMom.FullName + Common.NewLine +
+                "AlienPregnancy.HaveTheBaby" + Common.NewLine + 
+                " - Initiating Birth Sequence" + Common.NewLine;
+
             if (mContractionBroadcast != null)
                 mContractionBroadcast.Dispose();
 
-            mMom.RemoveAlarm(PreggersAlarm);
+            //mMom.RemoveAlarm(PreggersAlarm);
             mMom.RemoveAlarm(mContractionsAlarm);
+
+            msg += " - Contraction Alarm Removed" + Common.NewLine;
+
             bool flag = false;
 
-            foreach (InteractionInstance current in mMom.InteractionQueue.InteractionList)
+            if (mMom.InteractionQueue.HasInteractionOfType(HaveAlienBabyHome.Singleton))
             {
-                HaveAlienBabyHospital haveBabyHospital = (HaveAlienBabyHospital)current;
+                msg += " - Already Birthing at Home";
+                flag = true;
+            }
 
-                if (haveBabyHospital != null)
+            if (mMom.InteractionQueue.HasInteractionOfType(HaveAlienBabyHospital.Singleton))
+            {
+                msg += " - Already Birthing at Hospital";
+
+                foreach (InteractionInstance current in mMom.InteractionQueue.InteractionList)
                 {
-                    haveBabyHospital.CancellableByPlayer = false;
-                    haveBabyHospital.BabyShouldBeBorn = true;
-                    flag = true;
-                    break;
+                    HaveAlienBabyHospital haveBabyHosptial = current as HaveAlienBabyHospital;
+
+                    if (haveBabyHosptial != null)
+                    {
+                        haveBabyHosptial.CancellableByPlayer = false;
+                        haveBabyHosptial.BabyShouldBeBorn = true;
+                        flag = true;
+                        break;
+                    }
                 }
             }
 
             if (!flag)
             {
+                msg += " - Checking for Hospitals" + Common.NewLine;
+
                 List<RabbitHole> rabbitHoles = RabbitHole.GetRabbitHolesOfType(RabbitHoleType.Hospital);
                 float num = mMom.LotHome.GetDistanceToObject(mMom);
                 RabbitHole rabbitHole = null;
@@ -588,37 +607,59 @@ namespace NRaas.AliensSpace.Proxies
 
                 if (rabbitHole != null)
                 {
-                    instance = HaveAlienBabyHospital.Singleton.CreateInstance(rabbitHole, mMom, 
+                    msg += " - Birthing at Hospital" ;
+
+                    instance = HaveAlienBabyHospital.Singleton.CreateInstance(rabbitHole, mMom,
                         new InteractionPriority(InteractionPriorityLevel.Pregnancy), false, false);
                     ((HaveAlienBabyHospital)instance).BabyShouldBeBorn = true;
                 }
                 else
-                    instance = HaveAlienBabyHome.Singleton.CreateInstance(mMom.LotHome, mMom, 
+                {
+                    msg += " - Birthing at Home";
+
+                    instance = HaveAlienBabyHome.Singleton.CreateInstance(mMom.LotHome, mMom,
                         new InteractionPriority(InteractionPriorityLevel.Pregnancy), false, false);
+                }
 
                 mMom.InteractionQueue.Add(instance);
                 ActiveTopic.AddToSim(mMom, "Recently Had Baby");
             }
+
+            Common.DebugNotify(msg);
         }
 
         public override void HourlyCallback()
         {
             if (GameUtils.IsOnVacation() || GameUtils.IsUniversityWorld())
+            {
+                Common.DebugNotify("AlienPregnancy.HourlyCallback - Pregnancy paused");
                 return;
+            }
 
             mHourOfPregnancy++;
 
+            string msg = mMom.FullName + Common.NewLine
+                + "AlienPregnancy.HourlyCallback" + Common.NewLine
+                + " - Hour: " + mHourOfPregnancy + Common.NewLine;
+
             if (mHourOfPregnancy == Aliens.Settings.mPregnancyShow)
             {
-                InteractionInstance instance = ShowAlienPregnancy.Singleton.CreateInstance(mMom, mMom, 
+                msg += " - Showing Pregnancy";
+
+                InteractionInstance instance = ShowAlienPregnancy.Singleton.CreateInstance(mMom, mMom,
                     new InteractionPriority(InteractionPriorityLevel.ESRB), false, false);
                 instance.Hidden = true;
                 mMom.InteractionQueue.AddNext(instance);
+
+                Common.DebugNotify(msg);
+
                 return;
             }
 
             if (mMom.Household.IsTouristHousehold)
             {
+                msg += " - Mother is Tourist" + Common.NewLine;
+
                 ForeignVisitorsSituation situation = ForeignVisitorsSituation.TryGetForeignVisitorsSituation(mMom);
 
                 if (mHourOfPregnancy == Aliens.Settings.mForeignShowTNS && situation != null)
@@ -628,15 +669,24 @@ namespace NRaas.AliensSpace.Proxies
 
                 if (mHourOfPregnancy == Aliens.Settings.mForeignLeaves)
                 {
+                    msg += " - Sending Pregnant Tourist Home";
+
                     if (situation != null)
                         situation.MakeGuestGoHome(mMom);
                     else if (mMom.SimDescription.AssignedRole != null)
                         mMom.SimDescription.AssignedRole.RemoveSimFromRole();
+
+                    Common.DebugNotify(msg);
                 }
 
                 if (mHourOfPregnancy > Aliens.Settings.mForeignLeaves)
                 {
+                    msg += " - Walking Back 1 Hour";
+
                     mHourOfPregnancy--;
+
+                    Common.DebugNotify(msg);
+
                     return;
                 }
             }
@@ -649,6 +699,8 @@ namespace NRaas.AliensSpace.Proxies
 
             if (mHourOfPregnancy == Aliens.Settings.mStartLabor)
             {
+                msg += " - Beginning Labor" + Common.NewLine;
+
                 for (int i = 0; i < Aliens.Settings.mNumPuddles; i++)
                     PuddleManager.AddPuddle(mMom.PositionOnFloor);
 
@@ -657,29 +709,44 @@ namespace NRaas.AliensSpace.Proxies
                         new object[] { mMom }), StyledNotification.NotificationStyle.kGameMessageNegative), "glb_tns_baby_coming_r2");
 
                 mMom.BuffManager.RemoveElement(BuffsAndTraits.sXenogenesis);
-                mMom.BuffManager.AddElement(BuffsAndTraits.sAlienBabyIsComing, Origin.FromPregnancy);
+                mMom.BuffManager.AddElement(BuffNames.BabyIsComing, -40, Origin.FromPregnancy);
+                //mMom.BuffManager.AddElement(BuffsAndTraits.sAlienBabyIsComing, Origin.FromPregnancy);
 
                 if (mContractionBroadcast != null)
                     mContractionBroadcast.Dispose();
 
-                mContractionBroadcast = new ReactionBroadcaster(mMom, kContractionBroadcasterParams, 
+                mContractionBroadcast = new ReactionBroadcaster(mMom, kContractionBroadcasterParams,
                     new ReactionBroadcaster.BroadcastCallback(StartReaction), new ReactionBroadcaster.BroadcastCallback(CancelReaction));
                 mMom.AddInteraction(TakeToHospitalEx.Singleton);
-                InteractionInstance entry = HaveContraction.Singleton.CreateInstance(mMom, mMom, 
+                InteractionInstance entry = HaveContraction.Singleton.CreateInstance(mMom, mMom,
                     new InteractionPriority(InteractionPriorityLevel.High, 10f), false, false);
                 mMom.InteractionQueue.Add(entry);
-                mContractionsAlarm = mMom.AddAlarmRepeating(5f, TimeUnit.Minutes, new AlarmTimerCallback(TriggerContraction), 5f, TimeUnit.Minutes, 
+                mContractionsAlarm = mMom.AddAlarmRepeating(5f, TimeUnit.Minutes, new AlarmTimerCallback(TriggerContraction), 5f, TimeUnit.Minutes,
                     "Trigger Contractions Alarm", AlarmType.AlwaysPersisted);
                 EventTracker.SendEvent(EventTypeId.kPregnancyContractionsStarted, mMom);
             }
 
             if (mHourOfPregnancy >= Aliens.Settings.mPregnancyDuration)
+            {
+                msg += " - Delivering Baby" + Common.NewLine;
                 HaveTheBaby();
-
-            if (mHourOfPregnancy > Aliens.Settings.mPregnancyDuration)
-                mHourOfPregnancy = Aliens.Settings.mPregnancyDuration;
+            }
 
             SetPregoBlendShape();
+
+            msg += String.Format(" - Twins: {0:0.00}%" + Common.NewLine, 
+                mMultipleBabiesMultiplier * kChanceOfTwins * 100f);
+            msg += String.Format(" - Trips: {0:0.00}%" + Common.NewLine, 
+                mMultipleBabiesMultiplier * kChanceOfTriplets * 100f);
+
+            if (sWoohooerGetChanceOfQuads.Valid)
+                msg += String.Format(" - Quads: {0:0.00}%" + Common.NewLine, 
+                    mMultipleBabiesMultiplier * sWoohooerGetChanceOfQuads.Invoke<float>(new object[0]) * 100f);
+
+            msg += String.Format(" - Morph: {0:0.00}%", (mMom.SimDescription.mCurrentShape.Pregnant * 100f));
+
+
+            Common.DebugNotify(msg);
         }
 
         public override void PregnancyComplete(List<Sim> newborns, List<Sim> followers)
@@ -690,8 +757,10 @@ namespace NRaas.AliensSpace.Proxies
             Tutorialette.TriggerLesson(Lessons.Babies, mMom);
             EventTracker.SendEvent(new PregnancyEvent(EventTypeId.kHadBaby, mMom, null, this, newborns));
 
+            mMom.RemoveAlarm(PreggersAlarm);
             mMom.RemoveInteractionByType(TakeToHospitalEx.Singleton);
-            mMom.BuffManager.RemoveElement(BuffsAndTraits.sAlienBabyIsComing);
+            mMom.BuffManager.RemoveElement(BuffNames.BabyIsComing);
+            //mMom.BuffManager.RemoveElement(BuffsAndTraits.sAlienBabyIsComing);
             UnrequestPregnantWalkStyle();
 
             if (!mMom.SimDescription.IsVampire)
@@ -770,6 +839,34 @@ namespace NRaas.AliensSpace.Proxies
 
                 if (num2 == 0f)
                     num2 = 0.01f;
+
+                if (Aliens.Settings.mUseFertility)
+                {
+                    float num3 = Math.Min(mMultipleBabiesMultiplier, kMaxBabyMultiplier);
+
+                    if (mMom.TraitManager.HasElement(TraitNames.WishedForLargeFamily))
+                        num3 = 1000f;
+                    else if (mMom.TraitManager.HasElement(TraitNames.FertilityTreatment))
+                        num3 *= TraitTuning.kFertilityMultipleBabiesMultiplier;
+                    else if (mMom.BuffManager != null && mMom.BuffManager.HasElement(BuffNames.ATwinkleInTheEye))
+                        num3 *= TraitTuning.kFertilityMultipleBabiesMultiplier;
+
+                    if (sWoohooerGetChanceOfQuads.Valid)
+                    {
+                        float chanceOfQuads = sWoohooerGetChanceOfQuads.Invoke<float>(new object[0]);
+
+                        if (num3 <= chanceOfQuads * mMultipleBabiesMultiplier)
+                            num2 *= 1.3f;
+                        else if (num3 <= kChanceOfTriplets * mMultipleBabiesMultiplier)
+                            num2 *= (1.2f + 0.1f * chanceOfQuads * mMultipleBabiesMultiplier);
+                    }
+                    else if (num3 <= kChanceOfTriplets * mMultipleBabiesMultiplier)
+                        num2 *= 1.2f;
+                    else if (num3 <= kChanceOfTwins * mMultipleBabiesMultiplier)
+                        num2 *= (1.1f + 0.1f * kChanceOfTriplets * mMultipleBabiesMultiplier);
+                    else
+                        num2 *= (1.0f + 0.1f * kChanceOfTwins * mMultipleBabiesMultiplier);
+                }
 
                 mMom.SimDescription.SetPregnancy(num2, false);
 

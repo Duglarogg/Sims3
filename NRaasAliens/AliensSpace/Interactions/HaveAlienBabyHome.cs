@@ -39,7 +39,7 @@ namespace NRaas.AliensSpace.Interactions
         public List<Sim> mNewborns;
         public static ulong kIconNameHash = ResourceUtils.HashString64("hud_interactions_baby");
 
-        public class Definition : InteractionDefinition<Sim, Lot, HaveAlienBabyHome>
+        public class Definition : InteractionDefinition<Sim, Lot, HaveAlienBabyHome>, IUsableDuringBirthSequence, IUsableDuringFire
         {
             public override string GetInteractionName(Sim actor, Lot target, InteractionObjectPair iop)
             {
@@ -48,7 +48,8 @@ namespace NRaas.AliensSpace.Interactions
 
             public override bool Test(Sim actor, Lot target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
             {
-                return actor.Household == target.Household && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
+                return actor.Household == target.Household && actor.BuffManager.HasElement(BuffNames.BabyIsComing);
+                //return actor.Household == target.Household && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
             }
         }
 
@@ -129,10 +130,7 @@ namespace NRaas.AliensSpace.Interactions
                     Vector3 point = World.LotGetPtInside(Target.LotId);
 
                     if (point == Vector3.Invalid)
-                    {
-                        result = false;
-                        return result;
-                    }
+                        return false;
 
                     if (!Actor.RouteToPointRadius(point, 3f) 
                         && (!GlobalFunctions.PlaceAtGoodLocation(Actor, new World.FindGoodLocationParams(point), false) 

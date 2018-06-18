@@ -47,6 +47,7 @@ namespace NRaas.AliensSpace.Interactions
         public override bool Run()
         {
             Actor.SimDescription.Pregnancy.mHasShownPregnancy = true;
+
             if (Actor.IsSelectable)
             {
                 PlumbBob.SelectActor(Actor);
@@ -62,9 +63,9 @@ namespace NRaas.AliensSpace.Interactions
                 Actor.BuffManager.GetElement(BuffNames.Nauseous).mBuffOrigin = Origin.FromPregnancy;
 
             ActiveTopic.AddToSim(Actor, "Announce Pregnancy");
-            // Actor.SimDescription.Pregnancy.TryToGiveLeave();
+            Actor.SimDescription.Pregnancy.TryToGiveLeave();
             Tutorialette.TriggerLesson(Lessons.Pregnancy, Actor);
-            Actor.PlaySoloAnimation("a_alien_pregnancy_inspectStomach");
+            Actor.PlaySoloAnimation("a_alien_pregnancy_inspectStomach", false);
 
             if (Actor.Occupation != null)
                 Actor.Occupation.RemoveAllJobs();

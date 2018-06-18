@@ -85,7 +85,7 @@ namespace NRaas.AliensSpace
         public int mPregnancyShow = 10;
         public int mStartLabor = 82;
         public int mPregnancyDuration = 90;
-        public int mPregnancyMorph = 60;
+        public int mPregnancyMorph = 24;
         public int mStartWalk = 42;
         public int mForeignShowTNS = 22;
         public int mForeignLeaves = 28;
@@ -127,8 +127,8 @@ namespace NRaas.AliensSpace
             mPregnancyDuration = mPregnancyShow + pregnancyLength + mLaborLength;               // Default: 86 hours
             mForeignShowTNS = mPregnancyShow + (int)Math.Round((1f / 6f) * pregnancyLength);    // Default: 22 hours
             mForeignLeaves = mPregnancyShow + (int)Math.Round((1f / 4f) * pregnancyLength);     // Default: 28 hours
-            mStartWalk = mPregnancyShow + (int)Math.Round((4f / 9f) * pregnancyLength);         // Default: 42 hours
-            mPregnancyMorph = (int)Math.Round((5f / 6f) * pregnancyLength);                     // Default: 60 hours
+            mStartWalk = mPregnancyShow + (int)Math.Round((5f / 18f) * pregnancyLength);         // Default: 30 hours
+            mPregnancyMorph = (int)Math.Round((5f / 12f) * pregnancyLength);                    // Default: 30 hours
         }
     }
 }

@@ -41,9 +41,9 @@ namespace NRaas.AliensSpace.Interactions
             public override string GetInteractionName(Sim actor, Sim target, InteractionObjectPair iop)
             {
                 if (actor == target)
-                    return Localization.LocalizeString("Gameplay/ActorSystems/Pregnancy:GoToHospital", new object[0]);
+                    return Common.Localize("GoToHospitalEx");
 
-                return Localization.LocalizeString("Gameplay/ActorSystems/Pregnancy:TakeToHospital", new object[0]);
+                return Common.Localize("TakeToHospitalEx");
             }
 
             public override bool Test(Sim actor, Sim target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
@@ -51,7 +51,8 @@ namespace NRaas.AliensSpace.Interactions
                 if (RabbitHole.GetRabbitHolesOfType(RabbitHoleType.Hospital).Count <= 0)
                     return false;
 
-                return target.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
+                return target.BuffManager.HasElement(BuffNames.BabyIsComing);
+                //return target.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
             }
         }
 

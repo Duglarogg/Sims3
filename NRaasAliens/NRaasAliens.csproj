@@ -337,7 +337,9 @@
     <Compile Include="AliensSpace\Helpers\AlienUtilsEx.cs" />
     <Compile Include="AliensSpace\Helpers\BuffsAndTraits.cs" />
     <Compile Include="AliensSpace\Helpers\CommonPregnancy.cs" />
-    <Compile Include="AliensSpace\Interactions\AbductSimAEx.cs" />
+    <Compile Include="AliensSpace\Interactions\AbductSimEx.cs" />
+    <Compile Include="AliensSpace\Interactions\DebugAbductSim.cs" />
+    <Compile Include="AliensSpace\Interactions\DebugGetSkinToneKey.cs" />
     <Compile Include="AliensSpace\Interactions\DebugTriggerAbduction.cs" />
     <Compile Include="AliensSpace\Interactions\GetMedicalAdviceEx.cs" />
     <Compile Include="AliensSpace\Interactions\GoToHospitalEx.cs" />

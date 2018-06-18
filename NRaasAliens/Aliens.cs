@@ -1,12 +1,17 @@
 ﻿using NRaas.AliensSpace;
-using NRaas.AliensSpace.Booters;
+using NRaas.AliensSpace.Buffs;
 using NRaas.AliensSpace.Helpers;
+using NRaas.AliensSpace.Interactions;
+using NRaas.AliensSpace.Proxies;
 using NRaas.CommonSpace.Booters;
 using NRaas.CommonSpace.Helpers;
+using Sims3.Gameplay.Actors;
 using Sims3.Gameplay.Autonomy;
 using Sims3.Gameplay.Interactions;
 using Sims3.Gameplay.Interfaces;
+using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
+using System.Collections.Generic;
 
 namespace NRaas
 {
@@ -29,8 +34,6 @@ namespace NRaas
             StatValueCount.sFullLog = true;
             Bootstrap();
             BooterHelper.Add(new BuffBooter());
-            new TraitBooter().LoadTraitData();
-            //BooterHelper.Add(new TraitBooter());
         }
 
         public Aliens() { }
@@ -41,6 +44,39 @@ namespace NRaas
             where NewType : InteractionDefinition
         {
             return AbductionTuningControl.ResetTuning(Tunings.Inject<Target, OldType, NewType>(clone), false, false);
+        }
+
+        // Externalized to WooHooer for pregnancy tests
+        public static bool IsAlienPregnant(Sim sim)
+        {
+            if (!sim.SimDescription.IsPregnant)
+                return false;
+
+            if (sim.BuffManager != null && !sim.BuffManager.HasElement(BuffsAndTraits.sAbductedEx))
+                return false;
+
+            BuffAbductedEx.BuffInstanceAbductedEx instance = sim.BuffManager.GetElement(BuffsAndTraits.sAbductedEx) as BuffAbductedEx.BuffInstanceAbductedEx;
+
+            return instance.IsAlienPregnant;
+        }
+
+        // Externalized to WooHooer for pregnancy tests
+        public static bool OnPositivePregnancy(Sim sim)
+        {
+            if (!sim.SimDescription.IsPregnant)
+                return false;
+
+            AlienPregnancy pregnancy = new AlienPregnancy(sim.SimDescription.Pregnancy);
+            sim.RemoveAlarm(pregnancy.PreggersAlarm);
+            pregnancy.PreggersAlarm = sim.AddAlarmRepeating(1f, TimeUnit.Hours, new AlarmTimerCallback(pregnancy.HourlyCallback),
+                1f, TimeUnit.Hours, "Hourly Alien Pregnancy Update Alarm", AlarmType.AlwaysPersisted);
+            pregnancy.mHourOfPregnancy = Settings.mPregnancyShow;
+            InteractionInstance instance = ShowAlienPregnancy.Singleton.CreateInstance(sim, sim, 
+                new InteractionPriority(InteractionPriorityLevel.ESRB), false, false);
+            instance.Hidden = true;
+            sim.InteractionQueue.AddNext(instance);
+
+            return true;
         }
 
         public void OnWorldLoadFinished()

@@ -47,21 +47,13 @@ namespace NRaas.AliensSpace.Buffs
                 if (IsAlienPregnant && SimClock.ElapsedTime(TimeUnit.Minutes, LastTimeUpdated) >= sInspectFrequency)
                 {
                     Abductee.PlaySoloAnimation("a_alien_pregnancy_inspectStomach", false);
-                }
-
-                base.OnTimeOutUpdated();
-
-                /*
-                if (SimClock.ElapsedTime(TimeUnit.Minutes, LastTimeUpdated) >= sInspectFrequency && IsAlienPregnant)
-                {
-                    if (RandomUtil.RandomChance(BuffAbductedEx.sInspectChance))
-                        Abductee.PlaySoloAnimation("a_alien_pregnancy_inspectStomach");
 
                     LastTimeUpdated = SimClock.CurrentTime();
                 }
-                base.OnTimeOutUpdated();
-                */
+
+                base.OnTimeOutUpdated();                
             }
+            
         }
 
         public static int sInspectChance = 33;
@@ -96,10 +88,11 @@ namespace NRaas.AliensSpace.Buffs
                     AlienPregnancy.Start(buffInstance.Abductee, buffInstance.Alien);
                     buffInstance.IsAlienPregnant = true;
                     buffInstance.LastTimeUpdated = SimClock.CurrentTime();
+                    return;
                 }
-                else
-                    buffInstance.IsAlienPregnant = false;
             }
+
+            buffInstance.IsAlienPregnant = false;
         }
     }
 }

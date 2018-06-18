@@ -30,10 +30,7 @@ using System.Text;
  *      
  *  CanASimBeAbucted(...)
  *      - Currently not referenced by anything; candidate for culling.
- *      
- *  MakeAlien(...)
- *      - May make this method private, as it should not be called outside AlienRefreshCallback and MakeAlienBaby methods
- *
+ *  
  *  ResetAlienActivityAlarm()
  *      May need to uncomment a for-loop that clears outs the sAlienActivityAlarm array before creating new alarms
  */
@@ -62,10 +59,18 @@ namespace NRaas.AliensSpace.Helpers
         };
 
         static AlarmHandle[] sAlienActivityAlarm = new AlarmHandle[24];
+        static AlarmHandle sReplaceAlarms = AlarmHandle.kInvalidHandle;
         static int cooldown = 0;
-
         static AlarmTimerCallback sActivityCallback = new AlarmTimerCallback(AlienActivityCallback);
         static AlarmTimerCallback sRefreshCallback = new AlarmTimerCallback(AlienRefreshCallback);
+
+        static AlienUtilsEx()
+        {
+            for (int i = 0; i < 24; i++)
+            {
+                sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
+            }
+        }
 
         public static void AlienActivityCallback()
         {
@@ -778,8 +783,7 @@ namespace NRaas.AliensSpace.Helpers
             return result;
         }
 
-        // <NOTE> May make this method private </NOTE>
-        public static SimDescription MakeAlien(CASAgeGenderFlags age, CASAgeGenderFlags gender, WorldName homeworld, float alienDNAPercentage, bool assignRandomTraits)
+        private static SimDescription MakeAlien(CASAgeGenderFlags age, CASAgeGenderFlags gender, WorldName homeworld, float alienDNAPercentage, bool assignRandomTraits)
         {
             ResourceKey skinTone = RandomUtil.GetRandomObjectFromList(AlienSkinTones);
             float skinToneIndex;
@@ -860,8 +864,22 @@ namespace NRaas.AliensSpace.Helpers
                     baby.FirstName = string.Empty;
 
                 baby.LastName = abductee.LastName;
-                Genetics.AssignTraits(baby, null, abductee, interactive, averageMood, pregoRandom);
-                // baby.TraitManager.AddHiddenElement(BuffsAndTraits.sAlienChild);
+
+                try
+                {
+                    Genetics.AssignTraits(baby, null, null, interactive, averageMood, pregoRandom);
+                    //Genetics.AssignTraits(baby, null, abductee, interactive, averageMood, pregoRandom);
+                    //Genetics.AssignTraits(baby, alien, abductee, interactive, averageMood, pregoRandom);
+                }
+                catch(Exception e)
+                {
+                    Common.DebugException("AlienUtilsEx:MakeAlienBaby", e);
+                }
+                finally
+                {
+                    Genetics.AssignRandomTraits(baby);
+                }
+                
 
                 if (Aliens.Settings.mFutureSim)
                     baby.TraitManager.AddHiddenElement(TraitNames.FutureSim);
@@ -950,8 +968,22 @@ namespace NRaas.AliensSpace.Helpers
 
         public void OnWorldLoadFinished()
         {
+            /*
+            sReplaceAlarms = AlarmManager.Global.AddAlarm(5f, TimeUnit.Minutes, new AlarmTimerCallback(ReplaceAlarmsCallback), "Replace Alien Alarms Alarm",
+                AlarmType.NeverPersisted, Household.AlienHousehold);
+            */
+
             if (GameUtils.GetCurrentWorldType() != WorldType.Vacation)
             {
+                if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle)
+                {
+                    AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienHouseholdRefreshAlarm);
+                    AlienUtils.sAlienHouseholdRefreshAlarm = AlarmHandle.kInvalidHandle;
+                }
+
+                AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All,
+                    new AlarmTimerCallback(AlienRefreshCallback), "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
+
                 for (int i = 0; i < 24; i++)
                 {
                     if (sAlienActivityAlarm[i] != AlarmHandle.kInvalidHandle)
@@ -963,15 +995,6 @@ namespace NRaas.AliensSpace.Helpers
                     sAlienActivityAlarm[i] = AlarmManager.Global.AddAlarmDay(i, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
                         "Alien Actiivty Ex Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
                 }
-
-                if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle)
-                {
-                    AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienHouseholdRefreshAlarm);
-                    AlienUtils.sAlienHouseholdRefreshAlarm = AlarmHandle.kInvalidHandle;
-                }
-
-                AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All,
-                    new AlarmTimerCallback(AlienRefreshCallback), "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
             }
         }
 
@@ -987,46 +1010,37 @@ namespace NRaas.AliensSpace.Helpers
             }            
         }
 
+        private static void ReplaceAlarmsCallback()
+        {
+            if (GameUtils.GetCurrentWorldType() != WorldType.Vacation)
+            {
+                if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle)
+                {
+                    AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienHouseholdRefreshAlarm);
+                    AlienUtils.sAlienHouseholdRefreshAlarm = AlarmHandle.kInvalidHandle;
+                }
+
+                AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All, 
+                    new AlarmTimerCallback(AlienRefreshCallback), "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
+
+                for (int i = 0; i < 24; i++)
+                {
+                    if (sAlienActivityAlarm[i] != AlarmHandle.kInvalidHandle)
+                    {
+                        AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[i]);
+                        sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
+                    }
+
+                    sAlienActivityAlarm[i] = AlarmManager.Global.AddAlarmDay(i, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
+                        "Alien Activity Ex Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
+                }
+            }
+        }
+
         private static void ResetAbductionHelper()
         {
             AlienUtils.sAlienAbductionHelper.SpaceRocksFound = 0;
             AlienUtils.sAlienAbductionHelper.TelescopeUsed = false;
         }
-
-        /*
-        private static void ResetAlienActivityAlarm()
-        {
-            if (AlienUtils.sAlienVisitationAlarm != AlarmHandle.kInvalidHandle)
-            {
-                AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienVisitationAlarm);
-                AlienUtils.sAlienVisitationAlarm = AlarmHandle.kInvalidHandle;
-            }
-
-            for (int hour = 0; hour < 24; hour++)
-            {
-                //  <NOTE> Uncomment this block if there are issues with the alarms
-                if (sAlienActivityAlarm[hour] != AlarmHandle.kInvalidHandle)
-                {
-                    AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[hour]);
-                    sAlienActivityAlarm[hour] = AlarmHandle.kInvalidHandle;
-                }
-
-                sAlienActivityAlarm[hour] = AlarmManager.Global.AddAlarmDay(hour, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
-                    "Alien Activity Hourly Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
-            }
-        }
-
-        private static void ResetAlienRefreshAlarm()
-        {
-            if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle && !CheckAlarm(AlienUtils.sAlienHouseholdRefreshAlarm, refreshCallback))
-            {
-                AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienHouseholdRefreshAlarm);
-                AlienUtils.sAlienHouseholdRefreshAlarm = AlarmHandle.kInvalidHandle;
-            }
-
-            AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All, new AlarmTimerCallback(AlienRefreshCallback),
-                "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
-        }
-        */
     }
 }

@@ -17,11 +17,11 @@ namespace NRaas.AliensSpace.Helpers
 {
     public class AlienAbductionSituationEx : AlienAbductionSituation
     {
-        public class AbductSimEx : ChildSituation<AlienAbductionSituationEx>
+        public new class AbductSim : ChildSituation<AlienAbductionSituationEx>
         {
-            public AbductSimEx() { }
+            public AbductSim() { }
 
-            public AbductSimEx(AlienAbductionSituationEx parent) : base(parent) { }
+            public AbductSim(AlienAbductionSituationEx parent) : base(parent) { }
 
             public override void Init(AlienAbductionSituationEx parent)
             {
@@ -34,18 +34,18 @@ namespace NRaas.AliensSpace.Helpers
                     return;
                 }
 
-                AbductSimAEx abduction = ForceSituationSpecificInteraction(ufo, parent.Alien, AbductSimAEx.Singleton, null,
+                AbductSimEx abductSim = ForceSituationSpecificInteraction(ufo, parent.Alien, AbductSimEx.Singleton, null,
                     new Callback(OnCompletion), new Callback(OnFailure), new InteractionPriority(InteractionPriorityLevel.CriticalNPCBehavior))
-                    as AbductSimAEx;
+                    as AbductSimEx;
 
-                if (abduction == null)
+                if (abductSim == null)
                 {
                     Common.DebugNotify("Alien Abduction Situation - Abduct Sim interaction is null");
                     parent.CleanupAbduction();
                     return;
                 }
 
-                abduction.SimToAbduct = parent.Abductee;
+                abductSim.SimToAbduct = parent.Abductee;
             }
 
             public void OnCompletion(Sim actor, float x)
@@ -86,7 +86,7 @@ namespace NRaas.AliensSpace.Helpers
             {
                 Alien.AssignRole(this);
                 Abductee.AssignRole(this);
-                SetState(new AbductSimEx(this));
+                SetState(new AbductSim(this));
                 return;
             }
 

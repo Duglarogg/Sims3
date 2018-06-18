@@ -16,32 +16,30 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Interactions
 {
-    public class DebugTriggerAbduction : ImmediateInteraction<Sim, Lot>, Common.IAddInteraction
+    public class DebugAbductSim : ImmediateInteraction<Sim, Sim>, Common.IAddInteraction
     {
-        public static readonly InteractionDefinition Singleton = new Definition();
-
         [DoesntRequireTuning]
-        public class Definition : ImmediateInteractionDefinition<Sim, Lot, DebugTriggerAbduction>
+        public class Definition : ImmediateInteractionDefinition<Sim, Sim, DebugAbductSim>
         {
-            public override string GetInteractionName(Sim actor, Lot target, InteractionObjectPair iop)
+            public override string GetInteractionName(Sim actor, Sim target, InteractionObjectPair iop)
             {
-                return "DEBUG - Abduct from Lot";
+                return "DEBUG - Abduct Sim";
             }
 
-            public override bool Test(Sim actor, Lot target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
+            public override bool Test(Sim actor, Sim target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
             {
                 if (!Aliens.Settings.Debugging)
                     return false;
 
                 if (Household.AlienHousehold == null)
                 {
-                    greyedOutTooltipCallback = CreateTooltipCallback("Alien household does not exist.");
+                    greyedOutTooltipCallback = CreateTooltipCallback("Alien household is null.");
                     return false;
                 }
 
-                if (AlienUtils.IsHouseboatAndNotDocked(target))
+                if (AlienUtils.IsHouseboatAndNotDocked(target.LotCurrent))
                 {
-                    greyedOutTooltipCallback = CreateTooltipCallback("Houseboat is not docked.");
+                    greyedOutTooltipCallback = CreateTooltipCallback("Target is on an undocked houseboat.");
                     return false;
                 }
 
@@ -51,9 +49,15 @@ namespace NRaas.AliensSpace.Interactions
                     return false;
                 }
 
-                if (AlienUtilsEx.GetValidAbductees(target) == null)
+                if (!target.SimDescription.IsHuman)
                 {
-                    greyedOutTooltipCallback = CreateTooltipCallback("No valid abductees.");
+                    greyedOutTooltipCallback = CreateTooltipCallback("Target is not human.");
+                    return false;
+                }
+
+                if (target.SimDescription.ChildOrBelow)
+                {
+                    greyedOutTooltipCallback = CreateTooltipCallback("Target is not teen or older.");
                     return false;
                 }
 
@@ -61,9 +65,11 @@ namespace NRaas.AliensSpace.Interactions
             }
         }
 
+        public static readonly InteractionDefinition Singleton = new Definition();
+
         public void AddInteraction(Common.InteractionInjectorList interactions)
         {
-            interactions.Add<Lot>(Singleton);
+            interactions.Add<Sim>(Singleton);
         }
 
         public override bool Run()
@@ -72,20 +78,23 @@ namespace NRaas.AliensSpace.Interactions
                 return false;
 
             List<SimDescription> aliens = AlienUtilsEx.GetValidAliens();
-            List<Sim> abductees = AlienUtilsEx.GetValidAbductees(Target);
+            Lot lot = Target.LotCurrent;
 
-            if (aliens == null || abductees == null)
+            if (aliens == null)
             {
-                Common.DebugNotify("DEBUG - Trigger Abduction: No Valid Aliens and/or Abductees");
+                Common.DebugNotify("DEBUG - Abduct Sim: No valid aliens");
                 return false;
             }
 
-            Sim abductee = RandomUtil.GetRandomObjectFromList(abductees);
+            if (lot == null)
+            {
+                Common.DebugNotify("DEBUG - Abduct Sim: Target's current lot is null");
+            }
+
             SimDescription alien = RandomUtil.GetRandomObjectFromList(aliens);
-            AlienAbductionSituationEx.Create(alien, abductee, Target);
+            AlienAbductionSituationEx.Create(alien, Target, lot);
 
             return true;
         }
-
     }
 }

@@ -49,7 +49,8 @@ namespace NRaas.AliensSpace.Interactions
 
             public override bool Test(Sim actor, RabbitHole target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
             {
-                return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
+                return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffNames.BabyIsComing);
+                //return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
             }
         }
 
@@ -149,7 +150,7 @@ namespace NRaas.AliensSpace.Interactions
 
         public override bool InRabbitHole()
         {
-            string msg = "HaveAlienBabyHospital:InRabbitHole" + Common.NewLine;
+            string msg = "HaveAlienBabyHospital.InRabbitHole" + Common.NewLine;
             bool result;
 
             try
@@ -165,7 +166,10 @@ namespace NRaas.AliensSpace.Interactions
                     msg += "B";
 
                     AlienPregnancy pregnancy = new AlienPregnancy(Actor.SimDescription.Pregnancy);
-                    Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");
+
+                    if (Actor.IsSelectable)
+                        Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");
+
                     mNewborns = pregnancy.CreateNewborns(Pregnancy.HaveBabyHospital.kBonusMoodPointsForHospitalBirth, Actor.IsSelectable, false);
 
                     msg += "C";
@@ -245,6 +249,8 @@ namespace NRaas.AliensSpace.Interactions
                 result = false;
             }
 
+            Common.DebugNotify(msg);
+
             return result;
         }
 
@@ -273,7 +279,7 @@ namespace NRaas.AliensSpace.Interactions
         public override bool Test()
         {
             return !Actor.InteractionQueue.HasInteractionOfType(HaveAlienBabyHome.Singleton) 
-                && (!Actor.InteractionQueue.HasInteractionOfType(HaveAlienBabyHospital.Singleton) 
+                && (!Actor.InteractionQueue.HasInteractionOfType(Singleton) 
                 || Actor.InteractionQueue.HasInteraction(this)) && base.Test();
         }
     }
