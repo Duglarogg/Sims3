@@ -49,8 +49,8 @@ namespace NRaas.AliensSpace.Interactions
 
             public override bool Test(Sim actor, RabbitHole target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
             {
-                return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffNames.BabyIsComing);
-                //return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
+                //return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffNames.BabyIsComing);
+                return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
             }
         }
 

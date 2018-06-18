@@ -51,8 +51,8 @@ namespace NRaas.AliensSpace.Interactions
                 if (RabbitHole.GetRabbitHolesOfType(RabbitHoleType.Hospital).Count <= 0)
                     return false;
 
-                return target.BuffManager.HasElement(BuffNames.BabyIsComing);
-                //return target.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
+                //return target.BuffManager.HasElement(BuffNames.BabyIsComing);
+                return target.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
             }
         }
 

@@ -48,8 +48,8 @@ namespace NRaas.AliensSpace.Interactions
 
             public override bool Test(Sim actor, Lot target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
             {
-                return actor.Household == target.Household && actor.BuffManager.HasElement(BuffNames.BabyIsComing);
-                //return actor.Household == target.Household && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
+                //return actor.Household == target.Household && actor.BuffManager.HasElement(BuffNames.BabyIsComing);
+                return actor.Household == target.Household && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
             }
         }
 

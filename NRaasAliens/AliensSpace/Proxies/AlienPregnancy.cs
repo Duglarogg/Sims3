@@ -118,8 +118,8 @@ namespace NRaas.AliensSpace.Proxies
 
                 if (!mMom.HasBeenDestroyed)
                 {
-                    mMom.BuffManager.RemoveElement(BuffNames.BabyIsComing);
-                    //mMom.BuffManager.RemoveElement(BuffsAndTraits.sAlienBabyIsComing);
+                    //mMom.BuffManager.RemoveElement(BuffNames.BabyIsComing);
+                    mMom.BuffManager.RemoveElement(BuffsAndTraits.sAlienBabyIsComing);
 
                     if (!mMom.SimDescription.IsVampire)
                     {
@@ -178,8 +178,8 @@ namespace NRaas.AliensSpace.Proxies
 
             if (mHourOfPregnancy >= Aliens.Settings.mStartLabor)
             {
-                mMom.BuffManager.AddElement(BuffNames.BabyIsComing, Origin.FromPregnancy);
-                //mMom.BuffManager.AddElement(BuffsAndTraits.sAlienBabyIsComing, Origin.FromPregnancy);
+                //mMom.BuffManager.AddElement(BuffNames.BabyIsComing, Origin.FromPregnancy);
+                mMom.BuffManager.AddElement(BuffsAndTraits.sAlienBabyIsComing, Origin.FromPregnancy);
 
                 if (mContractionBroadcast != null)
                     mContractionBroadcast.Dispose();
@@ -709,8 +709,8 @@ namespace NRaas.AliensSpace.Proxies
                         new object[] { mMom }), StyledNotification.NotificationStyle.kGameMessageNegative), "glb_tns_baby_coming_r2");
 
                 mMom.BuffManager.RemoveElement(BuffsAndTraits.sXenogenesis);
-                mMom.BuffManager.AddElement(BuffNames.BabyIsComing, -40, Origin.FromPregnancy);
-                //mMom.BuffManager.AddElement(BuffsAndTraits.sAlienBabyIsComing, Origin.FromPregnancy);
+                //mMom.BuffManager.AddElement(BuffNames.BabyIsComing, -40, Origin.FromPregnancy);
+                mMom.BuffManager.AddElement(BuffsAndTraits.sAlienBabyIsComing, Origin.FromPregnancy);
 
                 if (mContractionBroadcast != null)
                     mContractionBroadcast.Dispose();
@@ -759,8 +759,8 @@ namespace NRaas.AliensSpace.Proxies
 
             mMom.RemoveAlarm(PreggersAlarm);
             mMom.RemoveInteractionByType(TakeToHospitalEx.Singleton);
-            mMom.BuffManager.RemoveElement(BuffNames.BabyIsComing);
-            //mMom.BuffManager.RemoveElement(BuffsAndTraits.sAlienBabyIsComing);
+            //mMom.BuffManager.RemoveElement(BuffNames.BabyIsComing);
+            mMom.BuffManager.RemoveElement(BuffsAndTraits.sAlienBabyIsComing);
             UnrequestPregnantWalkStyle();
 
             if (!mMom.SimDescription.IsVampire)
@@ -855,18 +855,20 @@ namespace NRaas.AliensSpace.Proxies
                     {
                         float chanceOfQuads = sWoohooerGetChanceOfQuads.Invoke<float>(new object[0]);
 
-                        if (num3 <= chanceOfQuads * mMultipleBabiesMultiplier)
-                            num2 *= 1.3f;
-                        else if (num3 <= kChanceOfTriplets * mMultipleBabiesMultiplier)
-                            num2 *= (1.2f + 0.1f * chanceOfQuads * mMultipleBabiesMultiplier);
+                        if (chanceOfQuads * num3 >= 1f)
+                            num2 *= 1.4f;
+                        else if (kChanceOfTriplets * num3 >= 1f)
+                            num2 *= (1.3f + 0.1f * chanceOfQuads * num3);
                     }
-                    else if (num3 <= kChanceOfTriplets * mMultipleBabiesMultiplier)
-                        num2 *= 1.2f;
-                    else if (num3 <= kChanceOfTwins * mMultipleBabiesMultiplier)
-                        num2 *= (1.1f + 0.1f * kChanceOfTriplets * mMultipleBabiesMultiplier);
+                    else if (kChanceOfTriplets * num3 >= 1f)
+                        num2 *= 1.3f;
+                    else if (kChanceOfTwins * num3 >= 1f)
+                        num2 *= (1.2f + 0.1f * kChanceOfTriplets * num3);
                     else
-                        num2 *= (1.0f + 0.1f * kChanceOfTwins * mMultipleBabiesMultiplier);
+                        num2 *= (1.1f + 0.1f * kChanceOfTwins * num3);
                 }
+                else
+                    num2 *= 1.1f;
 
                 mMom.SimDescription.SetPregnancy(num2, false);
 
