@@ -23,7 +23,7 @@ namespace NRaas.AliensSpace.Interactions
         {
             public override string GetInteractionName(Sim actor, RabbitHole target, InteractionObjectPair iop)
             {
-                return Localization.LocalizeString("NRaas.Aliens.GoToHospitalEx:MenuName", new object[0]);
+                return Common.Localize("GoToHospitalEx:MenuName");
             }
 
             public override bool Test(Sim actor, RabbitHole target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)

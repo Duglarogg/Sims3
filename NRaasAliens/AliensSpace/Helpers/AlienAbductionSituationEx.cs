@@ -86,7 +86,7 @@ namespace NRaas.AliensSpace.Helpers
             {
                 Alien.AssignRole(this);
                 Abductee.AssignRole(this);
-                SetState(new AbductSim(this));
+                SetState(new AlienAbductionSituationEx.AbductSim(this));
                 return;
             }
 

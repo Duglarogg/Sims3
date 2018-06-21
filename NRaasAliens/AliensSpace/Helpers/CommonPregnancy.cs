@@ -10,6 +10,7 @@ using Sims3.Gameplay.Core;
 using Sims3.Gameplay.EventSystem;
 using Sims3.Gameplay.Interactions;
 using Sims3.Gameplay.Interfaces;
+using Sims3.Gameplay.Socializing;
 using Sims3.Gameplay.TuningValues;
 using Sims3.Gameplay.Utilities;
 using Sims3.SimIFace;
@@ -44,6 +45,9 @@ namespace NRaas.AliensSpace.Helpers
         
         public static Genetics.TraitOutcome AssignTraits(SimDescription baby, SimDescription abductee, bool interactive, float averageMood, Random pregoRandom)
         {
+            string msg = baby.FullName + Common.NewLine +
+                "CommonPregnancy.AssignTraits" + Common.NewLine;
+
             List<Trait> horribleTraits = new List<Trait>();
             List<Trait> negativeTratis = new List<Trait>();
             List<Trait> remainingTraits = new List<Trait>();
@@ -62,9 +66,28 @@ namespace NRaas.AliensSpace.Helpers
                 }
             }
 
+            msg += " - Base Trait Lists Built" + Common.NewLine;
+
             List<TraitNames> babyTraitNames = new List<TraitNames>();
             List<Genetics.InheritedTraitSource> traitSources = new List<Genetics.InheritedTraitSource>();
-            Genetics.TraitOutcome result = Genetics.InheritTraits(remainingTraits, negativeTratis, horribleTraits, averageMood, pregoRandom, abductee, null, baby, babyTraitNames, traitSources, baby.Age);
+            Genetics.TraitOutcome result;
+
+            msg += " - Calling Genetics.InheritTraits" + Common.NewLine;
+            
+            try
+            {
+                result = Genetics.InheritTraits(remainingTraits, negativeTratis, horribleTraits, averageMood, pregoRandom, abductee, null, baby, babyTraitNames, traitSources, baby.Age);
+            }
+            catch(Exception e)
+            {
+                Common.Exception("CommonPregnancy.AssignTraits", e);
+            }
+            finally
+            {
+                result = Genetics.TraitOutcome.Excellent;
+            }
+            
+            msg += " - " + result.ToString() + Common.NewLine;
 
             if (abductee != null)
             {
@@ -86,6 +109,8 @@ namespace NRaas.AliensSpace.Helpers
 
             if (interactive)
             {
+                msg += " - Creating Make Baby Popup" + Common.NewLine;
+
                 string titleText = Localization.LocalizeString(baby.IsFemale, "Gameplay/CAS/Genetics:MakeBabyTitle", new object[0]);
                 string promptText = null;
 
@@ -152,6 +177,8 @@ namespace NRaas.AliensSpace.Helpers
                 while (string.IsNullOrEmpty(baby.FirstName))
                     baby.FirstName = StringInputDialog.Show(titleText, promptText, "", CASBasics.GetMaxNameLength(), StringInputDialog.Validation.SimNameText);
             }
+
+            msg += " - Assigning Traits to Baby";
 
             int numVisibleTraits = baby.TraitManager.CountVisibleTraits();
             int numTraitsForAge = baby.TraitManager.NumTraitsForAge();
@@ -247,6 +274,8 @@ namespace NRaas.AliensSpace.Helpers
                 }
             }
 
+            Common.DebugNotify(msg);
+
             return result;
         }
         
@@ -330,14 +359,151 @@ namespace NRaas.AliensSpace.Helpers
             }
         }
 
-        /*
+        
         public static Genetics.TraitOutcome InheritTraits(List<Trait> remainingTraits, List<Trait> negativeTraits, List<Trait> horribleTraits, 
             float averageMood, Random rnd, SimDescription abductee, SimDescription baby, List<TraitNames> babyTraitNames, 
             List<Genetics.InheritedTraitSource> traitSources, CASAgeGenderFlags age)
         {
+            List<Trait> negTraits1 = new List<Trait>();
+            List<Trait> posTraits1 = new List<Trait>();
+            List<Trait> negTraits2 = new List<Trait>();
+            List<Trait> posTraits2 = new List<Trait>();
 
+            if (abductee != null && abductee.Genealogy != null)
+            {
+                if (abductee.Genealogy != null)
+                {
+                    foreach (Genealogy current in abductee.Genealogy.Parents)
+                    {
+                        if (current.SimDescription != null && current.SimDescription.TraitManager != null)
+                        {
+                            IEnumerable<Trait> list5 = current.SimDescription.TraitManager.List;
+                            Genetics.AddTraitsToList(list5, posTraits1, negTraits1, age | baby.Species);
+                        }
+                    }
+                }
+
+                if (abductee.TraitManager != null)
+                {
+                    IEnumerable<Trait> list6 = abductee.TraitManager.List;
+                    Genetics.AddTraitsToList(list6, posTraits2, negTraits2, age | baby.Species);
+                }
+            }
+
+            bool flag = false;
+
+            if (averageMood < Genetics.kMoodLevelVeryPositive && abductee != null && abductee.Pregnancy != null
+                && abductee.Pregnancy.ForcedTrait != TraitNames.Unknown)
+                flag = Genetics.AddForcedTraitToBaby(babyTraitNames, baby, abductee.Pregnancy.ForcedTrait, traitSources);
+
+            if (averageMood < Genetics.kMoodLevelNegative)
+            {
+                while (babyTraitNames.Count < 2)
+                {
+                    int num = horribleTraits.Count + negativeTraits.Count;
+
+                    if (num < 2 - babyTraitNames.Count)
+                        break;
+
+                    List<float> list9 = new List<float>();
+                    Genetics.AddWeights(list9, horribleTraits);
+                    Genetics.AddWeights(list9, negativeTraits);
+                    int num2 = RandomUtil.GetWeightedIndex(list9, rnd);
+
+                    if (num2 >= horribleTraits.Count)
+                    {
+                        num2 -= horribleTraits.Count;
+                        Genetics.AddTraitToBaby(babyTraitNames, baby, negativeTraits, num2, traitSources, Genetics.InheritedTraitSource.LowMood);
+                    }
+                    else
+                        Genetics.AddTraitToBaby(babyTraitNames, baby, horribleTraits, num2, traitSources, Genetics.InheritedTraitSource.LowMood);
+
+
+                }
+
+                return Genetics.TraitOutcome.Horrible;
+            }
+
+            if (averageMood < Genetics.kMoodLevelNeutral)
+            {
+                int num3 = horribleTraits.Count + negativeTraits.Count;
+                bool flag2 = false;
+
+                while (!flag && !flag2 && num3 > 0)
+                {
+                    List<float> list10 = new List<float>();
+                    Genetics.AddWeights(list10, horribleTraits);
+                    Genetics.AddWeights(list10, negativeTraits);
+                    int num4 = RandomUtil.GetWeightedIndex(list10, rnd);
+
+                    if (num4 >= horribleTraits.Count)
+                    {
+                        num4 -= horribleTraits.Count;
+                        flag2 = Genetics.AddTraitToBaby(babyTraitNames, baby, negativeTraits, num4, traitSources, Genetics.InheritedTraitSource.LowMood);
+                    }
+                    else
+                        flag2 = Genetics.AddTraitToBaby(babyTraitNames, baby, horribleTraits, num4, traitSources, Genetics.InheritedTraitSource.LowMood);
+
+                    num3 = horribleTraits.Count + negativeTraits.Count;
+                }
+
+                num3 = negativeTraits.Count + remainingTraits.Count;
+                flag2 = false;
+
+                while (!flag2 && num3 > 0)
+                {
+                    List<float> list11 = new List<float>();
+                    Genetics.AddWeights(list11, negativeTraits);
+                    Genetics.AddWeights(list11, remainingTraits);
+                    int num5 = RandomUtil.GetWeightedIndex(list11, rnd);
+
+                    if (num5 >= negativeTraits.Count)
+                    {
+                        num5 -= negativeTraits.Count;
+                        flag2 = Genetics.AddTraitToBaby(babyTraitNames, baby, remainingTraits, num5, traitSources, Genetics.InheritedTraitSource.LowMood);
+                    }
+                    else
+                        flag2 = Genetics.AddTraitToBaby(babyTraitNames, baby, negativeTraits, num5, traitSources, Genetics.InheritedTraitSource.LowMood);
+
+                    num3 = negativeTraits.Count + remainingTraits.Count;
+                }
+
+                return Genetics.TraitOutcome.Bad;
+            }
+
+            if (averageMood < Genetics.kMoodLevelPositive)
+            {
+                bool flag3 = flag;
+                float traitSource = (float)rnd.NextDouble() * 100f;
+                Genetics.SelectGeneticTrait(rnd, traitSource, traitSources, ref flag3, baby, posTraits1, negTraits1, posTraits2, negTraits2, 
+                    remainingTraits, negativeTraits, babyTraitNames);
+
+                if (!flag)
+                {
+                    traitSource = (float)rnd.NextDouble() * 100f;
+                    Genetics.SelectGeneticTrait(rnd, traitSource, traitSources, ref flag3, baby, posTraits1, negTraits1, posTraits2, negTraits2,
+                        remainingTraits, negativeTraits, babyTraitNames);
+                }
+
+                return Genetics.TraitOutcome.Average;
+            }
+
+            if (averageMood < Genetics.kMoodLevelVeryPositive)
+            {
+                if (!flag)
+                {
+                    bool flag4 = true;
+                    float traitSource2 = (float)rnd.NextDouble() * 100f;
+                    Genetics.SelectGeneticTrait(rnd, traitSource2, traitSources, ref flag4, baby, posTraits1, negTraits1, posTraits2, negTraits2, 
+                        remainingTraits, negativeTraits, babyTraitNames);
+                }
+
+                return Genetics.TraitOutcome.Good;
+            }
+
+            return Genetics.TraitOutcome.Excellent;
         }
-        */
+        
 
         public static float OnGetChanceOfSuccess(Sim abductee, SimDescription alien)
         {

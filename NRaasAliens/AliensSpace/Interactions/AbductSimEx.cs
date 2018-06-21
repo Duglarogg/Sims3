@@ -54,7 +54,6 @@ namespace NRaas.AliensSpace.Interactions
         public VisualEffect mPreAbductFX;
         public VisualEffect mCarFX;
         public bool mFromInventory = true;
-        public bool mNPCAbductor = true;
 
         private bool AbductSim()
         {
@@ -208,8 +207,6 @@ namespace NRaas.AliensSpace.Interactions
             if (Target.InUse)
                 return false;
 
-            mNPCAbductor = true;
-
             if (SimToAbduct == null)
                 return false;
 
@@ -315,7 +312,7 @@ namespace NRaas.AliensSpace.Interactions
 
         private bool TryPlaceJigOnLot()
         {
-            Vector3 position = SimToAbduct.LotCurrent.FindMailbox().Position;
+            Vector3 position = SimToAbduct.Position;
             Vector3 randomDirXZ = RandomUtil.GetRandomDirXZ();
             FindGoodLocationBooleans fglBools = FindGoodLocationBooleans.Routable | FindGoodLocationBooleans.AllowOnStreets
                 | FindGoodLocationBooleans.AllowOnSideWalks | FindGoodLocationBooleans.AllowOffLot;

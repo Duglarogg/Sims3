@@ -151,6 +151,7 @@ namespace NRaas.AliensSpace.Interactions
         public override bool InRabbitHole()
         {
             string msg = "HaveAlienBabyHospital.InRabbitHole" + Common.NewLine;
+
             bool result;
 
             try
@@ -171,6 +172,9 @@ namespace NRaas.AliensSpace.Interactions
                         Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");
 
                     mNewborns = pregnancy.CreateNewborns(Pregnancy.HaveBabyHospital.kBonusMoodPointsForHospitalBirth, Actor.IsSelectable, false);
+
+                    for (int i = 0; i < mNewborns.Count; i++)
+                        Relationship.Get(Actor, mNewborns[i], true).LTR.ForceChangeState(LongTermRelationshipTypes.Friend);
 
                     msg += "C";
 

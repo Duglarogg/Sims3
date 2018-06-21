@@ -30,9 +30,6 @@ using System.Text;
  *      
  *  CanASimBeAbucted(...)
  *      - Currently not referenced by anything; candidate for culling.
- *  
- *  ResetAlienActivityAlarm()
- *      May need to uncomment a for-loop that clears outs the sAlienActivityAlarm array before creating new alarms
  */
 
 namespace NRaas.AliensSpace.Helpers
@@ -867,13 +864,11 @@ namespace NRaas.AliensSpace.Helpers
 
                 try
                 {
-                    Genetics.AssignTraits(baby, null, null, interactive, averageMood, pregoRandom);
-                    //Genetics.AssignTraits(baby, null, abductee, interactive, averageMood, pregoRandom);
-                    //Genetics.AssignTraits(baby, alien, abductee, interactive, averageMood, pregoRandom);
+                    CommonPregnancy.AssignTraits(baby, abductee, interactive, averageMood, pregoRandom);
                 }
                 catch(Exception e)
                 {
-                    Common.DebugException("AlienUtilsEx:MakeAlienBaby", e);
+                    Common.Exception("AlienUtilsEx.MakeAlienBaby", e);
                 }
                 finally
                 {
@@ -968,11 +963,10 @@ namespace NRaas.AliensSpace.Helpers
 
         public void OnWorldLoadFinished()
         {
-            /*
             sReplaceAlarms = AlarmManager.Global.AddAlarm(5f, TimeUnit.Minutes, new AlarmTimerCallback(ReplaceAlarmsCallback), "Replace Alien Alarms Alarm",
                 AlarmType.NeverPersisted, Household.AlienHousehold);
-            */
 
+            /*
             if (GameUtils.GetCurrentWorldType() != WorldType.Vacation)
             {
                 if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle)
@@ -996,6 +990,7 @@ namespace NRaas.AliensSpace.Helpers
                         "Alien Actiivty Ex Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
                 }
             }
+            */
         }
 
         public void OnWorldQuit()
@@ -1012,8 +1007,12 @@ namespace NRaas.AliensSpace.Helpers
 
         private static void ReplaceAlarmsCallback()
         {
+            string msg = "NRaas Aliens Alarm Replacement Triggered" + Common.NewLine + " - Checking World Type" + Common.NewLine;
+
             if (GameUtils.GetCurrentWorldType() != WorldType.Vacation)
             {
+                msg += " - World Type != Vacation" + Common.NewLine;
+
                 if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle)
                 {
                     AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienHouseholdRefreshAlarm);
@@ -1022,6 +1021,8 @@ namespace NRaas.AliensSpace.Helpers
 
                 AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All, 
                     new AlarmTimerCallback(AlienRefreshCallback), "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
+
+                msg += " - Alien Household Refresh Alarm Replaced" + Common.NewLine;
 
                 for (int i = 0; i < 24; i++)
                 {
@@ -1034,6 +1035,8 @@ namespace NRaas.AliensSpace.Helpers
                     sAlienActivityAlarm[i] = AlarmManager.Global.AddAlarmDay(i, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
                         "Alien Activity Ex Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
                 }
+
+                msg += " - Custom Alien Activity Alarms Created";
             }
         }
 
