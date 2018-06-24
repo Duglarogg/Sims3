@@ -333,7 +333,7 @@ namespace NRaas.AliensSpace.Interactions
             Vector3 zero = Vector3.Zero;
             Quaternion identity = Quaternion.Identity;
 
-            if (!World.FindPlaceOnRoad(mJig.Proxy, SimToAbduct.LotCurrent.FindMailbox().Position, 0u, ref zero, ref identity))
+            if (!World.FindPlaceOnRoad(mJig.Proxy, SimToAbduct.Position, 0u, ref zero, ref identity))
                 return false;
 
             mJig.SetPosition(zero);

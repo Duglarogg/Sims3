@@ -28,32 +28,15 @@ namespace NRaas.AliensSpace.Buffs
             public SimDescription Alien { get; set; }
             public bool IsAlienPregnant { get; set; }
 
-            public DateAndTime LastTimeUpdated { get; set; }
-
-            public BuffInstanceAbductedEx()
-            { }
+            public BuffInstanceAbductedEx() { }
 
             public BuffInstanceAbductedEx(Buff buff, BuffNames buffGuid, int effectValue, float timeoutCount)
-                : base (buff, buffGuid, effectValue, timeoutCount)
-            { }
+                : base (buff, buffGuid, effectValue, timeoutCount) { }
 
             public override BuffInstance Clone()
             {
                 return new BuffInstanceAbductedEx(mBuff, mBuffGuid, mEffectValue, mTimeoutCount);
-            }
-
-            public override void OnTimeOutUpdated()
-            {
-                if (IsAlienPregnant && SimClock.ElapsedTime(TimeUnit.Minutes, LastTimeUpdated) >= sInspectFrequency)
-                {
-                    Abductee.PlaySoloAnimation("a_alien_pregnancy_inspectStomach", false);
-
-                    LastTimeUpdated = SimClock.CurrentTime();
-                }
-
-                base.OnTimeOutUpdated();                
-            }
-            
+            }            
         }
 
         public static int sInspectChance = 33;
@@ -87,7 +70,6 @@ namespace NRaas.AliensSpace.Buffs
                 {
                     AlienPregnancy.Start(buffInstance.Abductee, buffInstance.Alien);
                     buffInstance.IsAlienPregnant = true;
-                    buffInstance.LastTimeUpdated = SimClock.CurrentTime();
                     return;
                 }
             }

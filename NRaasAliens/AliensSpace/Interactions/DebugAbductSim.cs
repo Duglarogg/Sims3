@@ -89,6 +89,7 @@ namespace NRaas.AliensSpace.Interactions
             if (lot == null)
             {
                 Common.DebugNotify("DEBUG - Abduct Sim: Target's current lot is null");
+                return false;
             }
 
             SimDescription alien = RandomUtil.GetRandomObjectFromList(aliens);

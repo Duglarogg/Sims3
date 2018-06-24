@@ -15,9 +15,9 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Helpers
 {
-    public class AlienAbductionSituationEx : AlienAbductionSituation
+    public class AlienAbductionSituationEx : RootSituation
     {
-        public new class AbductSim : ChildSituation<AlienAbductionSituationEx>
+        public class AbductSim : ChildSituation<AlienAbductionSituationEx>
         {
             public AbductSim() { }
 
@@ -29,7 +29,7 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (ufo == null)
                 {
-                    Common.DebugNotify("Alien Abduction Situation - UFO is null");
+                    Common.DebugNotify("AlienAbductionSituation.AbductSim.Init" + Common.NewLine + " - UFO is null");
                     parent.CleanupAbduction();
                     return;
                 }
@@ -59,6 +59,9 @@ namespace NRaas.AliensSpace.Helpers
             }
         }
 
+        public Sim Alien;
+        public Sim Abductee;
+
         public AlienAbductionSituationEx() { }
 
         public AlienAbductionSituationEx(SimDescription alien, Sim abductee, Lot lot) : base(lot)
@@ -86,11 +89,19 @@ namespace NRaas.AliensSpace.Helpers
             {
                 Alien.AssignRole(this);
                 Abductee.AssignRole(this);
-                SetState(new AlienAbductionSituationEx.AbductSim(this));
+                SetState(new AbductSim(this));
                 return;
             }
 
             Alien.Destroy();
+            Exit();
+        }
+
+        public void CleanupAbduction()
+        {
+            Abductee.RemoveRole(this);
+            Alien.RemoveRole(this);
+            Sim.MakeSimGoHome(Alien, false);
             Exit();
         }
 

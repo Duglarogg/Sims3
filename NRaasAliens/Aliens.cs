@@ -81,6 +81,8 @@ namespace NRaas
 
         public void OnWorldLoadFinished()
         {
+            Common.Notify("NRaasAliens" + Common.NewLine + " - Testing...123...testing");
+
             kDebugging = Settings.Debugging;
         }
 

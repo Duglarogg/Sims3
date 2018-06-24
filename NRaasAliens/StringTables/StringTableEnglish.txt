@@ -261,5 +261,4 @@
 <STR>Go to Hospital</STR>
 
 <KEY>NRaas.Aliens.HaveAlienBabyHospital:MenuName</KEY>
-<STR>Have Baby at Hospital</STR>
-
+<STR>Have Alien Baby at Hospital</STR>

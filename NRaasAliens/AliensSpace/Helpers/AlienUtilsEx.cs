@@ -34,7 +34,7 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Helpers
 {
-    public abstract class AlienUtilsEx : Common.IWorldLoadFinished, Common.IWorldQuit
+    public class AlienUtilsEx : Common.IWorldLoadFinished, Common.IWorldQuit
     {
         static ResourceKey[] AlienSkinTones = new ResourceKey[]
         {
@@ -963,6 +963,9 @@ namespace NRaas.AliensSpace.Helpers
 
         public void OnWorldLoadFinished()
         {
+            Common.Notify("AlienUtilsEx.OnWorldLoadFinished" + Common.NewLine +
+                " - Creating Replacement Alarm");
+
             sReplaceAlarms = AlarmManager.Global.AddAlarm(5f, TimeUnit.Minutes, new AlarmTimerCallback(ReplaceAlarmsCallback), "Replace Alien Alarms Alarm",
                 AlarmType.NeverPersisted, Household.AlienHousehold);
 
@@ -1007,6 +1010,9 @@ namespace NRaas.AliensSpace.Helpers
 
         private static void ReplaceAlarmsCallback()
         {
+            Common.Notify("AlienUtilsEx.ReplaceAlarmsCallback" + Common.NewLine +
+                " - Replacing Default Alien Alarms with Custom Alarms");
+
             string msg = "NRaas Aliens Alarm Replacement Triggered" + Common.NewLine + " - Checking World Type" + Common.NewLine;
 
             if (GameUtils.GetCurrentWorldType() != WorldType.Vacation)
@@ -1019,7 +1025,7 @@ namespace NRaas.AliensSpace.Helpers
                     AlienUtils.sAlienHouseholdRefreshAlarm = AlarmHandle.kInvalidHandle;
                 }
 
-                AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All, 
+                AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All,
                     new AlarmTimerCallback(AlienRefreshCallback), "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
 
                 msg += " - Alien Household Refresh Alarm Replaced" + Common.NewLine;
@@ -1038,6 +1044,10 @@ namespace NRaas.AliensSpace.Helpers
 
                 msg += " - Custom Alien Activity Alarms Created";
             }
+            else
+                msg += " - World Type == Vacation";
+
+            Common.Notify(msg);
         }
 
         private static void ResetAbductionHelper()
