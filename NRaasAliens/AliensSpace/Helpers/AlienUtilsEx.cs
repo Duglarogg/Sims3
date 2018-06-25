@@ -24,12 +24,19 @@ using System.Collections.Generic;
 using System.Text;
 
 /* <NOTES>
+ * 
  *  static AlienUtilsEx()
  *      - The alarm for alien activity may be converted to singular, hourly repeating alarm instead
  *        of 24 daily alarms (one for each hour of the day).
  *      
  *  CanASimBeAbucted(...)
  *      - Currently not referenced by anything; candidate for culling.
+ * 
+ * 
+ * <WISHLIST>
+ * 
+ *  AlienActivityCallback()
+ *      - Allow for NPC abductions that don't trigger NRaasStoryProgression affair scenarios.
  */
 
 namespace NRaas.AliensSpace.Helpers
@@ -71,22 +78,26 @@ namespace NRaas.AliensSpace.Helpers
 
         public static void AlienActivityCallback()
         {
-            Common.DebugNotify("Alien Activity - Triggered");
+            string msg = "Alien Activity Alarm" + Common.NewLine;
 
             if (cooldown > 0)
             {
                 cooldown -= 1;
-                Common.DebugNotify("Alien Activity - On Cooldown: " + cooldown.ToString() + " hours to go");
+
+                msg += " - On Cooldown: " + cooldown + "hours remaining";
+                Common.DebugNotify(msg);
+
                 return;
             }
 
-            int hour = SimClock.Hours24;
+            int endHour = (Aliens.Settings.mEarliestHour + Aliens.Settings.mActivityWindow) % 24;
 
-            if (hour >= Aliens.Settings.mEarliestHour && hour <= (Aliens.Settings.mEarliestHour + Aliens.Settings.mActivityWindow) % 24)
+            if (SimClock.Hours24 >= Aliens.Settings.mEarliestHour || SimClock.Hours24 <= endHour)
             {
                 if (Household.AlienHousehold == null || Household.AlienHousehold.NumMembers == 0)
                 {
-                    Common.DebugNotify("Alien Activity - Alien household does not exist or it is empty");
+                    msg += " - Alien household null or empty";
+                    Common.DebugNotify(msg);
                     return;
                 }
 
@@ -94,16 +105,19 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (!RandomUtil.RandomChance(chance))
                 {
-                    Common.DebugNotify("Alien Activity - Activity Roll Fail (" + chance + "%)");
+                    msg += " - Activity Roll Fail (" + chance + "%)";
+                    Common.DebugNotify(msg);
                     return;
                 }
 
-                Common.DebugNotify("Alien Activity - Activity Roll Pass (" + chance + "%)");
+                msg += " - Activity Roll Pass (" + chance + "%)" + Common.NewLine;
+
                 List<SimDescription> aliens = GetValidAliens();
 
                 if (aliens == null)
                 {
-                    Common.DebugNotify("Alien Activity - No valid aliens");
+                    msg += " - No valid aliens";
+                    Common.DebugNotify(msg);
                     return;
                 }
 
@@ -112,7 +126,7 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (RandomUtil.RandomChance(chance))
                 {
-                    Common.DebugNotify("Alien Activity - Abduction Roll Pass (" + chance + "%)");
+                    msg += " - Abduction Roll Pass (" + chance +"%)" + Common.NewLine;
 
                     /* <WISHLIST>
                      *      For now, abductions will only target the active household.  This is due to how alien babies are treated
@@ -126,7 +140,8 @@ namespace NRaas.AliensSpace.Helpers
 
                     if (validAbductees == null)
                     {
-                        Common.DebugNotify("Alien Activity - Abduction Fail: No valid abductees");
+                        msg += " -- No valid abductees";
+                        Common.DebugNotify(msg);
                         return;
                     }
 
@@ -135,9 +150,13 @@ namespace NRaas.AliensSpace.Helpers
 
                     if (lot == null)
                     {
-                        Common.DebugNotify("Alien Activity - Abduction Fail: Abductee not on valid lot");
+                        msg += " -- Abductee lot is null";
+                        Common.DebugNotify(msg);
                         return;
                     }
+
+                    msg += " -- Starting abduction situation";
+                    Common.DebugNotify(msg);
 
                     AlienAbductionSituationEx.Create(alien, abductee, lot);
                     cooldown = Aliens.Settings.mActivityCooldown;
@@ -145,13 +164,15 @@ namespace NRaas.AliensSpace.Helpers
                 }
                 else
                 {
-                    Common.DebugNotify("Alien Activity - Abduction Roll Fail (" + chance + "%)");
+                    msg += " - Abduction Roll Fail (" + chance + "%)" + Common.NewLine;
 
                     chance = GetVisitationChance(Household.ActiveHousehold, alien);
 
                     if (RandomUtil.RandomChance(chance))
                     {
-                        Common.DebugNotify("Alien Activity - Visit Active Roll Pass (" + chance + "%)");
+                        msg += " - Visit Active Roll Pass (" + chance + "%)" + Common.NewLine +
+                            " -- Starting visit situation (" + Household.ActiveHousehold.LotHome.Name + ")";
+                        Common.DebugNotify(msg);
 
                         Sim visitor = alien.InstantiateOffScreen(LotManager.GetFarthestLot(Household.ActiveHousehold.LotHome));
                         AlienSituation.Create(visitor, Household.ActiveHousehold.LotHome);
@@ -160,17 +181,22 @@ namespace NRaas.AliensSpace.Helpers
                     }
                     else
                     {
-                        Common.DebugNotify("Alien Activity - Visit Active Roll Fail (" + chance + "%)");
+                        msg += " - Visit Active Roll Fail (" + chance + "%)" + Common.NewLine;
 
                         List<Lot> lots = GetValidLots();
 
                         if (lots == null)
                         {
-                            Common.DebugNotify("Alien Activity - Visit Fail: No valid lots");
+                            msg += " -- No valid lots";
+                            Common.DebugNotify(msg);
                             return;
                         }
 
                         Lot lot = RandomUtil.GetRandomObjectFromList(lots);
+
+                        msg += " -- Starting visit situation (" + lot.Name + ")";
+                        Common.DebugNotify(msg);
+
                         Sim visitor = alien.InstantiateOffScreen(LotManager.GetFarthestLot(lot));
                         AlienSituation.Create(visitor, lot);
                         cooldown = Aliens.Settings.mActivityCooldown;
@@ -179,22 +205,25 @@ namespace NRaas.AliensSpace.Helpers
                 }
             }
             else
-                Common.DebugNotify("Alien Activity - Outside active hours");
+                msg += " - Outside active hours";
+
+            Common.DebugNotify(msg);
         }
 
         public static void AlienRefreshCallback()
         {
-            Common.DebugNotify("Alien Household Refresh - Triggered");
+            string msg = "Alien Household Refresh" + Common.NewLine;
 
             if (Household.AlienHousehold == null)
             {
-                Common.DebugNotify("Alien Household Refresh - Alien household does not exist");
+                msg += " - Alien household is null";
+                Common.DebugNotify(msg);
                 return;
             }
 
             if (Household.AlienHousehold.NumMembers < AlienUtils.kAlienHouseholdNumMembers)
             {
-                Common.DebugNotify("Alien Household Refresh - Adding new member to alien household");
+                msg += " - Adding new alien" + Common.NewLine;
 
                 CASAgeGenderFlags age = RandomUtil.GetRandomObjectFromList(Aliens.Settings.mValidAlienAges);
                 CASAgeGenderFlags gender = RandomUtil.CoinFlip() ? CASAgeGenderFlags.Male : CASAgeGenderFlags.Female;
@@ -202,7 +231,7 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (Aliens.Settings.mAllowOccultAliens && RandomUtil.RandomChance(Aliens.Settings.mOccultAlienChance))
                 {
-                    Common.DebugNotify("Alien Household Refresh - Creating occult alien");
+                    msg += " -- Creating occult alien";
 
                     int numOccults = RandomUtil.GetInt(1, Aliens.Settings.mMaxAlienOccults);
                     List<OccultTypes> validOccults = new List<OccultTypes>(Aliens.Settings.mValidAlienOccults);
@@ -222,9 +251,12 @@ namespace NRaas.AliensSpace.Helpers
                                 RandomUtil.GetRandomObjectFromList((SimDescription.DeathType[])Enum.GetValues(typeof(SimDescription.DeathType)));
                             Urnstones.SimToPlayableGhost(description, deathType);
                         }
+
                         validOccults.Remove(type);
                     }
                 }
+
+                msg += " -- Adding baseline skills" + Common.NewLine;
 
                 Skill element = null;
 
@@ -248,6 +280,8 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (Aliens.Settings.mFutureSim)
                 {
+                    msg += " -- Adding Adv Tech skill" + Common.NewLine;
+
                     description.TraitManager.AddElement(TraitNames.FutureSim);
 
                     element = description.SkillManager.AddElement(SkillNames.Future);
@@ -258,6 +292,8 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (Aliens.Settings.mAlienScience)
                 {
+                    msg += " -- Adding Science skill" + Common.NewLine;
+
                     element = description.SkillManager.AddElement(SkillNames.Science);
 
                     if (element != null)
@@ -266,6 +302,8 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (OccultTypeHelper.HasType(description, OccultTypes.Fairy) || OccultTypeHelper.HasType(description, OccultTypes.PlantSim))
                 {
+                    msg += " -- Adding Gardening skill" + Common.NewLine;
+
                     element = description.SkillManager.AddElement(SkillNames.Gardening);
 
                     if (element != null)
@@ -274,6 +312,8 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (OccultTypeHelper.HasType(description, OccultTypes.Fairy))
                 {
+                    msg += " -- Adding Fairy Magic skill" + Common.NewLine;
+
                     element = description.SkillManager.AddElement(SkillNames.FairyMagic);
 
                     if (element != null)
@@ -282,6 +322,8 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (OccultTypeHelper.HasType(description, OccultTypes.Werewolf))
                 {
+                    msg += " -- Adding Lycanthropy skill" + Common.NewLine;
+
                     element = description.SkillManager.AddElement(SkillNames.Lycanthropy);
 
                     if (element != null)
@@ -290,6 +332,8 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (OccultTypeHelper.HasType(description, OccultTypes.Witch))
                 {
+                    msg += " -- Adding witch skills" + Common.NewLine;
+
                     element = description.SkillManager.AddElement(SkillNames.Spellcasting);
 
                     if (element != null)
@@ -301,8 +345,12 @@ namespace NRaas.AliensSpace.Helpers
                         element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
                 }
 
+                msg += " -- Adding alien to household";
+
                 Household.AlienHousehold.AddSilent(description);
                 description.OnHouseholdChanged(Household.AlienHousehold, false);
+
+                Common.DebugNotify(msg);
             }
         }
 
@@ -963,13 +1011,9 @@ namespace NRaas.AliensSpace.Helpers
 
         public void OnWorldLoadFinished()
         {
-            Common.Notify("AlienUtilsEx.OnWorldLoadFinished" + Common.NewLine +
+            Common.DebugNotify("AlienUtilsEx.OnWorldLoadFinished" + Common.NewLine +
                 " - Creating Replacement Alarm");
 
-            sReplaceAlarms = AlarmManager.Global.AddAlarm(5f, TimeUnit.Minutes, new AlarmTimerCallback(ReplaceAlarmsCallback), "Replace Alien Alarms Alarm",
-                AlarmType.NeverPersisted, Household.AlienHousehold);
-
-            /*
             if (GameUtils.GetCurrentWorldType() != WorldType.Vacation)
             {
                 if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle)
@@ -993,7 +1037,6 @@ namespace NRaas.AliensSpace.Helpers
                         "Alien Actiivty Ex Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
                 }
             }
-            */
         }
 
         public void OnWorldQuit()
