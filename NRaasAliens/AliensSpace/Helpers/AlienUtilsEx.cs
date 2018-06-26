@@ -221,137 +221,153 @@ namespace NRaas.AliensSpace.Helpers
                 return;
             }
 
-            if (Household.AlienHousehold.NumMembers < AlienUtils.kAlienHouseholdNumMembers)
+            try
             {
-                msg += " - Adding new alien" + Common.NewLine;
-
-                CASAgeGenderFlags age = RandomUtil.GetRandomObjectFromList(Aliens.Settings.mValidAlienAges);
-                CASAgeGenderFlags gender = RandomUtil.CoinFlip() ? CASAgeGenderFlags.Male : CASAgeGenderFlags.Female;
-                SimDescription description = MakeAlien(age, gender, GameUtils.GetCurrentWorld(), 1f, true);
-
-                if (Aliens.Settings.mAllowOccultAliens && RandomUtil.RandomChance(Aliens.Settings.mOccultAlienChance))
+                if (Household.AlienHousehold.NumMembers < AlienUtils.kAlienHouseholdNumMembers)
                 {
-                    msg += " -- Creating occult alien";
+                    msg += " - Adding new alien" + Common.NewLine;
 
-                    int numOccults = RandomUtil.GetInt(1, Aliens.Settings.mMaxAlienOccults);
-                    List<OccultTypes> validOccults = new List<OccultTypes>(Aliens.Settings.mValidAlienOccults);
+                    CASAgeGenderFlags age = RandomUtil.GetRandomObjectFromList(Aliens.Settings.mValidAlienAges);
+                    CASAgeGenderFlags gender = RandomUtil.CoinFlip() ? CASAgeGenderFlags.Male : CASAgeGenderFlags.Female;
+                    SimDescription description = MakeAlien(age, gender, GameUtils.GetCurrentWorld(), 1f, true);
 
-                    for (int i = 0; i < numOccults; i++)
+                    if (Aliens.Settings.mAllowOccultAliens && RandomUtil.RandomChance(Aliens.Settings.mOccultAlienChance))
                     {
-                        if (validOccults.Count == 0)
-                            break;
+                        msg += " -- Creating occult alien";
 
-                        OccultTypes type = RandomUtil.GetRandomObjectFromList(validOccults);
+                        int numOccults = RandomUtil.GetInt(1, Aliens.Settings.mMaxAlienOccults);
+                        List<OccultTypes> validOccults = new List<OccultTypes>(Aliens.Settings.mValidAlienOccults);
 
-                        if (type != OccultTypes.Ghost)
-                            OccultTypeHelper.Add(description, type, false, false);
-                        else
+                        for (int i = 0; i < numOccults; i++)
                         {
-                            SimDescription.DeathType deathType = 
-                                RandomUtil.GetRandomObjectFromList((SimDescription.DeathType[])Enum.GetValues(typeof(SimDescription.DeathType)));
-                            Urnstones.SimToPlayableGhost(description, deathType);
+                            if (validOccults.Count == 0)
+                                break;
+
+                            OccultTypes type = RandomUtil.GetRandomObjectFromList(validOccults);
+
+                            if (type != OccultTypes.Ghost)
+                                OccultTypeHelper.Add(description, type, false, false);
+                            else
+                            {
+                                SimDescription.DeathType deathType =
+                                    RandomUtil.GetRandomObjectFromList((SimDescription.DeathType[])Enum.GetValues(typeof(SimDescription.DeathType)));
+                                Urnstones.SimToPlayableGhost(description, deathType);
+                            }
+
+                            validOccults.Remove(type);
                         }
-
-                        validOccults.Remove(type);
                     }
-                }
 
-                msg += " -- Adding baseline skills" + Common.NewLine;
+                    msg += " -- Adding baseline skills" + Common.NewLine;
 
-                Skill element = null;
+                    Skill element = null;
 
-                element = description.SkillManager.AddElement(SkillNames.Logic);
-
-                if (element != null)
-                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLogicSkill[0], Aliens.Settings.mLogicSkill[1]));
-
-                element = description.SkillManager.AddElement(SkillNames.Handiness);
-
-                if (element != null)
-                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mHandinessSkill[0], Aliens.Settings.mHandinessSkill[1]));
-
-                if (age == CASAgeGenderFlags.Teen)
-                {
-                    element = description.SkillManager.AddElement(SkillNames.LearnToDrive);
+                    element = description.SkillManager.AddElement(SkillNames.Logic);
 
                     if (element != null)
-                        element.ForceSkillLevelUp(SkillManager.GetMaximumSupportedSkillLevel(SkillNames.LearnToDrive));
-                }
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLogicSkill[0], Aliens.Settings.mLogicSkill[1]));
 
-                if (Aliens.Settings.mFutureSim)
-                {
-                    msg += " -- Adding Adv Tech skill" + Common.NewLine;
-
-                    description.TraitManager.AddElement(TraitNames.FutureSim);
-
-                    element = description.SkillManager.AddElement(SkillNames.Future);
+                    element = description.SkillManager.AddElement(SkillNames.Handiness);
 
                     if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFutureSkill[0], Aliens.Settings.mFutureSkill[1]));
+                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mHandinessSkill[0], Aliens.Settings.mHandinessSkill[1]));
+
+                    if (age == CASAgeGenderFlags.Teen)
+                    {
+                        element = description.SkillManager.AddElement(SkillNames.LearnToDrive);
+
+                        if (element != null)
+                            element.ForceSkillLevelUp(SkillManager.GetMaximumSupportedSkillLevel(SkillNames.LearnToDrive));
+                    }
+
+                    if (Aliens.Settings.mFutureSim)
+                    {
+                        msg += " -- Adding Adv Tech skill" + Common.NewLine;
+
+                        description.TraitManager.AddElement(TraitNames.FutureSim);
+
+                        element = description.SkillManager.AddElement(SkillNames.Future);
+
+                        if (element != null)
+                            element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFutureSkill[0], Aliens.Settings.mFutureSkill[1]));
+                    }
+
+                    if (Aliens.Settings.mAlienScience)
+                    {
+                        msg += " -- Adding Science skill" + Common.NewLine;
+
+                        element = description.SkillManager.AddElement(SkillNames.Science);
+
+                        if (element != null)
+                            element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mScienceSkill[0], Aliens.Settings.mScienceSkill[1]));
+                    }
+
+                    if (OccultTypeHelper.HasType(description, OccultTypes.Fairy) || OccultTypeHelper.HasType(description, OccultTypes.PlantSim))
+                    {
+                        msg += " -- Adding Gardening skill" + Common.NewLine;
+
+                        element = description.SkillManager.AddElement(SkillNames.Gardening);
+
+                        if (element != null)
+                            element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
+                    }
+
+                    if (OccultTypeHelper.HasType(description, OccultTypes.Fairy))
+                    {
+                        msg += " -- Adding Fairy Magic skill" + Common.NewLine;
+
+                        element = description.SkillManager.AddElement(SkillNames.FairyMagic);
+
+                        if (element != null)
+                            element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFairyMagicSkill[0], Aliens.Settings.mFairyMagicSkill[1]));
+                    }
+
+                    if (OccultTypeHelper.HasType(description, OccultTypes.Werewolf))
+                    {
+                        msg += " -- Adding Lycanthropy skill" + Common.NewLine;
+
+                        element = description.SkillManager.AddElement(SkillNames.Lycanthropy);
+
+                        if (element != null)
+                            element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLycanthropySkill[0], Aliens.Settings.mLycanthropySkill[1]));
+                    }
+
+                    if (OccultTypeHelper.HasType(description, OccultTypes.Witch))
+                    {
+                        msg += " -- Adding witch skills" + Common.NewLine;
+
+                        element = description.SkillManager.AddElement(SkillNames.Spellcasting);
+
+                        if (element != null)
+                            element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
+
+                        element = description.SkillManager.AddElement(SkillNames.Spellcraft);
+
+                        if (element != null)
+                            element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
+                    }
+
+                    msg += " -- Adding alien to household";
+
+                    Household.AlienHousehold.AddSilent(description);
+                    description.OnHouseholdChanged(Household.AlienHousehold, false);
+
+                    Common.DebugNotify(msg);
                 }
-
-                if (Aliens.Settings.mAlienScience)
-                {
-                    msg += " -- Adding Science skill" + Common.NewLine;
-
-                    element = description.SkillManager.AddElement(SkillNames.Science);
-
-                    if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mScienceSkill[0], Aliens.Settings.mScienceSkill[1]));
-                }
-
-                if (OccultTypeHelper.HasType(description, OccultTypes.Fairy) || OccultTypeHelper.HasType(description, OccultTypes.PlantSim))
-                {
-                    msg += " -- Adding Gardening skill" + Common.NewLine;
-
-                    element = description.SkillManager.AddElement(SkillNames.Gardening);
-
-                    if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
-                }
-
-                if (OccultTypeHelper.HasType(description, OccultTypes.Fairy))
-                {
-                    msg += " -- Adding Fairy Magic skill" + Common.NewLine;
-
-                    element = description.SkillManager.AddElement(SkillNames.FairyMagic);
-
-                    if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFairyMagicSkill[0], Aliens.Settings.mFairyMagicSkill[1]));
-                }
-
-                if (OccultTypeHelper.HasType(description, OccultTypes.Werewolf))
-                {
-                    msg += " -- Adding Lycanthropy skill" + Common.NewLine;
-
-                    element = description.SkillManager.AddElement(SkillNames.Lycanthropy);
-
-                    if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLycanthropySkill[0], Aliens.Settings.mLycanthropySkill[1]));
-                }
-
-                if (OccultTypeHelper.HasType(description, OccultTypes.Witch))
-                {
-                    msg += " -- Adding witch skills" + Common.NewLine;
-
-                    element = description.SkillManager.AddElement(SkillNames.Spellcasting);
-
-                    if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
-
-                    element = description.SkillManager.AddElement(SkillNames.Spellcraft);
-
-                    if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
-                }
-
-                msg += " -- Adding alien to household";
-
-                Household.AlienHousehold.AddSilent(description);
-                description.OnHouseholdChanged(Household.AlienHousehold, false);
-
-                Common.DebugNotify(msg);
             }
+            catch(Exception e)
+            {
+                Common.Exception("NRaasAliens.AlienUtilsEx.AlienRefreshCallback", e);
+                Common.DebugNotify("Alien Household Refresh" + Common.NewLine + 
+                    " - ERROR! ERROR!  ERROR!" + Common.NewLine +
+                    " - " + e.ToString());
+            }
+            finally
+            {
+                AlienUtils.AlienRefreshCallBack();
+            }
+
+
         }
 
         public static void ApplyAlienFaceBlend(CASAgeGenderFlags gender, ref SimBuilder sb)
