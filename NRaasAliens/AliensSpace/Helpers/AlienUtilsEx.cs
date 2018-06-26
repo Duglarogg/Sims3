@@ -31,7 +31,9 @@ using System.Text;
  *      
  *  CanASimBeAbucted(...)
  *      - Currently not referenced by anything; candidate for culling.
- * 
+ *  
+ *  MakeAlienDescendant(...)
+ *      - Implement
  * 
  * <WISHLIST>
  * 
@@ -82,17 +84,16 @@ namespace NRaas.AliensSpace.Helpers
 
             if (cooldown > 0)
             {
-                cooldown -= 1;
-
-                msg += " - On Cooldown: " + cooldown + "hours remaining";
+                msg += " - On Cooldown: " + cooldown + " hours remaining";
                 Common.DebugNotify(msg);
+
+                cooldown -= 1;
 
                 return;
             }
 
-            int endHour = (Aliens.Settings.mEarliestHour + Aliens.Settings.mActivityWindow) % 24;
-
-            if (SimClock.Hours24 >= Aliens.Settings.mEarliestHour || SimClock.Hours24 <= endHour)
+            if (SimClock.Hours24 >= Aliens.Settings.mEarliestHour 
+                || SimClock.Hours24 <= (Aliens.Settings.mEarliestHour + Aliens.Settings.mActivityWindow) % 24)
             {
                 if (Household.AlienHousehold == null || Household.AlienHousehold.NumMembers == 0)
                 {
@@ -233,7 +234,7 @@ namespace NRaas.AliensSpace.Helpers
 
                     if (Aliens.Settings.mAllowOccultAliens && RandomUtil.RandomChance(Aliens.Settings.mOccultAlienChance))
                     {
-                        msg += " -- Creating occult alien";
+                        msg += " -- Creating occult alien" + Common.NewLine;
 
                         int numOccults = RandomUtil.GetInt(1, Aliens.Settings.mMaxAlienOccults);
                         List<OccultTypes> validOccults = new List<OccultTypes>(Aliens.Settings.mValidAlienOccults);
@@ -285,7 +286,6 @@ namespace NRaas.AliensSpace.Helpers
                         msg += " -- Adding Adv Tech skill" + Common.NewLine;
 
                         description.TraitManager.AddElement(TraitNames.FutureSim);
-
                         element = description.SkillManager.AddElement(SkillNames.Future);
 
                         if (element != null)
@@ -296,10 +296,13 @@ namespace NRaas.AliensSpace.Helpers
                     {
                         msg += " -- Adding Science skill" + Common.NewLine;
 
+                        Sim temp = description.InstantiateOffScreen(LotManager.GetFarthestLot(Household.ActiveHouseholdLot));
                         element = description.SkillManager.AddElement(SkillNames.Science);
 
                         if (element != null)
                             element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mScienceSkill[0], Aliens.Settings.mScienceSkill[1]));
+
+                        temp.Destroy();
                     }
 
                     if (OccultTypeHelper.HasType(description, OccultTypes.Fairy) || OccultTypeHelper.HasType(description, OccultTypes.PlantSim))
@@ -359,15 +362,12 @@ namespace NRaas.AliensSpace.Helpers
             {
                 Common.Exception("NRaasAliens.AlienUtilsEx.AlienRefreshCallback", e);
                 Common.DebugNotify("Alien Household Refresh" + Common.NewLine + 
-                    " - ERROR! ERROR!  ERROR!" + Common.NewLine +
-                    " - " + e.ToString());
+                    " - ERROR! ERROR!  ERROR!");
             }
             finally
             {
                 AlienUtils.AlienRefreshCallBack();
             }
-
-
         }
 
         public static void ApplyAlienFaceBlend(CASAgeGenderFlags gender, ref SimBuilder sb)
@@ -846,9 +846,11 @@ namespace NRaas.AliensSpace.Helpers
 
         private static SimDescription MakeAlien(CASAgeGenderFlags age, CASAgeGenderFlags gender, WorldName homeworld, float alienDNAPercentage, bool assignRandomTraits)
         {
-            ResourceKey skinTone = RandomUtil.GetRandomObjectFromList(AlienSkinTones);
-            float skinToneIndex;
-
+            ResourceKey skinTone = new ResourceKey(0xb93c88cd44494517, 55867754u, 0u);
+            float skinToneIndex = RandomUtil.GetFloat(0f, 1f);
+            
+            // RandomUtil.GetRandomObjectFromList(AlienSkinTones);
+            /*
             if (skinTone == AlienSkinTones[0])
                 skinToneIndex = 1f;
             else if (skinTone == AlienSkinTones[1] || skinTone == AlienSkinTones[3] || skinTone == AlienSkinTones[4])
@@ -857,6 +859,7 @@ namespace NRaas.AliensSpace.Helpers
                 skinToneIndex = 0.50f + (0.50f * RandomUtil.GetFloat(1f));
             else
                 skinToneIndex = 0.25f + (0.75f * RandomUtil.GetFloat(1f));
+            */
 
             SimBuilder sb = new SimBuilder();
             sb.Age = age;
@@ -917,7 +920,7 @@ namespace NRaas.AliensSpace.Helpers
 
         public static SimDescription MakeAlienBaby(SimDescription alien, SimDescription abductee, CASAgeGenderFlags gender, float averageMood, Random pregoRandom, bool interactive)
         {
-            SimDescription baby = MakeAlien(CASAgeGenderFlags.Baby, gender, GameUtils.GetCurrentWorld(), 1f, interactive);
+            SimDescription baby = MakeAlien(CASAgeGenderFlags.Baby, gender, GameUtils.GetCurrentWorld(), 1f, false);
 
             if (baby != null)
             {
@@ -970,6 +973,12 @@ namespace NRaas.AliensSpace.Helpers
             }
 
             return baby;
+        }
+
+        // <NOTE> For use with NRaasWoohooer's Pregnancy proxy and NRaasTraveler descendant generation so that new skin tones are passed down instead of the standard grey-green
+        public static SimDescription MakeAlienDescendant()
+        {
+            return null;
         }
 
         private static List<OccultTypes> OccultsToInherit(List<OccultTypes> abductee, List<OccultTypes> alien)
@@ -1065,48 +1074,6 @@ namespace NRaas.AliensSpace.Helpers
                 AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[i]);
                 sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
             }            
-        }
-
-        private static void ReplaceAlarmsCallback()
-        {
-            Common.Notify("AlienUtilsEx.ReplaceAlarmsCallback" + Common.NewLine +
-                " - Replacing Default Alien Alarms with Custom Alarms");
-
-            string msg = "NRaas Aliens Alarm Replacement Triggered" + Common.NewLine + " - Checking World Type" + Common.NewLine;
-
-            if (GameUtils.GetCurrentWorldType() != WorldType.Vacation)
-            {
-                msg += " - World Type != Vacation" + Common.NewLine;
-
-                if (AlienUtils.sAlienHouseholdRefreshAlarm != AlarmHandle.kInvalidHandle)
-                {
-                    AlarmManager.Global.RemoveAlarm(AlienUtils.sAlienHouseholdRefreshAlarm);
-                    AlienUtils.sAlienHouseholdRefreshAlarm = AlarmHandle.kInvalidHandle;
-                }
-
-                AlienUtils.sAlienHouseholdRefreshAlarm = AlarmManager.Global.AddAlarmDay(15f, DaysOfTheWeek.All,
-                    new AlarmTimerCallback(AlienRefreshCallback), "Alien Household Refresh Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
-
-                msg += " - Alien Household Refresh Alarm Replaced" + Common.NewLine;
-
-                for (int i = 0; i < 24; i++)
-                {
-                    if (sAlienActivityAlarm[i] != AlarmHandle.kInvalidHandle)
-                    {
-                        AlarmManager.Global.RemoveAlarm(sAlienActivityAlarm[i]);
-                        sAlienActivityAlarm[i] = AlarmHandle.kInvalidHandle;
-                    }
-
-                    sAlienActivityAlarm[i] = AlarmManager.Global.AddAlarmDay(i, DaysOfTheWeek.All, new AlarmTimerCallback(AlienActivityCallback),
-                        "Alien Activity Ex Alarm", AlarmType.NeverPersisted, Household.AlienHousehold);
-                }
-
-                msg += " - Custom Alien Activity Alarms Created";
-            }
-            else
-                msg += " - World Type == Vacation";
-
-            Common.Notify(msg);
         }
 
         private static void ResetAbductionHelper()
