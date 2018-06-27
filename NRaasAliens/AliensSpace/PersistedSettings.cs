@@ -46,6 +46,7 @@ namespace NRaas.AliensSpace
                 OccultTypes.Ghost,
                 OccultTypes.Mummy,
                 OccultTypes.Robot,
+                OccultTypes.TimeTraveler,
                 OccultTypes.Unicorn
             }, false);
 

@@ -9,6 +9,7 @@ using Sims3.Gameplay.Core;
 using Sims3.Gameplay.EventSystem;
 using Sims3.Gameplay.Interactions;
 using Sims3.Gameplay.Objects;
+using Sims3.Gameplay.Objects.Island;
 using Sims3.Gameplay.Situations;
 using Sims3.Gameplay.Skills;
 using Sims3.Gameplay.Socializing;
@@ -123,11 +124,11 @@ namespace NRaas.AliensSpace.Helpers
                 }
 
                 SimDescription alien = RandomUtil.GetRandomObjectFromList(aliens);
-                chance = GetAbductionChance();
+                chance = GetAbductionChance(true);
 
                 if (RandomUtil.RandomChance(chance))
                 {
-                    msg += " - Abduction Roll Pass (" + chance +"%)" + Common.NewLine;
+                    msg += " - Active Abduction Roll Pass (" + chance +"%)" + Common.NewLine;
 
                     /* <WISHLIST>
                      *      For now, abductions will only target the active household.  This is due to how alien babies are treated
@@ -156,53 +157,95 @@ namespace NRaas.AliensSpace.Helpers
                         return;
                     }
 
-                    msg += " -- Starting abduction situation";
+                    msg += " -- Starting active abduction situation";
                     Common.DebugNotify(msg);
 
                     AlienAbductionSituationEx.Create(alien, abductee, lot);
                     cooldown = Aliens.Settings.mActivityCooldown;
                     ResetAbductionHelper();
+                    return;
+                }
+
+                msg += " - Active Abduction Roll Fail (" + chance + "%)" + Common.NewLine;
+
+                chance = GetAbductionChance();
+
+                if (RandomUtil.RandomChance(chance))
+                {
+                    msg += " - NPC Abduction Roll Pass (" + chance + "%)" + Common.NewLine;
+
+                    List<Lot> lots = GetValidLots(true);
+
+                    if (lots == null)
+                    {
+                        msg += " - No valid lots";
+                        Common.DebugNotify(msg);
+                        return;
+                    }
+
+                    Lot lot = RandomUtil.GetRandomObjectFromList(lots);
+
+                    if (lot == null)
+                    {
+                        msg += " - Lot is null";
+                        Common.DebugNotify(msg);
+                        return;
+                    }
+
+                    List<Sim> validAbductees = GetValidAbductees(lot);
+
+                    if (validAbductees == null)
+                    {
+                        msg += " -- No valid abductees";
+                        Common.DebugNotify(msg);
+                        return;
+                    }
+
+                    msg += " -- Starting NPC abduction situation";
+                    Common.DebugNotify(msg);
+
+                    Sim abductee = RandomUtil.GetRandomObjectFromList(validAbductees);
+                    AlienAbductionSituationEx.Create(alien, abductee, lot);
+                    cooldown = Aliens.Settings.mActivityCooldown;
+                    return;
+                }
+
+                msg += " - NPC Abduction Roll Fail (" + chance + "%)" + Common.NewLine;
+
+                chance = GetVisitationChance(Household.ActiveHousehold, alien);
+
+                if (RandomUtil.RandomChance(chance))
+                {
+                    msg += " - Visit Active Roll Pass (" + chance + "%)" + Common.NewLine +
+                        " -- Starting active visit situation (" + Household.ActiveHousehold.LotHome.Name + ")";
+                    Common.DebugNotify(msg);
+
+                    Sim visitor = alien.InstantiateOffScreen(LotManager.GetFarthestLot(Household.ActiveHousehold.LotHome));
+                    AlienSituation.Create(visitor, Household.ActiveHousehold.LotHome);
+                    cooldown = Aliens.Settings.mActivityCooldown;
+                    ResetAbductionHelper();
                 }
                 else
                 {
-                    msg += " - Abduction Roll Fail (" + chance + "%)" + Common.NewLine;
+                    msg += " - Visit Active Roll Fail (" + chance + "%)" + Common.NewLine;
 
-                    chance = GetVisitationChance(Household.ActiveHousehold, alien);
+                    List<Lot> lots = GetValidLots();
 
-                    if (RandomUtil.RandomChance(chance))
+                    if (lots == null)
                     {
-                        msg += " - Visit Active Roll Pass (" + chance + "%)" + Common.NewLine +
-                            " -- Starting visit situation (" + Household.ActiveHousehold.LotHome.Name + ")";
+                        msg += " -- No valid lots";
                         Common.DebugNotify(msg);
-
-                        Sim visitor = alien.InstantiateOffScreen(LotManager.GetFarthestLot(Household.ActiveHousehold.LotHome));
-                        AlienSituation.Create(visitor, Household.ActiveHousehold.LotHome);
-                        cooldown = Aliens.Settings.mActivityCooldown;
-                        ResetAbductionHelper();
+                        return;
                     }
-                    else
-                    {
-                        msg += " - Visit Active Roll Fail (" + chance + "%)" + Common.NewLine;
 
-                        List<Lot> lots = GetValidLots();
+                    Lot lot = RandomUtil.GetRandomObjectFromList(lots);
 
-                        if (lots == null)
-                        {
-                            msg += " -- No valid lots";
-                            Common.DebugNotify(msg);
-                            return;
-                        }
+                    msg += " -- Starting NPC visit situation (" + lot.Name + ")";
+                    Common.DebugNotify(msg);
 
-                        Lot lot = RandomUtil.GetRandomObjectFromList(lots);
-
-                        msg += " -- Starting visit situation (" + lot.Name + ")";
-                        Common.DebugNotify(msg);
-
-                        Sim visitor = alien.InstantiateOffScreen(LotManager.GetFarthestLot(lot));
-                        AlienSituation.Create(visitor, lot);
-                        cooldown = Aliens.Settings.mActivityCooldown;
-                        ResetAbductionHelper();
-                    }
+                    Sim visitor = alien.InstantiateOffScreen(LotManager.GetFarthestLot(lot));
+                    AlienSituation.Create(visitor, lot);
+                    cooldown = Aliens.Settings.mActivityCooldown;
                 }
             }
             else
@@ -222,65 +265,67 @@ namespace NRaas.AliensSpace.Helpers
                 return;
             }
 
-            try
+            if (Household.AlienHousehold.NumMembers < AlienUtils.kAlienHouseholdNumMembers)
             {
-                if (Household.AlienHousehold.NumMembers < AlienUtils.kAlienHouseholdNumMembers)
+                msg += " - Adding new alien" + Common.NewLine;
+
+                CASAgeGenderFlags age = RandomUtil.GetRandomObjectFromList(Aliens.Settings.mValidAlienAges);
+                CASAgeGenderFlags gender = RandomUtil.CoinFlip() ? CASAgeGenderFlags.Male : CASAgeGenderFlags.Female;
+                SimDescription description = MakeAlien(age, gender, GameUtils.GetCurrentWorld(), 1f, true);
+
+                if (Aliens.Settings.mAllowOccultAliens && RandomUtil.RandomChance(Aliens.Settings.mOccultAlienChance))
                 {
-                    msg += " - Adding new alien" + Common.NewLine;
+                    msg += " -- Creating occult alien" + Common.NewLine;
 
-                    CASAgeGenderFlags age = RandomUtil.GetRandomObjectFromList(Aliens.Settings.mValidAlienAges);
-                    CASAgeGenderFlags gender = RandomUtil.CoinFlip() ? CASAgeGenderFlags.Male : CASAgeGenderFlags.Female;
-                    SimDescription description = MakeAlien(age, gender, GameUtils.GetCurrentWorld(), 1f, true);
+                    int numOccults = RandomUtil.GetInt(1, Aliens.Settings.mMaxAlienOccults);
+                    List<OccultTypes> validOccults = new List<OccultTypes>(Aliens.Settings.mValidAlienOccults);
 
-                    if (Aliens.Settings.mAllowOccultAliens && RandomUtil.RandomChance(Aliens.Settings.mOccultAlienChance))
+                    for (int i = 0; i < numOccults; i++)
                     {
-                        msg += " -- Creating occult alien" + Common.NewLine;
+                        if (validOccults.Count == 0)
+                            break;
 
-                        int numOccults = RandomUtil.GetInt(1, Aliens.Settings.mMaxAlienOccults);
-                        List<OccultTypes> validOccults = new List<OccultTypes>(Aliens.Settings.mValidAlienOccults);
+                        OccultTypes type = RandomUtil.GetRandomObjectFromList(validOccults);
 
-                        for (int i = 0; i < numOccults; i++)
+                        if (type != OccultTypes.Ghost)
                         {
-                            if (validOccults.Count == 0)
-                                break;
+                            OccultTypeHelper.Add(description, type, false, false);
 
-                            OccultTypes type = RandomUtil.GetRandomObjectFromList(validOccults);
-
-                            if (type != OccultTypes.Ghost)
-                                OccultTypeHelper.Add(description, type, false, false);
-                            else
-                            {
-                                SimDescription.DeathType deathType =
-                                    RandomUtil.GetRandomObjectFromList((SimDescription.DeathType[])Enum.GetValues(typeof(SimDescription.DeathType)));
-                                Urnstones.SimToPlayableGhost(description, deathType);
-                            }
-
-                            validOccults.Remove(type);
+                            msg += " --- " + OccultTypeHelper.GetLocalizedName(type) + Common.NewLine;
                         }
+                        else
+                        {
+                            SimDescription.DeathType deathType =
+                                RandomUtil.GetRandomObjectFromList((SimDescription.DeathType[])Enum.GetValues(typeof(SimDescription.DeathType)));
+                            Urnstones.SimToPlayableGhost(description, deathType);
+
+                            msg += " --- " + Urnstones.GetLocalizedString(description.IsFemale, deathType) + Common.NewLine;
+                        }
+
+                        validOccults.Remove(type);
                     }
+                }
 
-                    msg += " -- Adding baseline skills" + Common.NewLine;
+                msg += " -- Adding baseline skills" + Common.NewLine;
 
-                    Skill element = null;
+                Skill element = null;
 
-                    element = description.SkillManager.AddElement(SkillNames.Logic);
+                element = description.SkillManager.AddElement(SkillNames.Logic);
 
-                    if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLogicSkill[0], Aliens.Settings.mLogicSkill[1]));
+                if (element != null)
+                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLogicSkill[0], Aliens.Settings.mLogicSkill[1]));
 
-                    element = description.SkillManager.AddElement(SkillNames.Handiness);
+                msg += " --- " + element.Name + Common.NewLine;
 
-                    if (element != null)
-                        element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mHandinessSkill[0], Aliens.Settings.mHandinessSkill[1]));
+                element = description.SkillManager.AddElement(SkillNames.Handiness);
 
-                    if (age == CASAgeGenderFlags.Teen)
-                    {
-                        element = description.SkillManager.AddElement(SkillNames.LearnToDrive);
+                if (element != null)
+                    element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mHandinessSkill[0], Aliens.Settings.mHandinessSkill[1]));
 
-                        if (element != null)
-                            element.ForceSkillLevelUp(SkillManager.GetMaximumSupportedSkillLevel(SkillNames.LearnToDrive));
-                    }
+                msg += " --- " + element.Name + Common.NewLine;
 
+                try
+                {
                     if (Aliens.Settings.mFutureSim)
                     {
                         msg += " -- Adding Adv Tech skill" + Common.NewLine;
@@ -292,19 +337,45 @@ namespace NRaas.AliensSpace.Helpers
                             element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFutureSkill[0], Aliens.Settings.mFutureSkill[1]));
                     }
 
+                }
+                catch (Exception e)
+                {
+                    Common.Exception("AlienUtilsEx.AlienRefresh" + Common.NewLine + " - Failed to add Adv Tech skill", e);
+                }
+
+                /*
+                if (age == CASAgeGenderFlags.Teen)
+                {
+                    element = description.SkillManager.AddElement(SkillNames.LearnToDrive);
+
+                    if (element != null)
+                        element.ForceSkillLevelUp(SkillManager.GetMaximumSupportedSkillLevel(SkillNames.LearnToDrive));
+                }
+                */
+
+                try
+                {
                     if (Aliens.Settings.mAlienScience)
                     {
                         msg += " -- Adding Science skill" + Common.NewLine;
 
-                        Sim temp = description.InstantiateOffScreen(LotManager.GetFarthestLot(Household.ActiveHouseholdLot));
+                        //Sim temp = description.InstantiateOffScreen(LotManager.GetFarthestLot(Household.ActiveHouseholdLot));
                         element = description.SkillManager.AddElement(SkillNames.Science);
 
                         if (element != null)
                             element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mScienceSkill[0], Aliens.Settings.mScienceSkill[1]));
 
-                        temp.Destroy();
+                        //temp.Destroy();
                     }
 
+                }
+                catch (Exception e)
+                {
+                    Common.Exception("AlienUtilsEx.AlienRefresh" + Common.NewLine + " - Failed to add Science skill", e);
+                }
+
+                try
+                {
                     if (OccultTypeHelper.HasType(description, OccultTypes.Fairy) || OccultTypeHelper.HasType(description, OccultTypes.PlantSim))
                     {
                         msg += " -- Adding Gardening skill" + Common.NewLine;
@@ -314,7 +385,14 @@ namespace NRaas.AliensSpace.Helpers
                         if (element != null)
                             element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
                     }
+                }
+                catch (Exception e)
+                {
+                    Common.Exception("AlienUtilsEx.AlienRefresh" + Common.NewLine + " - Failed to add Gardening skill", e);
+                }
 
+                try
+                {
                     if (OccultTypeHelper.HasType(description, OccultTypes.Fairy))
                     {
                         msg += " -- Adding Fairy Magic skill" + Common.NewLine;
@@ -324,7 +402,14 @@ namespace NRaas.AliensSpace.Helpers
                         if (element != null)
                             element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mFairyMagicSkill[0], Aliens.Settings.mFairyMagicSkill[1]));
                     }
+                }
+                catch (Exception e)
+                {
+                    Common.Exception("AlienUtilsEx.AlienRefresh" + Common.NewLine + " - Failed to add Fairy Magic skill", e);
+                }
 
+                try
+                {
                     if (OccultTypeHelper.HasType(description, OccultTypes.Werewolf))
                     {
                         msg += " -- Adding Lycanthropy skill" + Common.NewLine;
@@ -334,7 +419,14 @@ namespace NRaas.AliensSpace.Helpers
                         if (element != null)
                             element.ForceSkillLevelUp(RandomUtil.GetInt(Aliens.Settings.mLycanthropySkill[0], Aliens.Settings.mLycanthropySkill[1]));
                     }
+                }
+                catch (Exception e)
+                {
+                    Common.Exception("AlienUtilsEx.AlienRefresh" + Common.NewLine + " - Failed to add Lycanthropy skill", e);
+                }
 
+                try
+                {
                     if (OccultTypeHelper.HasType(description, OccultTypes.Witch))
                     {
                         msg += " -- Adding witch skills" + Common.NewLine;
@@ -349,24 +441,18 @@ namespace NRaas.AliensSpace.Helpers
                         if (element != null)
                             element.ForceSkillLevelUp(RandomUtil.GetInt(3, 6));
                     }
-
-                    msg += " -- Adding alien to household";
-
-                    Household.AlienHousehold.AddSilent(description);
-                    description.OnHouseholdChanged(Household.AlienHousehold, false);
-
-                    Common.DebugNotify(msg);
                 }
-            }
-            catch(Exception e)
-            {
-                Common.Exception("NRaasAliens.AlienUtilsEx.AlienRefreshCallback", e);
-                Common.DebugNotify("Alien Household Refresh" + Common.NewLine + 
-                    " - ERROR! ERROR!  ERROR!");
-            }
-            finally
-            {
-                AlienUtils.AlienRefreshCallBack();
+                catch (Exception e)
+                {
+                    Common.Exception("AlienUtilsEx.AlienRefresh" + Common.NewLine + " - Failed to add witch skills", e);
+                }
+
+                msg += " -- Adding alien to household";
+
+                Household.AlienHousehold.AddSilent(description);
+                description.OnHouseholdChanged(Household.AlienHousehold, false);
+
+                Common.DebugNotify(msg);
             }
         }
 
@@ -677,7 +763,7 @@ namespace NRaas.AliensSpace.Helpers
             return result;
         }
 
-        private static float GetAbductionChance()
+        private static float GetAbductionChance(bool isActive = false)
         {
             float result = Aliens.Settings.mBaseAbductionChance;
 
@@ -687,12 +773,15 @@ namespace NRaas.AliensSpace.Helpers
                 return 0;
             }
 
-            if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
-                result += Aliens.Settings.mTelescopeBonus;
+            if (isActive)
+            {
+                if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
+                    result += Aliens.Settings.mTelescopeBonus;
 
-            if (AlienUtils.sAlienAbductionHelper.SpaceRocksFound > 0)
-                result += Math.Min(AlienUtils.sAlienAbductionHelper.SpaceRocksFound * Aliens.Settings.mSpaceRockFoundBonus, 
-                    Aliens.Settings.mMaxSpaceRockBonus);
+                if (AlienUtils.sAlienAbductionHelper.SpaceRocksFound > 0)
+                    result += Math.Min(AlienUtils.sAlienAbductionHelper.SpaceRocksFound * Aliens.Settings.mSpaceRockFoundBonus,
+                        Aliens.Settings.mMaxSpaceRockBonus);
+            }
 
             return result;
         }
@@ -756,7 +845,7 @@ namespace NRaas.AliensSpace.Helpers
             return types;
         }
 
-        public static List<Sim> GetValidAbductees(Household household)
+        private static List<Sim> GetValidAbductees(Household household)
         {
             List<Sim> list = new List<Sim>();
 
@@ -805,14 +894,29 @@ namespace NRaas.AliensSpace.Helpers
                 return list;
         }
 
-        public static List<Lot> GetValidLots()
+        private static List<Lot> GetValidLots(bool forAbduction = false)
         {
             List<Lot> list = new List<Lot>();
 
-            foreach (Lot current in LotManager.AllLotsWithoutCommonExceptions)
+            foreach (Lot lot in LotManager.AllLots)
             {
-                if (current.LotType != LotType.Tutorial && current != Household.ActiveHousehold.LotHome && !AlienUtils.IsHouseboatAndNotDocked(current))
-                    list.Add(current);
+                if (!lot.IsWorldLot && lot.LotType != LotType.Tutorial && !lot.IsCommunityLotOfType(CommercialLotSubType.kMisc_NoVisitors)
+                    && !lot.IsCommunityLotOfType(CommercialLotSubType.kEP10_Diving) && !UnchartedIslandMarker.IsUnchartedIsland(lot))
+                {
+                    if (lot.IsPlayerHomeLot)
+                        continue;
+
+                    if (lot.IsResidentialLot && lot.Household == null)
+                        continue;
+
+                    if (AlienUtils.IsHouseboatAndNotDocked(lot))
+                        continue;
+
+                    if (forAbduction && lot.GetAllActorsCount() <= 0)
+                        continue;
+
+                    list.Add(lot);
+                }
             }
 
             if (list.Count == 0)
@@ -849,18 +953,6 @@ namespace NRaas.AliensSpace.Helpers
             ResourceKey skinTone = new ResourceKey(0xb93c88cd44494517, 55867754u, 0u);
             float skinToneIndex = RandomUtil.GetFloat(0f, 1f);
             
-            // RandomUtil.GetRandomObjectFromList(AlienSkinTones);
-            /*
-            if (skinTone == AlienSkinTones[0])
-                skinToneIndex = 1f;
-            else if (skinTone == AlienSkinTones[1] || skinTone == AlienSkinTones[3] || skinTone == AlienSkinTones[4])
-                skinToneIndex = 0.25f + (0.50f * RandomUtil.GetFloat(1f));
-            else if (skinTone == AlienSkinTones[2])
-                skinToneIndex = 0.50f + (0.50f * RandomUtil.GetFloat(1f));
-            else
-                skinToneIndex = 0.25f + (0.75f * RandomUtil.GetFloat(1f));
-            */
-
             SimBuilder sb = new SimBuilder();
             sb.Age = age;
             sb.Gender = gender;
