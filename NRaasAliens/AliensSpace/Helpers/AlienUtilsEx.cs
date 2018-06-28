@@ -46,25 +46,6 @@ namespace NRaas.AliensSpace.Helpers
 {
     public class AlienUtilsEx : Common.IWorldLoadFinished, Common.IWorldQuit
     {
-        static ResourceKey[] AlienSkinTones = new ResourceKey[]
-        {
-            new ResourceKey(ResourceUtils.HashString64("AlienEP08"), 55867754u, 0u),
-            new ResourceKey(ResourceUtils.HashString64("Aqua Skin Tone"), 55867754u, 0u),
-            new ResourceKey(ResourceUtils.HashString64("Blue Skin"), 55867754u, 0u),
-            new ResourceKey(ResourceUtils.HashString64("Gold Skin Tone"), 55867754u, 0u),
-            new ResourceKey(ResourceUtils.HashString64("Purple Skin Tone"), 55867754u, 0u),
-            new ResourceKey(ResourceUtils.HashString64("Alien Skin"), 55867754u, 0u)
-        };
-
-        static Color[] AlienHairColors = new Color[]
-        {
-            new Color(174, 222, 181),
-            new Color(186, 219, 202),
-            new Color(144, 183, 151),
-            new Color(207, 242, 214),
-            new Color(144, 183, 151)
-        };
-
         static AlarmHandle[] sAlienActivityAlarm = new AlarmHandle[24];
         static AlarmHandle sReplaceAlarms = AlarmHandle.kInvalidHandle;
         static int cooldown = 0;
@@ -948,10 +929,54 @@ namespace NRaas.AliensSpace.Helpers
             return result;
         }
 
+        private static Color HSLToRGB(float h, float s, float l)
+        {
+            int r, g, b;
+            float var1, var2;
+
+            if (s == 0f)
+            {
+                r = (int)(l * 255f);
+                g = (int)(l * 255f);
+                b = (int)(l * 255f);
+            }
+            else
+            {
+                if (l < 0.5f)
+                    var2 = l * (1f + s);
+                else
+                    var2 = (l + s) - (s * l);
+
+                var1 = 2f * l - var2;
+
+                r = (int)(255f * HueToRGB(var1, var2, h + (1f / 3f)));
+                g = (int)(255f * HueToRGB(var1, var2, h));
+                b = (int)(255f * HueToRGB(var1, var2, h - (1f / 3f)));
+            }
+
+            return new Color(r, g, b);
+        }
+
+        private static float HueToRGB(float var1, float var2, float h)
+        {
+            h = h % 1f;
+
+            if ((6f * h) < 1f)
+                return (var1 + (var2 - var1) * 6f * h);
+
+            if ((2f * h) < 1f)
+                return var2;
+
+            if ((3f * h) < 2f)
+                return (var1 + (var2 - var1) * ((2f / 3f) - h) * 6f);
+
+            return var1;
+        }
+
         private static SimDescription MakeAlien(CASAgeGenderFlags age, CASAgeGenderFlags gender, WorldName homeworld, float alienDNAPercentage, bool assignRandomTraits)
         {
             ResourceKey skinTone = new ResourceKey(0xb93c88cd44494517, 55867754u, 0u);
-            float skinToneIndex = RandomUtil.GetFloat(0f, 1f);
+            float skinToneIndex = RandomUtil.GetFloat(1f);
             
             SimBuilder sb = new SimBuilder();
             sb.Age = age;
@@ -962,7 +987,10 @@ namespace NRaas.AliensSpace.Helpers
             sb.TextureSize = 1024u;
             sb.UseCompression = true;
             ApplyAlienFaceBlend(gender, ref sb);
-            SimDescription alienDescription = Genetics.MakeSim(sb, age, gender, skinTone, skinToneIndex, AlienHairColors, homeworld, 4294967295u, true);
+            float hue = (skinToneIndex + 0.5f) % 1f;
+            float saturation = age == CASAgeGenderFlags.Elder ? 0.25f : 0.75f;
+            Color[] colors = new Color[] { HSLToRGB(hue, saturation, 0.5f) };
+            SimDescription alienDescription = Genetics.MakeSim(sb, age, gender, skinTone, skinToneIndex, colors, homeworld, 4294967295u, true);
 
             if (alienDescription != null)
             {
@@ -1012,29 +1040,30 @@ namespace NRaas.AliensSpace.Helpers
 
         public static SimDescription MakeAlienBaby(SimDescription alien, SimDescription abductee, CASAgeGenderFlags gender, float averageMood, Random pregoRandom, bool interactive)
         {
-            SimDescription baby = MakeAlien(CASAgeGenderFlags.Baby, gender, GameUtils.GetCurrentWorld(), 1f, false);
+            SimBuilder sb = new SimBuilder();
+            sb.Age = CASAgeGenderFlags.Baby;
+            sb.Gender = gender;
+            sb.Species = CASAgeGenderFlags.Human;
+            sb.SkinTone = alien.SkinToneKey;
+            sb.SkinToneIndex = alien.SkinToneIndex;
+            sb.TextureSize = 1024u;
+            sb.UseCompression = true;
+            ApplyAlienFaceBlend(gender, ref sb);
+            float hue = (sb.SkinToneIndex + 0.5f) % 1f;
+            Color[] colors = new Color[] { HSLToRGB(hue, 0.75f, 0.5f) };
+            SimDescription baby = Genetics.MakeSim(sb, CASAgeGenderFlags.Baby, gender, alien.SkinToneKey, alien.SkinToneIndex, colors, 
+                GameUtils.GetCurrentWorld(), 4294967295u, true);
 
             if (baby != null)
             {
                 if (interactive)
                     baby.FirstName = string.Empty;
+                else
+                    baby.FirstName = SimUtils.GetRandomAlienGivenName(baby.IsMale);
 
                 baby.LastName = abductee.LastName;
-
-                try
-                {
-                    CommonPregnancy.AssignTraits(baby, abductee, interactive, averageMood, pregoRandom);
-                }
-                catch(Exception e)
-                {
-                    Common.Exception("AlienUtilsEx.MakeAlienBaby", e);
-                }
-                finally
-                {
-                    Genetics.AssignRandomTraits(baby);
-                }
+                Genetics.AssignTraits(baby, null, abductee, interactive, averageMood, pregoRandom);
                 
-
                 if (Aliens.Settings.mFutureSim)
                     baby.TraitManager.AddHiddenElement(TraitNames.FutureSim);
 
@@ -1054,6 +1083,24 @@ namespace NRaas.AliensSpace.Helpers
                                 Urnstones.SimToPlayableGhost(baby, deathType);
                             }
                         }
+
+                        if (OccultTypeHelper.HasType(baby, OccultTypes.Fairy))
+                        {
+                            CASFairyData casFairyData = baby.SupernaturalData as CASFairyData;
+
+                            if (casFairyData != null)
+                            {
+                                Vector3 wingColor;
+                                WingTypes wingType;
+                                Genetics.InheritWings(baby, abductee, alien, pregoRandom, out wingColor, out wingType);
+                                casFairyData.WingType = wingType;
+                                casFairyData.WingColor = wingColor;
+                            }
+                        }
+                    }
+                    else if (RandomUtil.RandomChance01(abductee.Pregnancy.mChanceOfRandomOccultMutation))
+                    {
+                        OccultTypeHelper.Add(baby, Pregnancy.ChooseARandomOccultMutation(), false, false);
                     }
                 }
 
@@ -1067,7 +1114,8 @@ namespace NRaas.AliensSpace.Helpers
             return baby;
         }
 
-        // <NOTE> For use with NRaasWoohooer's Pregnancy proxy and NRaasTraveler descendant generation so that new skin tones are passed down instead of the standard grey-green
+        // <NOTE> For use with NRaasWoohooer's Pregnancy proxy and NRaasTraveler descendant generation so that new skin tones 
+        //  are passed down instead of the standard grey-green.
         public static SimDescription MakeAlienDescendant()
         {
             return null;
