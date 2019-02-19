@@ -49,7 +49,6 @@ namespace NRaas.AliensSpace.Interactions
 
             public override bool Test(Sim actor, RabbitHole target, bool isAutonomous, ref GreyedOutTooltipCallback greyedOutTooltipCallback)
             {
-                //return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffNames.BabyIsComing);
                 return target.Guid == RabbitHoleType.Hospital && actor.BuffManager.HasElement(BuffsAndTraits.sAlienBabyIsComing);
             }
         }
@@ -166,7 +165,7 @@ namespace NRaas.AliensSpace.Interactions
                 {
                     msg += "B";
 
-                    AlienPregnancy pregnancy = new AlienPregnancy(Actor.SimDescription.Pregnancy);
+                    AlienPregnancyProxy pregnancy = new AlienPregnancyProxy(Actor.SimDescription.Pregnancy);
 
                     if (Actor.IsSelectable)
                         Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");

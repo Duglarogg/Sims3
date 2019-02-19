@@ -67,7 +67,7 @@ namespace NRaas
             if (!sim.SimDescription.IsPregnant)
                 return false;
 
-            AlienPregnancy pregnancy = new AlienPregnancy(sim.SimDescription.Pregnancy);
+            AlienPregnancyProxy pregnancy = new AlienPregnancyProxy(sim.SimDescription.Pregnancy);
             sim.RemoveAlarm(pregnancy.PreggersAlarm);
             pregnancy.PreggersAlarm = sim.AddAlarmRepeating(1f, TimeUnit.Hours, new AlarmTimerCallback(pregnancy.HourlyCallback),
                 1f, TimeUnit.Hours, "Hourly Alien Pregnancy Update Alarm", AlarmType.AlwaysPersisted);

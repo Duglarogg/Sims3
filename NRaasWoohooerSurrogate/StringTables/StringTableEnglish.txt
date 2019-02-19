@@ -1,0 +1,17 @@
+﻿<KEY>NRaas.WoohooerSurrogate.Version:Prompt</KEY>
+<STR>Version: {0.Number}</STR>
+
+<KEY>NRaas.WoohooerSurrogate.Root:MenuName</KEY>
+<STR>Woohooer Surrogate</STR>
+
+<KEY>NRaas.WoohooerSurrogate.DonateRobot:MenuName<KEY>
+<STR>Ask for a DNA Donation</STR>
+
+<KEY>NRaas.WoohooerSurrogate.DonateHuman:MenuName<KEY>
+<STR>Offer a DNA Donation</STR>
+
+<KEY>NRaas.WoohooerSurrogate.ImpregnateMale:MenuName</KEY>
+<STR>Impregnate using...</STR>
+
+<KEY>NRaas.WoohooerSurrogate.ImpregnateFemale:MenuName</KEY>
+<STR>Be Impregnated using...</STR>

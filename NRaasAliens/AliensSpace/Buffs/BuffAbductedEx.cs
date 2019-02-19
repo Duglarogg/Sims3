@@ -66,9 +66,9 @@ namespace NRaas.AliensSpace.Buffs
             {
                 buffInstance.Alien = RandomUtil.GetRandomObjectFromList(list);
 
-                if (AlienPregnancy.ShouldImpregnate(buffInstance.Abductee, buffInstance.Alien))
+                if (AlienPregnancyProxy.ShouldImpregnate(buffInstance.Abductee, buffInstance.Alien))
                 {
-                    AlienPregnancy.Start(buffInstance.Abductee, buffInstance.Alien);
+                    AlienPregnancyProxy.Start(buffInstance.Abductee, buffInstance.Alien);
                     buffInstance.IsAlienPregnant = true;
                     return;
                 }

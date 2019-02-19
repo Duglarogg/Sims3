@@ -74,7 +74,7 @@ namespace NRaas.AliensSpace.Helpers
                 return;
             }
 
-            if (SimClock.Hours24 >= Aliens.Settings.mEarliestHour 
+            if (SimClock.Hours24 >= Aliens.Settings.mEarliestHour
                 || SimClock.Hours24 <= (Aliens.Settings.mEarliestHour + Aliens.Settings.mActivityWindow) % 24)
             {
                 if (Household.AlienHousehold == null || Household.AlienHousehold.NumMembers == 0)
@@ -109,7 +109,7 @@ namespace NRaas.AliensSpace.Helpers
 
                 if (RandomUtil.RandomChance(chance))
                 {
-                    msg += " - Active Abduction Roll Pass (" + chance +"%)" + Common.NewLine;
+                    msg += " - Active Abduction Roll Pass (" + chance + "%)" + Common.NewLine;
 
                     /* <WISHLIST>
                      *      For now, abductions will only target the active household.  This is due to how alien babies are treated
@@ -230,9 +230,10 @@ namespace NRaas.AliensSpace.Helpers
                 }
             }
             else
+            {
                 msg += " - Outside active hours";
-
-            Common.DebugNotify(msg);
+                Common.DebugNotify(msg);
+            }
         }
 
         public static void AlienRefreshCallback()
@@ -749,10 +750,7 @@ namespace NRaas.AliensSpace.Helpers
             float result = Aliens.Settings.mBaseAbductionChance;
 
             if (result <= 0)
-            {
-                Common.DebugNotify("Alien Activity: Abductions disabled");
                 return 0;
-            }
 
             if (isActive)
             {
@@ -772,10 +770,7 @@ namespace NRaas.AliensSpace.Helpers
             float result = Aliens.Settings.mBaseActivityChance;
 
             if (result <= 0)
-            {
-                Common.DebugNotify("Alien Activity: All activity disabled");
                 return 0;
-            }
 
             if (AlienUtils.sAlienAbductionHelper.TelescopeUsed)
                 result += Aliens.Settings.mTelescopeBonus;
@@ -1050,7 +1045,19 @@ namespace NRaas.AliensSpace.Helpers
             sb.UseCompression = true;
             ApplyAlienFaceBlend(gender, ref sb);
             float hue = (sb.SkinToneIndex + 0.5f) % 1f;
-            Color[] colors = new Color[] { HSLToRGB(hue, 0.75f, 0.5f) };
+            Color[] colors = new Color[]
+            {
+                HSLToRGB(hue, 0.71f, 0.5f),
+                HSLToRGB(hue, 0.72f, 0.5f),
+                HSLToRGB(hue, 0.73f, 0.5f),
+                HSLToRGB(hue, 0.74f, 0.5f),
+                HSLToRGB(hue, 0.75f, 0.5f),
+                HSLToRGB(hue, 0.76f, 0.5f),
+                HSLToRGB(hue, 0.77f, 0.5f),
+                HSLToRGB(hue, 0.78f, 0.5f),
+                HSLToRGB(hue, 0.79f, 0.5f),
+                HSLToRGB(hue, 0.80f, 0.5f)
+            };
             SimDescription baby = Genetics.MakeSim(sb, CASAgeGenderFlags.Baby, gender, alien.SkinToneKey, alien.SkinToneIndex, colors, 
                 GameUtils.GetCurrentWorld(), 4294967295u, true);
 

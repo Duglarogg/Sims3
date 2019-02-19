@@ -28,19 +28,9 @@ namespace NRaas.AliensSpace.Helpers
         static Common.MethodStore sStoryProgressionAllowImpregnation = new Common.MethodStore("NRaasStoryProgression", "NRaas.StoryProgression",
             "AllowImpregnation", new Type[] { typeof(SimDescription), typeof(bool) });
 
-        /*
-        static Common.MethodStore sWoohooerAllowPlantSimPregnancy = new Common.MethodStore("NRaasWoohooer", "NRaas.Woohooer", "AllowPlantSimPregnancy",
-            new Type[] { });
-            */
-
         public delegate float GetChanceOfSuccess(Sim a, SimDescription b);
         public static GetChanceOfSuccess sGetChanceOfSuccess = OnGetChanceOfSuccess;
         public static BuffNames sItsQuadruplets = unchecked((BuffNames)ResourceUtils.HashString64("NRaasItsQuadruplets"));
-
-        public static bool AllowPlantSimPregnancy()
-        {
-            return true;
-        }
 
         public static bool CanGetPregnant(Sim sim, bool isAutonomous, out string reason)
         {

@@ -54,7 +54,7 @@ namespace NRaas.AliensSpace.Interactions
 
         public override void Cleanup()
         {
-            AlienPregnancy pregnancy = new AlienPregnancy(Actor.SimDescription.Pregnancy);
+            AlienPregnancyProxy pregnancy = new AlienPregnancyProxy(Actor.SimDescription.Pregnancy);
             bool wasPregnant = pregnancy != null;
 
             try
@@ -166,7 +166,7 @@ namespace NRaas.AliensSpace.Interactions
                     Actor.LoopIdle();
                 }
 
-                AlienPregnancy pregnancy = new AlienPregnancy(Actor.SimDescription.Pregnancy);
+                AlienPregnancyProxy pregnancy = new AlienPregnancyProxy(Actor.SimDescription.Pregnancy);
                 Sims3.Gameplay.Gameflow.Singleton.DisableSave(this, "Gameplay/ActorSystems/Pregnancy:DisableSave");
                 mNewborns = pregnancy.CreateNewborns(0f, Actor.IsSelectable, true);
                 mCurrentStateMachine = StateMachineClient.Acquire(Actor, "Pregnancy");

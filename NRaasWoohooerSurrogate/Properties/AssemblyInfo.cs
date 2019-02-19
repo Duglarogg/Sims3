@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("NRaasAliens_Take7")]
+[assembly: AssemblyTitle("NRaasWoohooerSurrogate")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("NRaasAliens_Take7")]
+[assembly: AssemblyProduct("NRaasWoohooerSurrogate")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d2ddd63a-625c-4b6f-af6a-f2b82dc1eeda")]
+[assembly: Guid("e22917c2-c722-4f49-8126-1a0f25eb267c")]
 
 // Version information for an assembly consists of the following four values:
 //

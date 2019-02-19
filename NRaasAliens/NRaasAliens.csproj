@@ -424,7 +424,7 @@
     <Compile Include="AliensSpace\Options\SkillRangeOption.cs" />
     <Compile Include="AliensSpace\Options\ToggleSettingOption.cs" />
     <Compile Include="AliensSpace\PersistedSettings.cs" />
-    <Compile Include="AliensSpace\Proxies\AlienPregnancy.cs" />
+    <Compile Include="AliensSpace\Proxies\AlienPregnancyProxy.cs" />
     <Compile Include="AliensSpace\TraitBooter.cs" />
     <Compile Include="AliensTuning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

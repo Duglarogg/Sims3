@@ -33,11 +33,11 @@ using System.Text;
 
 namespace NRaas.AliensSpace.Proxies
 {
-    public class AlienPregnancy : Pregnancy
+    public class AlienPregnancyProxy : Pregnancy
     {
         static Common.MethodStore sWoohooerGetChanceOfQuads = new Common.MethodStore("NRaasWoohooer", "NRaas.Woohooer", "GetChanceOfQuads", new Type[] { });
 
-        public AlienPregnancy(Sim abductee, SimDescription alien)
+        public AlienPregnancyProxy(Sim abductee, SimDescription alien)
         {
             mMom = abductee;
             mDad = alien != null ? alien.CreatedSim : null;
@@ -59,7 +59,7 @@ namespace NRaas.AliensSpace.Proxies
             Initialize();
         }
 
-        public AlienPregnancy(Pregnancy src)
+        public AlienPregnancyProxy(Pregnancy src)
         {
             CopyPregnancy(this, src);
         }
@@ -944,46 +944,31 @@ namespace NRaas.AliensSpace.Proxies
 
         public static new bool StartInternal(Sim abductee, SimDescription alien)
         {
-            if ((abductee.SimDescription.IsPlantSim || alien.IsPlantSim) && !CommonPregnancy.AllowPlantSimPregnancy())
+            if (!CommonPregnancy.CanGetPregnant(abductee, true, out string reason))
             {
-                IGameObject gameObject = GlobalFunctions.CreateObjectOutOfWorld("forbiddenFruit", ProductVersion.EP9, 
-                    "Sims3.Gameplay.Objects.Gardening.ForbiddenFruit", null);
-
-                if (gameObject != null)
-                {
-                    abductee.Inventory.TryToAdd(gameObject);
-                    return true;
-                }
-
+                Common.DebugNotify("Alien Pregnancy: Auto Fail - " + reason);
                 return false;
+            }
+
+            AgingManager.Singleton.CancelAgingAlarmsForSim(abductee.SimDescription.AgingState);
+
+            if (abductee.IsHuman)
+            {
+                AlienPregnancyProxy pregnancy = new AlienPregnancyProxy(abductee, alien);
+                pregnancy.PreggersAlarm = abductee.AddAlarmRepeating(1f, TimeUnit.Hours, new AlarmTimerCallback(pregnancy.HourlyCallback),
+                    1f, TimeUnit.Hours, "Hourly Alien Pregnancy Update Alarm", AlarmType.AlwaysPersisted);
+                abductee.SimDescription.Pregnancy = pregnancy;
+                EventTracker.SendEvent(new PregnancyEvent(EventTypeId.kGotPregnant, abductee, null, pregnancy, null));
             }
             else
             {
-                if (!CommonPregnancy.CanGetPregnant(abductee, true, out string reason))
-                {
-                    Common.DebugNotify("Alien Pregnancy: Auto Fail - " + reason);
-                    return false;
-                }
-
-                AgingManager.Singleton.CancelAgingAlarmsForSim(abductee.SimDescription.AgingState);
-
-                if (abductee.IsHuman)
-                {
-                    AlienPregnancy pregnancy = new AlienPregnancy(abductee, alien);
-                    pregnancy.PreggersAlarm = abductee.AddAlarmRepeating(1f, TimeUnit.Hours, new AlarmTimerCallback(pregnancy.HourlyCallback), 
-                        1f, TimeUnit.Hours, "Hourly Alien Pregnancy Update Alarm", AlarmType.AlwaysPersisted);
-                    abductee.SimDescription.Pregnancy = pregnancy;
-                    EventTracker.SendEvent(new PregnancyEvent(EventTypeId.kGotPregnant, abductee, null, pregnancy, null));
-                }
-                else
-                {
-                    Common.DebugNotify("Alien Pregnancy: Abductee is Pet");
-                    return false;
-                }
-
-                ((AlienPregnancy)abductee.SimDescription.Pregnancy).ApplyInitialMutationFactors();
-                return true;
+                Common.DebugNotify("Alien Pregnancy: Abductee is Pet");
+                return false;
             }
+
+            ((AlienPregnancyProxy)abductee.SimDescription.Pregnancy).ApplyInitialMutationFactors();
+
+            return true;
         }
 
         public new void StartReaction(Sim sim, ReactionBroadcaster broadcaster)
